@@ -780,11 +780,13 @@ enum class BodyPart : uint8_t {
   RIGHT_LITTLE_PROXIMAL = 52,
   RIGHT_LITTLE_INTERMEDIATE = 53,
   RIGHT_LITTLE_DISTAL = 54,
+  LEFT_HAND_INPUT = 61,
+  RIGHT_HAND_INPUT = 62,
   MIN = NONE,
-  MAX = RIGHT_LITTLE_DISTAL
+  MAX = RIGHT_HAND_INPUT
 };
 
-inline const BodyPart (&EnumValuesBodyPart())[53] {
+inline const BodyPart (&EnumValuesBodyPart())[55] {
   static const BodyPart values[] = {
     BodyPart::NONE,
     BodyPart::HEAD,
@@ -838,13 +840,15 @@ inline const BodyPart (&EnumValuesBodyPart())[53] {
     BodyPart::RIGHT_RING_DISTAL,
     BodyPart::RIGHT_LITTLE_PROXIMAL,
     BodyPart::RIGHT_LITTLE_INTERMEDIATE,
-    BodyPart::RIGHT_LITTLE_DISTAL
+    BodyPart::RIGHT_LITTLE_DISTAL,
+    BodyPart::LEFT_HAND_INPUT,
+    BodyPart::RIGHT_HAND_INPUT
   };
   return values;
 }
 
 inline const char * const *EnumNamesBodyPart() {
-  static const char * const names[56] = {
+  static const char * const names[64] = {
     "NONE",
     "HEAD",
     "NECK",
@@ -900,13 +904,21 @@ inline const char * const *EnumNamesBodyPart() {
     "RIGHT_LITTLE_PROXIMAL",
     "RIGHT_LITTLE_INTERMEDIATE",
     "RIGHT_LITTLE_DISTAL",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "LEFT_HAND_INPUT",
+    "RIGHT_HAND_INPUT",
     nullptr
   };
   return names;
 }
 
 inline const char *EnumNameBodyPart(BodyPart e) {
-  if (flatbuffers::IsOutRange(e, BodyPart::NONE, BodyPart::RIGHT_LITTLE_DISTAL)) return "";
+  if (flatbuffers::IsOutRange(e, BodyPart::NONE, BodyPart::RIGHT_HAND_INPUT)) return "";
   const size_t index = static_cast<size_t>(e);
   return EnumNamesBodyPart()[index];
 }

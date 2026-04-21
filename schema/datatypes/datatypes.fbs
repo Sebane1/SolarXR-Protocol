@@ -151,7 +151,9 @@ enum BodyPart: uint8 {
     RIGHT_LITTLE_PROXIMAL = 52,
     RIGHT_LITTLE_INTERMEDIATE = 53,
     RIGHT_LITTLE_DISTAL = 54,
-}
+    LEFT_HAND_INPUT = 61,
+    RIGHT_HAND_INPUT = 62
+ }
 
 enum TrackerStatus: uint8 {
     NONE = 0,

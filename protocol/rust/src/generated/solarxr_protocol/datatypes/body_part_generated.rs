@@ -12,10 +12,10 @@ use super::*;
 #[deprecated(since = "2.0.0", note = "Use associated constants instead. This will no longer be generated in 2021.")]
 pub const ENUM_MIN_BODY_PART: u8 = 0;
 #[deprecated(since = "2.0.0", note = "Use associated constants instead. This will no longer be generated in 2021.")]
-pub const ENUM_MAX_BODY_PART: u8 = 54;
+pub const ENUM_MAX_BODY_PART: u8 = 62;
 #[deprecated(since = "2.0.0", note = "Use associated constants instead. This will no longer be generated in 2021.")]
 #[allow(non_camel_case_types)]
-pub const ENUM_VALUES_BODY_PART: [BodyPart; 53] = [
+pub const ENUM_VALUES_BODY_PART: [BodyPart; 55] = [
   BodyPart::NONE,
   BodyPart::HEAD,
   BodyPart::NECK,
@@ -69,6 +69,8 @@ pub const ENUM_VALUES_BODY_PART: [BodyPart; 53] = [
   BodyPart::RIGHT_LITTLE_PROXIMAL,
   BodyPart::RIGHT_LITTLE_INTERMEDIATE,
   BodyPart::RIGHT_LITTLE_DISTAL,
+  BodyPart::LEFT_HAND_INPUT,
+  BodyPart::RIGHT_HAND_INPUT,
 ];
 
 /// Different parts of the body. Maps to each possible non-tracker bone in the skeleton.
@@ -131,9 +133,11 @@ impl BodyPart {
   pub const RIGHT_LITTLE_PROXIMAL: Self = Self(52);
   pub const RIGHT_LITTLE_INTERMEDIATE: Self = Self(53);
   pub const RIGHT_LITTLE_DISTAL: Self = Self(54);
+  pub const LEFT_HAND_INPUT: Self = Self(61);
+  pub const RIGHT_HAND_INPUT: Self = Self(62);
 
   pub const ENUM_MIN: u8 = 0;
-  pub const ENUM_MAX: u8 = 54;
+  pub const ENUM_MAX: u8 = 62;
   pub const ENUM_VALUES: &'static [Self] = &[
     Self::NONE,
     Self::HEAD,
@@ -188,6 +192,8 @@ impl BodyPart {
     Self::RIGHT_LITTLE_PROXIMAL,
     Self::RIGHT_LITTLE_INTERMEDIATE,
     Self::RIGHT_LITTLE_DISTAL,
+    Self::LEFT_HAND_INPUT,
+    Self::RIGHT_HAND_INPUT,
   ];
   /// Returns the variant's name or "" if unknown.
   pub fn variant_name(self) -> Option<&'static str> {
@@ -245,6 +251,8 @@ impl BodyPart {
       Self::RIGHT_LITTLE_PROXIMAL => Some("RIGHT_LITTLE_PROXIMAL"),
       Self::RIGHT_LITTLE_INTERMEDIATE => Some("RIGHT_LITTLE_INTERMEDIATE"),
       Self::RIGHT_LITTLE_DISTAL => Some("RIGHT_LITTLE_DISTAL"),
+      Self::LEFT_HAND_INPUT => Some("LEFT_HAND_INPUT"),
+      Self::RIGHT_HAND_INPUT => Some("RIGHT_HAND_INPUT"),
       _ => None,
     }
   }
