@@ -115,9 +115,18 @@ class ChangeSettingsRequest : Table() {
             null
         }
     }
+    val spatialHeadphonesOsc : solarxr_protocol.rpc.OSCSettings? get() = spatialHeadphonesOsc(solarxr_protocol.rpc.OSCSettings())
+    fun spatialHeadphonesOsc(obj: solarxr_protocol.rpc.OSCSettings) : solarxr_protocol.rpc.OSCSettings? {
+        val o = __offset(26)
+        return if (o != 0) {
+            obj.__assign(__indirect(o + bb_pos), bb)
+        } else {
+            null
+        }
+    }
     val hidSettings : solarxr_protocol.rpc.HIDSettings? get() = hidSettings(solarxr_protocol.rpc.HIDSettings())
     fun hidSettings(obj: solarxr_protocol.rpc.HIDSettings) : solarxr_protocol.rpc.HIDSettings? {
-        val o = __offset(26)
+        val o = __offset(28)
         return if (o != 0) {
             obj.__assign(__indirect(o + bb_pos), bb)
         } else {
@@ -126,7 +135,7 @@ class ChangeSettingsRequest : Table() {
     }
     val timeout : solarxr_protocol.rpc.TimeoutSettings? get() = timeout(solarxr_protocol.rpc.TimeoutSettings())
     fun timeout(obj: solarxr_protocol.rpc.TimeoutSettings) : solarxr_protocol.rpc.TimeoutSettings? {
-        val o = __offset(28)
+        val o = __offset(30)
         return if (o != 0) {
             obj.__assign(__indirect(o + bb_pos), bb)
         } else {
@@ -135,7 +144,7 @@ class ChangeSettingsRequest : Table() {
     }
     val velocitySettings : solarxr_protocol.rpc.VelocitySettings? get() = velocitySettings(solarxr_protocol.rpc.VelocitySettings())
     fun velocitySettings(obj: solarxr_protocol.rpc.VelocitySettings) : solarxr_protocol.rpc.VelocitySettings? {
-        val o = __offset(30)
+        val o = __offset(32)
         return if (o != 0) {
             obj.__assign(__indirect(o + bb_pos), bb)
         } else {
@@ -153,10 +162,11 @@ class ChangeSettingsRequest : Table() {
             return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb))
         }
         @JvmStatic
-        fun createChangeSettingsRequest(builder: FlatBufferBuilder, steamVrTrackersOffset: Int, filteringOffset: Int, driftCompensationOffset: Int, oscRouterOffset: Int, vrcOscOffset: Int, vmcOscOffset: Int, modelSettingsOffset: Int, tapDetectionSettingsOffset: Int, autoBoneSettingsOffset: Int, resetsSettingsOffset: Int, stayAlignedOffset: Int, hidSettingsOffset: Int, timeoutOffset: Int, velocitySettingsOffset: Int) : Int {
-            builder.startTable(14)
+        fun createChangeSettingsRequest(builder: FlatBufferBuilder, steamVrTrackersOffset: Int, filteringOffset: Int, driftCompensationOffset: Int, oscRouterOffset: Int, vrcOscOffset: Int, vmcOscOffset: Int, modelSettingsOffset: Int, tapDetectionSettingsOffset: Int, autoBoneSettingsOffset: Int, resetsSettingsOffset: Int, stayAlignedOffset: Int, spatialHeadphonesOscOffset: Int, hidSettingsOffset: Int, timeoutOffset: Int, velocitySettingsOffset: Int) : Int {
+            builder.startTable(15)
             addVelocitySettings(builder, velocitySettingsOffset)
             addTimeout(builder, timeoutOffset)
+            addSpatialHeadphonesOsc(builder, spatialHeadphonesOscOffset)
             addHidSettings(builder, hidSettingsOffset)
             addStayAligned(builder, stayAlignedOffset)
             addResetsSettings(builder, resetsSettingsOffset)
@@ -172,7 +182,7 @@ class ChangeSettingsRequest : Table() {
             return endChangeSettingsRequest(builder)
         }
         @JvmStatic
-        fun startChangeSettingsRequest(builder: FlatBufferBuilder) = builder.startTable(14)
+        fun startChangeSettingsRequest(builder: FlatBufferBuilder) = builder.startTable(15)
         @JvmStatic
         fun addSteamVrTrackers(builder: FlatBufferBuilder, steamVrTrackers: Int) = builder.addOffset(0, steamVrTrackers, 0)
         @JvmStatic
@@ -196,11 +206,13 @@ class ChangeSettingsRequest : Table() {
         @JvmStatic
         fun addStayAligned(builder: FlatBufferBuilder, stayAligned: Int) = builder.addOffset(10, stayAligned, 0)
         @JvmStatic
-        fun addHidSettings(builder: FlatBufferBuilder, hidSettings: Int) = builder.addOffset(11, hidSettings, 0)
+        fun addSpatialHeadphonesOsc(builder: FlatBufferBuilder, spatialHeadphonesOsc: Int) = builder.addOffset(11, spatialHeadphonesOsc, 0)
         @JvmStatic
-        fun addTimeout(builder: FlatBufferBuilder, timeout: Int) = builder.addOffset(12, timeout, 0)
+        fun addHidSettings(builder: FlatBufferBuilder, hidSettings: Int) = builder.addOffset(12, hidSettings, 0)
         @JvmStatic
-        fun addVelocitySettings(builder: FlatBufferBuilder, velocitySettings: Int) = builder.addOffset(13, velocitySettings, 0)
+        fun addTimeout(builder: FlatBufferBuilder, timeout: Int) = builder.addOffset(13, timeout, 0)
+        @JvmStatic
+        fun addVelocitySettings(builder: FlatBufferBuilder, velocitySettings: Int) = builder.addOffset(14, velocitySettings, 0)
         @JvmStatic
         fun endChangeSettingsRequest(builder: FlatBufferBuilder) : Int {
             val o = builder.endTable()

@@ -7,6 +7,7 @@ import { DriftCompensationSettings, DriftCompensationSettingsT } from '../../sol
 import { FilteringSettings, FilteringSettingsT } from '../../solarxr-protocol/rpc/filtering-settings.js';
 import { HIDSettings, HIDSettingsT } from '../../solarxr-protocol/rpc/hidsettings.js';
 import { OSCRouterSettings, OSCRouterSettingsT } from '../../solarxr-protocol/rpc/oscrouter-settings.js';
+import { OSCSettings, OSCSettingsT } from '../../solarxr-protocol/rpc/oscsettings.js';
 import { ResetsSettings, ResetsSettingsT } from '../../solarxr-protocol/rpc/resets-settings.js';
 import { StayAlignedSettings, StayAlignedSettingsT } from '../../solarxr-protocol/rpc/stay-aligned-settings.js';
 import { SteamVRTrackersSetting, SteamVRTrackersSettingT } from '../../solarxr-protocol/rpc/steam-vrtrackers-setting.js';
@@ -91,23 +92,28 @@ stayAligned(obj?:StayAlignedSettings):StayAlignedSettings|null {
   return offset ? (obj || new StayAlignedSettings()).__init(this.bb!.__indirect(this.bb_pos + offset), this.bb!) : null;
 }
 
-hidSettings(obj?:HIDSettings):HIDSettings|null {
+spatialHeadphonesOsc(obj?:OSCSettings):OSCSettings|null {
   const offset = this.bb!.__offset(this.bb_pos, 26);
+  return offset ? (obj || new OSCSettings()).__init(this.bb!.__indirect(this.bb_pos + offset), this.bb!) : null;
+}
+
+hidSettings(obj?:HIDSettings):HIDSettings|null {
+  const offset = this.bb!.__offset(this.bb_pos, 28);
   return offset ? (obj || new HIDSettings()).__init(this.bb!.__indirect(this.bb_pos + offset), this.bb!) : null;
 }
 
 timeout(obj?:TimeoutSettings):TimeoutSettings|null {
-  const offset = this.bb!.__offset(this.bb_pos, 28);
+  const offset = this.bb!.__offset(this.bb_pos, 30);
   return offset ? (obj || new TimeoutSettings()).__init(this.bb!.__indirect(this.bb_pos + offset), this.bb!) : null;
 }
 
 velocitySettings(obj?:VelocitySettings):VelocitySettings|null {
-  const offset = this.bb!.__offset(this.bb_pos, 30);
+  const offset = this.bb!.__offset(this.bb_pos, 32);
   return offset ? (obj || new VelocitySettings()).__init(this.bb!.__indirect(this.bb_pos + offset), this.bb!) : null;
 }
 
 static startChangeSettingsRequest(builder:flatbuffers.Builder) {
-  builder.startObject(14);
+  builder.startObject(15);
 }
 
 static addSteamVrTrackers(builder:flatbuffers.Builder, steamVrTrackersOffset:flatbuffers.Offset) {
@@ -154,16 +160,20 @@ static addStayAligned(builder:flatbuffers.Builder, stayAlignedOffset:flatbuffers
   builder.addFieldOffset(10, stayAlignedOffset, 0);
 }
 
+static addSpatialHeadphonesOsc(builder:flatbuffers.Builder, spatialHeadphonesOscOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(11, spatialHeadphonesOscOffset, 0);
+}
+
 static addHidSettings(builder:flatbuffers.Builder, hidSettingsOffset:flatbuffers.Offset) {
-  builder.addFieldOffset(11, hidSettingsOffset, 0);
+  builder.addFieldOffset(12, hidSettingsOffset, 0);
 }
 
 static addTimeout(builder:flatbuffers.Builder, timeoutOffset:flatbuffers.Offset) {
-  builder.addFieldOffset(12, timeoutOffset, 0);
+  builder.addFieldOffset(13, timeoutOffset, 0);
 }
 
 static addVelocitySettings(builder:flatbuffers.Builder, velocitySettingsOffset:flatbuffers.Offset) {
-  builder.addFieldOffset(13, velocitySettingsOffset, 0);
+  builder.addFieldOffset(14, velocitySettingsOffset, 0);
 }
 
 static endChangeSettingsRequest(builder:flatbuffers.Builder):flatbuffers.Offset {
@@ -185,6 +195,7 @@ unpack(): ChangeSettingsRequestT {
     (this.autoBoneSettings() !== null ? this.autoBoneSettings()!.unpack() : null),
     (this.resetsSettings() !== null ? this.resetsSettings()!.unpack() : null),
     (this.stayAligned() !== null ? this.stayAligned()!.unpack() : null),
+    (this.spatialHeadphonesOsc() !== null ? this.spatialHeadphonesOsc()!.unpack() : null),
     (this.hidSettings() !== null ? this.hidSettings()!.unpack() : null),
     (this.timeout() !== null ? this.timeout()!.unpack() : null),
     (this.velocitySettings() !== null ? this.velocitySettings()!.unpack() : null)
@@ -204,6 +215,7 @@ unpackTo(_o: ChangeSettingsRequestT): void {
   _o.autoBoneSettings = (this.autoBoneSettings() !== null ? this.autoBoneSettings()!.unpack() : null);
   _o.resetsSettings = (this.resetsSettings() !== null ? this.resetsSettings()!.unpack() : null);
   _o.stayAligned = (this.stayAligned() !== null ? this.stayAligned()!.unpack() : null);
+  _o.spatialHeadphonesOsc = (this.spatialHeadphonesOsc() !== null ? this.spatialHeadphonesOsc()!.unpack() : null);
   _o.hidSettings = (this.hidSettings() !== null ? this.hidSettings()!.unpack() : null);
   _o.timeout = (this.timeout() !== null ? this.timeout()!.unpack() : null);
   _o.velocitySettings = (this.velocitySettings() !== null ? this.velocitySettings()!.unpack() : null);
@@ -223,6 +235,7 @@ constructor(
   public autoBoneSettings: AutoBoneSettingsT|null = null,
   public resetsSettings: ResetsSettingsT|null = null,
   public stayAligned: StayAlignedSettingsT|null = null,
+  public spatialHeadphonesOsc: OSCSettingsT|null = null,
   public hidSettings: HIDSettingsT|null = null,
   public timeout: TimeoutSettingsT|null = null,
   public velocitySettings: VelocitySettingsT|null = null
@@ -241,6 +254,7 @@ pack(builder:flatbuffers.Builder): flatbuffers.Offset {
   const autoBoneSettings = (this.autoBoneSettings !== null ? this.autoBoneSettings!.pack(builder) : 0);
   const resetsSettings = (this.resetsSettings !== null ? this.resetsSettings!.pack(builder) : 0);
   const stayAligned = (this.stayAligned !== null ? this.stayAligned!.pack(builder) : 0);
+  const spatialHeadphonesOsc = (this.spatialHeadphonesOsc !== null ? this.spatialHeadphonesOsc!.pack(builder) : 0);
   const hidSettings = (this.hidSettings !== null ? this.hidSettings!.pack(builder) : 0);
   const timeout = (this.timeout !== null ? this.timeout!.pack(builder) : 0);
   const velocitySettings = (this.velocitySettings !== null ? this.velocitySettings!.pack(builder) : 0);
@@ -257,6 +271,7 @@ pack(builder:flatbuffers.Builder): flatbuffers.Offset {
   ChangeSettingsRequest.addAutoBoneSettings(builder, autoBoneSettings);
   ChangeSettingsRequest.addResetsSettings(builder, resetsSettings);
   ChangeSettingsRequest.addStayAligned(builder, stayAligned);
+  ChangeSettingsRequest.addSpatialHeadphonesOsc(builder, spatialHeadphonesOsc);
   ChangeSettingsRequest.addHidSettings(builder, hidSettings);
   ChangeSettingsRequest.addTimeout(builder, timeout);
   ChangeSettingsRequest.addVelocitySettings(builder, velocitySettings);

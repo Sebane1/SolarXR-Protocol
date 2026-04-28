@@ -37,12 +37,14 @@ public final class ChangeSettingsRequest extends Table {
   public solarxr_protocol.rpc.ResetsSettings resetsSettings(solarxr_protocol.rpc.ResetsSettings obj) { int o = __offset(22); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
   public solarxr_protocol.rpc.StayAlignedSettings stayAligned() { return stayAligned(new solarxr_protocol.rpc.StayAlignedSettings()); }
   public solarxr_protocol.rpc.StayAlignedSettings stayAligned(solarxr_protocol.rpc.StayAlignedSettings obj) { int o = __offset(24); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
+  public solarxr_protocol.rpc.OSCSettings spatialHeadphonesOsc() { return spatialHeadphonesOsc(new solarxr_protocol.rpc.OSCSettings()); }
+  public solarxr_protocol.rpc.OSCSettings spatialHeadphonesOsc(solarxr_protocol.rpc.OSCSettings obj) { int o = __offset(26); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
   public solarxr_protocol.rpc.HIDSettings hidSettings() { return hidSettings(new solarxr_protocol.rpc.HIDSettings()); }
-  public solarxr_protocol.rpc.HIDSettings hidSettings(solarxr_protocol.rpc.HIDSettings obj) { int o = __offset(26); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
+  public solarxr_protocol.rpc.HIDSettings hidSettings(solarxr_protocol.rpc.HIDSettings obj) { int o = __offset(28); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
   public solarxr_protocol.rpc.TimeoutSettings timeout() { return timeout(new solarxr_protocol.rpc.TimeoutSettings()); }
-  public solarxr_protocol.rpc.TimeoutSettings timeout(solarxr_protocol.rpc.TimeoutSettings obj) { int o = __offset(28); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
+  public solarxr_protocol.rpc.TimeoutSettings timeout(solarxr_protocol.rpc.TimeoutSettings obj) { int o = __offset(30); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
   public solarxr_protocol.rpc.VelocitySettings velocitySettings() { return velocitySettings(new solarxr_protocol.rpc.VelocitySettings()); }
-  public solarxr_protocol.rpc.VelocitySettings velocitySettings(solarxr_protocol.rpc.VelocitySettings obj) { int o = __offset(30); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
+  public solarxr_protocol.rpc.VelocitySettings velocitySettings(solarxr_protocol.rpc.VelocitySettings obj) { int o = __offset(32); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
 
   public static int createChangeSettingsRequest(FlatBufferBuilder builder,
       int steamVrTrackersOffset,
@@ -56,12 +58,14 @@ public final class ChangeSettingsRequest extends Table {
       int autoBoneSettingsOffset,
       int resetsSettingsOffset,
       int stayAlignedOffset,
+      int spatialHeadphonesOscOffset,
       int hidSettingsOffset,
       int timeoutOffset,
       int velocitySettingsOffset) {
-    builder.startTable(14);
+    builder.startTable(15);
     ChangeSettingsRequest.addVelocitySettings(builder, velocitySettingsOffset);
     ChangeSettingsRequest.addTimeout(builder, timeoutOffset);
+    ChangeSettingsRequest.addSpatialHeadphonesOsc(builder, spatialHeadphonesOscOffset);
     ChangeSettingsRequest.addHidSettings(builder, hidSettingsOffset);
     ChangeSettingsRequest.addStayAligned(builder, stayAlignedOffset);
     ChangeSettingsRequest.addResetsSettings(builder, resetsSettingsOffset);
@@ -77,7 +81,7 @@ public final class ChangeSettingsRequest extends Table {
     return ChangeSettingsRequest.endChangeSettingsRequest(builder);
   }
 
-  public static void startChangeSettingsRequest(FlatBufferBuilder builder) { builder.startTable(14); }
+  public static void startChangeSettingsRequest(FlatBufferBuilder builder) { builder.startTable(15); }
   public static void addSteamVrTrackers(FlatBufferBuilder builder, int steamVrTrackersOffset) { builder.addOffset(0, steamVrTrackersOffset, 0); }
   public static void addFiltering(FlatBufferBuilder builder, int filteringOffset) { builder.addOffset(1, filteringOffset, 0); }
   public static void addDriftCompensation(FlatBufferBuilder builder, int driftCompensationOffset) { builder.addOffset(2, driftCompensationOffset, 0); }
@@ -89,9 +93,10 @@ public final class ChangeSettingsRequest extends Table {
   public static void addAutoBoneSettings(FlatBufferBuilder builder, int autoBoneSettingsOffset) { builder.addOffset(8, autoBoneSettingsOffset, 0); }
   public static void addResetsSettings(FlatBufferBuilder builder, int resetsSettingsOffset) { builder.addOffset(9, resetsSettingsOffset, 0); }
   public static void addStayAligned(FlatBufferBuilder builder, int stayAlignedOffset) { builder.addOffset(10, stayAlignedOffset, 0); }
-  public static void addHidSettings(FlatBufferBuilder builder, int hidSettingsOffset) { builder.addOffset(11, hidSettingsOffset, 0); }
-  public static void addTimeout(FlatBufferBuilder builder, int timeoutOffset) { builder.addOffset(12, timeoutOffset, 0); }
-  public static void addVelocitySettings(FlatBufferBuilder builder, int velocitySettingsOffset) { builder.addOffset(13, velocitySettingsOffset, 0); }
+  public static void addSpatialHeadphonesOsc(FlatBufferBuilder builder, int spatialHeadphonesOscOffset) { builder.addOffset(11, spatialHeadphonesOscOffset, 0); }
+  public static void addHidSettings(FlatBufferBuilder builder, int hidSettingsOffset) { builder.addOffset(12, hidSettingsOffset, 0); }
+  public static void addTimeout(FlatBufferBuilder builder, int timeoutOffset) { builder.addOffset(13, timeoutOffset, 0); }
+  public static void addVelocitySettings(FlatBufferBuilder builder, int velocitySettingsOffset) { builder.addOffset(14, velocitySettingsOffset, 0); }
   public static int endChangeSettingsRequest(FlatBufferBuilder builder) {
     int o = builder.endTable();
     return o;
@@ -131,6 +136,8 @@ public final class ChangeSettingsRequest extends Table {
     else _o.setResetsSettings(null);
     if (stayAligned() != null) _o.setStayAligned(stayAligned().unpack());
     else _o.setStayAligned(null);
+    if (spatialHeadphonesOsc() != null) _o.setSpatialHeadphonesOsc(spatialHeadphonesOsc().unpack());
+    else _o.setSpatialHeadphonesOsc(null);
     if (hidSettings() != null) _o.setHidSettings(hidSettings().unpack());
     else _o.setHidSettings(null);
     if (timeout() != null) _o.setTimeout(timeout().unpack());
@@ -151,6 +158,7 @@ public final class ChangeSettingsRequest extends Table {
     int _autoBoneSettings = _o.getAutoBoneSettings() == null ? 0 : solarxr_protocol.rpc.AutoBoneSettings.pack(builder, _o.getAutoBoneSettings());
     int _resetsSettings = _o.getResetsSettings() == null ? 0 : solarxr_protocol.rpc.ResetsSettings.pack(builder, _o.getResetsSettings());
     int _stayAligned = _o.getStayAligned() == null ? 0 : solarxr_protocol.rpc.StayAlignedSettings.pack(builder, _o.getStayAligned());
+    int _spatialHeadphonesOsc = _o.getSpatialHeadphonesOsc() == null ? 0 : solarxr_protocol.rpc.OSCSettings.pack(builder, _o.getSpatialHeadphonesOsc());
     int _hidSettings = _o.getHidSettings() == null ? 0 : solarxr_protocol.rpc.HIDSettings.pack(builder, _o.getHidSettings());
     int _timeout = _o.getTimeout() == null ? 0 : solarxr_protocol.rpc.TimeoutSettings.pack(builder, _o.getTimeout());
     int _velocitySettings = _o.getVelocitySettings() == null ? 0 : solarxr_protocol.rpc.VelocitySettings.pack(builder, _o.getVelocitySettings());
@@ -167,6 +175,7 @@ public final class ChangeSettingsRequest extends Table {
       _autoBoneSettings,
       _resetsSettings,
       _stayAligned,
+      _spatialHeadphonesOsc,
       _hidSettings,
       _timeout,
       _velocitySettings);

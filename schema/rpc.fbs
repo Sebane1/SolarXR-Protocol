@@ -225,6 +225,7 @@ table SettingsResponse {
     auto_bone_settings: AutoBoneSettings;
     resets_settings: ResetsSettings;
     stay_aligned: StayAlignedSettings;
+    spatial_headphones_osc: OSCSettings;
     hid_settings: HIDSettings;
     timeout: TimeoutSettings;
     velocity_settings: VelocitySettings;
@@ -242,6 +243,7 @@ table ChangeSettingsRequest {
     auto_bone_settings: AutoBoneSettings;
     resets_settings: ResetsSettings;
     stay_aligned: StayAlignedSettings;
+    spatial_headphones_osc: OSCSettings;
     hid_settings: HIDSettings;
     timeout: TimeoutSettings;
     velocity_settings: VelocitySettings;
