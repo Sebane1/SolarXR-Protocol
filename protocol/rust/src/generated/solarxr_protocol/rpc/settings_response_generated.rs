@@ -36,10 +36,10 @@ impl<'a> SettingsResponse<'a> {
   pub const VT_AUTO_BONE_SETTINGS: flatbuffers::VOffsetT = 20;
   pub const VT_RESETS_SETTINGS: flatbuffers::VOffsetT = 22;
   pub const VT_STAY_ALIGNED: flatbuffers::VOffsetT = 24;
-  pub const VT_SPATIAL_HEADPHONES_OSC: flatbuffers::VOffsetT = 26;
-  pub const VT_HID_SETTINGS: flatbuffers::VOffsetT = 28;
-  pub const VT_TIMEOUT: flatbuffers::VOffsetT = 30;
-  pub const VT_VELOCITY_SETTINGS: flatbuffers::VOffsetT = 32;
+  pub const VT_HID_SETTINGS: flatbuffers::VOffsetT = 26;
+  pub const VT_TIMEOUT: flatbuffers::VOffsetT = 28;
+  pub const VT_VELOCITY_SETTINGS: flatbuffers::VOffsetT = 30;
+  pub const VT_SPATIAL_HEADPHONES_OSC: flatbuffers::VOffsetT = 32;
 
   #[inline]
   pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
@@ -51,10 +51,10 @@ impl<'a> SettingsResponse<'a> {
     args: &'args SettingsResponseArgs<'args>
   ) -> flatbuffers::WIPOffset<SettingsResponse<'bldr>> {
     let mut builder = SettingsResponseBuilder::new(_fbb);
+    if let Some(x) = args.spatial_headphones_osc { builder.add_spatial_headphones_osc(x); }
     if let Some(x) = args.velocity_settings { builder.add_velocity_settings(x); }
     if let Some(x) = args.timeout { builder.add_timeout(x); }
     if let Some(x) = args.hid_settings { builder.add_hid_settings(x); }
-    if let Some(x) = args.spatial_headphones_osc { builder.add_spatial_headphones_osc(x); }
     if let Some(x) = args.stay_aligned { builder.add_stay_aligned(x); }
     if let Some(x) = args.resets_settings { builder.add_resets_settings(x); }
     if let Some(x) = args.auto_bone_settings { builder.add_auto_bone_settings(x); }
@@ -148,13 +148,6 @@ impl<'a> SettingsResponse<'a> {
     unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<StayAlignedSettings>>(SettingsResponse::VT_STAY_ALIGNED, None)}
   }
   #[inline]
-  pub fn spatial_headphones_osc(&self) -> Option<OSCSettings<'a>> {
-    // Safety:
-    // Created from valid Table for this object
-    // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<OSCSettings>>(SettingsResponse::VT_SPATIAL_HEADPHONES_OSC, None)}
-  }
-  #[inline]
   pub fn hid_settings(&self) -> Option<HIDSettings<'a>> {
     // Safety:
     // Created from valid Table for this object
@@ -174,6 +167,13 @@ impl<'a> SettingsResponse<'a> {
     // Created from valid Table for this object
     // which contains a valid value in this slot
     unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<VelocitySettings>>(SettingsResponse::VT_VELOCITY_SETTINGS, None)}
+  }
+  #[inline]
+  pub fn spatial_headphones_osc(&self) -> Option<SpatialHeadphonesOSCSettings<'a>> {
+    // Safety:
+    // Created from valid Table for this object
+    // which contains a valid value in this slot
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SpatialHeadphonesOSCSettings>>(SettingsResponse::VT_SPATIAL_HEADPHONES_OSC, None)}
   }
 }
 
@@ -195,10 +195,10 @@ impl flatbuffers::Verifiable for SettingsResponse<'_> {
      .visit_field::<flatbuffers::ForwardsUOffset<AutoBoneSettings>>("auto_bone_settings", Self::VT_AUTO_BONE_SETTINGS, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<ResetsSettings>>("resets_settings", Self::VT_RESETS_SETTINGS, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<StayAlignedSettings>>("stay_aligned", Self::VT_STAY_ALIGNED, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<OSCSettings>>("spatial_headphones_osc", Self::VT_SPATIAL_HEADPHONES_OSC, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<HIDSettings>>("hid_settings", Self::VT_HID_SETTINGS, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<TimeoutSettings>>("timeout", Self::VT_TIMEOUT, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<VelocitySettings>>("velocity_settings", Self::VT_VELOCITY_SETTINGS, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<SpatialHeadphonesOSCSettings>>("spatial_headphones_osc", Self::VT_SPATIAL_HEADPHONES_OSC, false)?
      .finish();
     Ok(())
   }
@@ -215,10 +215,10 @@ pub struct SettingsResponseArgs<'a> {
     pub auto_bone_settings: Option<flatbuffers::WIPOffset<AutoBoneSettings<'a>>>,
     pub resets_settings: Option<flatbuffers::WIPOffset<ResetsSettings<'a>>>,
     pub stay_aligned: Option<flatbuffers::WIPOffset<StayAlignedSettings<'a>>>,
-    pub spatial_headphones_osc: Option<flatbuffers::WIPOffset<OSCSettings<'a>>>,
     pub hid_settings: Option<flatbuffers::WIPOffset<HIDSettings<'a>>>,
     pub timeout: Option<flatbuffers::WIPOffset<TimeoutSettings<'a>>>,
     pub velocity_settings: Option<flatbuffers::WIPOffset<VelocitySettings<'a>>>,
+    pub spatial_headphones_osc: Option<flatbuffers::WIPOffset<SpatialHeadphonesOSCSettings<'a>>>,
 }
 impl<'a> Default for SettingsResponseArgs<'a> {
   #[inline]
@@ -235,10 +235,10 @@ impl<'a> Default for SettingsResponseArgs<'a> {
       auto_bone_settings: None,
       resets_settings: None,
       stay_aligned: None,
-      spatial_headphones_osc: None,
       hid_settings: None,
       timeout: None,
       velocity_settings: None,
+      spatial_headphones_osc: None,
     }
   }
 }
@@ -293,10 +293,6 @@ impl<'a: 'b, 'b> SettingsResponseBuilder<'a, 'b> {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<StayAlignedSettings>>(SettingsResponse::VT_STAY_ALIGNED, stay_aligned);
   }
   #[inline]
-  pub fn add_spatial_headphones_osc(&mut self, spatial_headphones_osc: flatbuffers::WIPOffset<OSCSettings<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<OSCSettings>>(SettingsResponse::VT_SPATIAL_HEADPHONES_OSC, spatial_headphones_osc);
-  }
-  #[inline]
   pub fn add_hid_settings(&mut self, hid_settings: flatbuffers::WIPOffset<HIDSettings<'b >>) {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<HIDSettings>>(SettingsResponse::VT_HID_SETTINGS, hid_settings);
   }
@@ -307,6 +303,10 @@ impl<'a: 'b, 'b> SettingsResponseBuilder<'a, 'b> {
   #[inline]
   pub fn add_velocity_settings(&mut self, velocity_settings: flatbuffers::WIPOffset<VelocitySettings<'b >>) {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<VelocitySettings>>(SettingsResponse::VT_VELOCITY_SETTINGS, velocity_settings);
+  }
+  #[inline]
+  pub fn add_spatial_headphones_osc(&mut self, spatial_headphones_osc: flatbuffers::WIPOffset<SpatialHeadphonesOSCSettings<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SpatialHeadphonesOSCSettings>>(SettingsResponse::VT_SPATIAL_HEADPHONES_OSC, spatial_headphones_osc);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SettingsResponseBuilder<'a, 'b> {
@@ -337,10 +337,10 @@ impl core::fmt::Debug for SettingsResponse<'_> {
       ds.field("auto_bone_settings", &self.auto_bone_settings());
       ds.field("resets_settings", &self.resets_settings());
       ds.field("stay_aligned", &self.stay_aligned());
-      ds.field("spatial_headphones_osc", &self.spatial_headphones_osc());
       ds.field("hid_settings", &self.hid_settings());
       ds.field("timeout", &self.timeout());
       ds.field("velocity_settings", &self.velocity_settings());
+      ds.field("spatial_headphones_osc", &self.spatial_headphones_osc());
       ds.finish()
   }
 }

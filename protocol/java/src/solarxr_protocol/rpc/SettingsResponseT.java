@@ -19,10 +19,10 @@ public class SettingsResponseT {
   private solarxr_protocol.rpc.AutoBoneSettingsT autoBoneSettings;
   private solarxr_protocol.rpc.ResetsSettingsT resetsSettings;
   private solarxr_protocol.rpc.StayAlignedSettingsT stayAligned;
-  private solarxr_protocol.rpc.OSCSettingsT spatialHeadphonesOsc;
   private solarxr_protocol.rpc.HIDSettingsT hidSettings;
   private solarxr_protocol.rpc.TimeoutSettingsT timeout;
   private solarxr_protocol.rpc.VelocitySettingsT velocitySettings;
+  private solarxr_protocol.rpc.SpatialHeadphonesOSCSettingsT spatialHeadphonesOsc;
 
   public solarxr_protocol.rpc.SteamVRTrackersSettingT getSteamVrTrackers() { return steamVrTrackers; }
 
@@ -68,10 +68,6 @@ public class SettingsResponseT {
 
   public void setStayAligned(solarxr_protocol.rpc.StayAlignedSettingsT stayAligned) { this.stayAligned = stayAligned; }
 
-  public solarxr_protocol.rpc.OSCSettingsT getSpatialHeadphonesOsc() { return spatialHeadphonesOsc; }
-
-  public void setSpatialHeadphonesOsc(solarxr_protocol.rpc.OSCSettingsT spatialHeadphonesOsc) { this.spatialHeadphonesOsc = spatialHeadphonesOsc; }
-
   public solarxr_protocol.rpc.HIDSettingsT getHidSettings() { return hidSettings; }
 
   public void setHidSettings(solarxr_protocol.rpc.HIDSettingsT hidSettings) { this.hidSettings = hidSettings; }
@@ -83,6 +79,10 @@ public class SettingsResponseT {
   public solarxr_protocol.rpc.VelocitySettingsT getVelocitySettings() { return velocitySettings; }
 
   public void setVelocitySettings(solarxr_protocol.rpc.VelocitySettingsT velocitySettings) { this.velocitySettings = velocitySettings; }
+
+  public solarxr_protocol.rpc.SpatialHeadphonesOSCSettingsT getSpatialHeadphonesOsc() { return spatialHeadphonesOsc; }
+
+  public void setSpatialHeadphonesOsc(solarxr_protocol.rpc.SpatialHeadphonesOSCSettingsT spatialHeadphonesOsc) { this.spatialHeadphonesOsc = spatialHeadphonesOsc; }
 
 
   public SettingsResponseT() {
@@ -97,10 +97,10 @@ public class SettingsResponseT {
     this.autoBoneSettings = null;
     this.resetsSettings = null;
     this.stayAligned = null;
-    this.spatialHeadphonesOsc = null;
     this.hidSettings = null;
     this.timeout = null;
     this.velocitySettings = null;
+    this.spatialHeadphonesOsc = null;
   }
 }
 

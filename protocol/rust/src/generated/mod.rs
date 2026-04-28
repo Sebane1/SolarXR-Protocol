@@ -240,6 +240,8 @@ pub mod solarxr_protocol {
     pub use self::vmcoscsettings_generated::*;
     mod oscsettings_generated;
     pub use self::oscsettings_generated::*;
+    mod spatial_headphones_oscsettings_generated;
+    pub use self::spatial_headphones_oscsettings_generated::*;
     mod osctrackers_setting_generated;
     pub use self::osctrackers_setting_generated::*;
     mod tap_detection_settings_generated;
