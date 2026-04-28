@@ -7392,9 +7392,10 @@ struct SettingsResponse FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_AUTO_BONE_SETTINGS = 20,
     VT_RESETS_SETTINGS = 22,
     VT_STAY_ALIGNED = 24,
-    VT_HID_SETTINGS = 26,
-    VT_TIMEOUT = 28,
-    VT_VELOCITY_SETTINGS = 30
+    VT_SPATIAL_HEADPHONES_OSC = 26,
+    VT_HID_SETTINGS = 28,
+    VT_TIMEOUT = 30,
+    VT_VELOCITY_SETTINGS = 32
   };
   const solarxr_protocol::rpc::SteamVRTrackersSetting *steam_vr_trackers() const {
     return GetPointer<const solarxr_protocol::rpc::SteamVRTrackersSetting *>(VT_STEAM_VR_TRACKERS);
@@ -7429,6 +7430,9 @@ struct SettingsResponse FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const solarxr_protocol::rpc::StayAlignedSettings *stay_aligned() const {
     return GetPointer<const solarxr_protocol::rpc::StayAlignedSettings *>(VT_STAY_ALIGNED);
   }
+  const solarxr_protocol::rpc::OSCSettings *spatial_headphones_osc() const {
+    return GetPointer<const solarxr_protocol::rpc::OSCSettings *>(VT_SPATIAL_HEADPHONES_OSC);
+  }
   const solarxr_protocol::rpc::HIDSettings *hid_settings() const {
     return GetPointer<const solarxr_protocol::rpc::HIDSettings *>(VT_HID_SETTINGS);
   }
@@ -7462,6 +7466,8 @@ struct SettingsResponse FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            verifier.VerifyTable(resets_settings()) &&
            VerifyOffset(verifier, VT_STAY_ALIGNED) &&
            verifier.VerifyTable(stay_aligned()) &&
+           VerifyOffset(verifier, VT_SPATIAL_HEADPHONES_OSC) &&
+           verifier.VerifyTable(spatial_headphones_osc()) &&
            VerifyOffset(verifier, VT_HID_SETTINGS) &&
            verifier.VerifyTable(hid_settings()) &&
            VerifyOffset(verifier, VT_TIMEOUT) &&
@@ -7509,6 +7515,9 @@ struct SettingsResponseBuilder {
   void add_stay_aligned(flatbuffers::Offset<solarxr_protocol::rpc::StayAlignedSettings> stay_aligned) {
     fbb_.AddOffset(SettingsResponse::VT_STAY_ALIGNED, stay_aligned);
   }
+  void add_spatial_headphones_osc(flatbuffers::Offset<solarxr_protocol::rpc::OSCSettings> spatial_headphones_osc) {
+    fbb_.AddOffset(SettingsResponse::VT_SPATIAL_HEADPHONES_OSC, spatial_headphones_osc);
+  }
   void add_hid_settings(flatbuffers::Offset<solarxr_protocol::rpc::HIDSettings> hid_settings) {
     fbb_.AddOffset(SettingsResponse::VT_HID_SETTINGS, hid_settings);
   }
@@ -7542,6 +7551,7 @@ inline flatbuffers::Offset<SettingsResponse> CreateSettingsResponse(
     flatbuffers::Offset<solarxr_protocol::rpc::AutoBoneSettings> auto_bone_settings = 0,
     flatbuffers::Offset<solarxr_protocol::rpc::ResetsSettings> resets_settings = 0,
     flatbuffers::Offset<solarxr_protocol::rpc::StayAlignedSettings> stay_aligned = 0,
+    flatbuffers::Offset<solarxr_protocol::rpc::OSCSettings> spatial_headphones_osc = 0,
     flatbuffers::Offset<solarxr_protocol::rpc::HIDSettings> hid_settings = 0,
     flatbuffers::Offset<solarxr_protocol::rpc::TimeoutSettings> timeout = 0,
     flatbuffers::Offset<solarxr_protocol::rpc::VelocitySettings> velocity_settings = 0) {
@@ -7549,6 +7559,7 @@ inline flatbuffers::Offset<SettingsResponse> CreateSettingsResponse(
   builder_.add_velocity_settings(velocity_settings);
   builder_.add_timeout(timeout);
   builder_.add_hid_settings(hid_settings);
+  builder_.add_spatial_headphones_osc(spatial_headphones_osc);
   builder_.add_stay_aligned(stay_aligned);
   builder_.add_resets_settings(resets_settings);
   builder_.add_auto_bone_settings(auto_bone_settings);
@@ -7577,9 +7588,10 @@ struct ChangeSettingsRequest FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
     VT_AUTO_BONE_SETTINGS = 20,
     VT_RESETS_SETTINGS = 22,
     VT_STAY_ALIGNED = 24,
-    VT_HID_SETTINGS = 26,
-    VT_TIMEOUT = 28,
-    VT_VELOCITY_SETTINGS = 30
+    VT_SPATIAL_HEADPHONES_OSC = 26,
+    VT_HID_SETTINGS = 28,
+    VT_TIMEOUT = 30,
+    VT_VELOCITY_SETTINGS = 32
   };
   const solarxr_protocol::rpc::SteamVRTrackersSetting *steam_vr_trackers() const {
     return GetPointer<const solarxr_protocol::rpc::SteamVRTrackersSetting *>(VT_STEAM_VR_TRACKERS);
@@ -7614,6 +7626,9 @@ struct ChangeSettingsRequest FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
   const solarxr_protocol::rpc::StayAlignedSettings *stay_aligned() const {
     return GetPointer<const solarxr_protocol::rpc::StayAlignedSettings *>(VT_STAY_ALIGNED);
   }
+  const solarxr_protocol::rpc::OSCSettings *spatial_headphones_osc() const {
+    return GetPointer<const solarxr_protocol::rpc::OSCSettings *>(VT_SPATIAL_HEADPHONES_OSC);
+  }
   const solarxr_protocol::rpc::HIDSettings *hid_settings() const {
     return GetPointer<const solarxr_protocol::rpc::HIDSettings *>(VT_HID_SETTINGS);
   }
@@ -7647,6 +7662,8 @@ struct ChangeSettingsRequest FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
            verifier.VerifyTable(resets_settings()) &&
            VerifyOffset(verifier, VT_STAY_ALIGNED) &&
            verifier.VerifyTable(stay_aligned()) &&
+           VerifyOffset(verifier, VT_SPATIAL_HEADPHONES_OSC) &&
+           verifier.VerifyTable(spatial_headphones_osc()) &&
            VerifyOffset(verifier, VT_HID_SETTINGS) &&
            verifier.VerifyTable(hid_settings()) &&
            VerifyOffset(verifier, VT_TIMEOUT) &&
@@ -7694,6 +7711,9 @@ struct ChangeSettingsRequestBuilder {
   void add_stay_aligned(flatbuffers::Offset<solarxr_protocol::rpc::StayAlignedSettings> stay_aligned) {
     fbb_.AddOffset(ChangeSettingsRequest::VT_STAY_ALIGNED, stay_aligned);
   }
+  void add_spatial_headphones_osc(flatbuffers::Offset<solarxr_protocol::rpc::OSCSettings> spatial_headphones_osc) {
+    fbb_.AddOffset(ChangeSettingsRequest::VT_SPATIAL_HEADPHONES_OSC, spatial_headphones_osc);
+  }
   void add_hid_settings(flatbuffers::Offset<solarxr_protocol::rpc::HIDSettings> hid_settings) {
     fbb_.AddOffset(ChangeSettingsRequest::VT_HID_SETTINGS, hid_settings);
   }
@@ -7727,6 +7747,7 @@ inline flatbuffers::Offset<ChangeSettingsRequest> CreateChangeSettingsRequest(
     flatbuffers::Offset<solarxr_protocol::rpc::AutoBoneSettings> auto_bone_settings = 0,
     flatbuffers::Offset<solarxr_protocol::rpc::ResetsSettings> resets_settings = 0,
     flatbuffers::Offset<solarxr_protocol::rpc::StayAlignedSettings> stay_aligned = 0,
+    flatbuffers::Offset<solarxr_protocol::rpc::OSCSettings> spatial_headphones_osc = 0,
     flatbuffers::Offset<solarxr_protocol::rpc::HIDSettings> hid_settings = 0,
     flatbuffers::Offset<solarxr_protocol::rpc::TimeoutSettings> timeout = 0,
     flatbuffers::Offset<solarxr_protocol::rpc::VelocitySettings> velocity_settings = 0) {
@@ -7734,6 +7755,7 @@ inline flatbuffers::Offset<ChangeSettingsRequest> CreateChangeSettingsRequest(
   builder_.add_velocity_settings(velocity_settings);
   builder_.add_timeout(timeout);
   builder_.add_hid_settings(hid_settings);
+  builder_.add_spatial_headphones_osc(spatial_headphones_osc);
   builder_.add_stay_aligned(stay_aligned);
   builder_.add_resets_settings(resets_settings);
   builder_.add_auto_bone_settings(auto_bone_settings);

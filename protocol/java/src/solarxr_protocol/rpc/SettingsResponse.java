@@ -65,8 +65,8 @@ public final class SettingsResponse extends Table {
     builder.startTable(15);
     SettingsResponse.addVelocitySettings(builder, velocitySettingsOffset);
     SettingsResponse.addTimeout(builder, timeoutOffset);
-    SettingsResponse.addSpatialHeadphonesOsc(builder, spatialHeadphonesOscOffset);
     SettingsResponse.addHidSettings(builder, hidSettingsOffset);
+    SettingsResponse.addSpatialHeadphonesOsc(builder, spatialHeadphonesOscOffset);
     SettingsResponse.addStayAligned(builder, stayAlignedOffset);
     SettingsResponse.addResetsSettings(builder, resetsSettingsOffset);
     SettingsResponse.addAutoBoneSettings(builder, autoBoneSettingsOffset);

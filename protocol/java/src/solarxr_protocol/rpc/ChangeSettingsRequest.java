@@ -65,8 +65,8 @@ public final class ChangeSettingsRequest extends Table {
     builder.startTable(15);
     ChangeSettingsRequest.addVelocitySettings(builder, velocitySettingsOffset);
     ChangeSettingsRequest.addTimeout(builder, timeoutOffset);
-    ChangeSettingsRequest.addSpatialHeadphonesOsc(builder, spatialHeadphonesOscOffset);
     ChangeSettingsRequest.addHidSettings(builder, hidSettingsOffset);
+    ChangeSettingsRequest.addSpatialHeadphonesOsc(builder, spatialHeadphonesOscOffset);
     ChangeSettingsRequest.addStayAligned(builder, stayAlignedOffset);
     ChangeSettingsRequest.addResetsSettings(builder, resetsSettingsOffset);
     ChangeSettingsRequest.addAutoBoneSettings(builder, autoBoneSettingsOffset);
