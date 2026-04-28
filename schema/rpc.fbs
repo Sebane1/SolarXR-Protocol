@@ -228,7 +228,7 @@ table SettingsResponse {
     hid_settings: HIDSettings;
     timeout: TimeoutSettings;
     velocity_settings: VelocitySettings;
-    spatial_headphones_osc: SpatialHeadphonesOSCSettings;
+    spatial_headphones_osc: SpatialHeadphonesOscSettings;
 }
 
 table ChangeSettingsRequest {
@@ -246,7 +246,7 @@ table ChangeSettingsRequest {
     hid_settings: HIDSettings;
     timeout: TimeoutSettings;
     velocity_settings: VelocitySettings;
-    spatial_headphones_osc: SpatialHeadphonesOSCSettings;
+    spatial_headphones_osc: SpatialHeadphonesOscSettings;
 }
 
 
@@ -321,9 +321,8 @@ table OSCSettings {
 }
 
 /// OSC Settings that are used for spatial headphone processing
-table SpatialHeadphonesOSCSettings {
+table SpatialHeadphonesOscSettings {
     enabled: bool;
-    port_in: uint16;
     port_out: uint16;
     address: string;
 }

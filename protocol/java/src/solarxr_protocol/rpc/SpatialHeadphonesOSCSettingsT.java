@@ -7,19 +7,14 @@ import java.lang.*;
 import java.util.*;
 import com.google.flatbuffers.*;
 
-public class SpatialHeadphonesOSCSettingsT {
+public class SpatialHeadphonesOscSettingsT {
   private boolean enabled;
-  private int portIn;
   private int portOut;
   private String address;
 
   public boolean getEnabled() { return enabled; }
 
   public void setEnabled(boolean enabled) { this.enabled = enabled; }
-
-  public int getPortIn() { return portIn; }
-
-  public void setPortIn(int portIn) { this.portIn = portIn; }
 
   public int getPortOut() { return portOut; }
 
@@ -30,9 +25,8 @@ public class SpatialHeadphonesOSCSettingsT {
   public void setAddress(String address) { this.address = address; }
 
 
-  public SpatialHeadphonesOSCSettingsT() {
+  public SpatialHeadphonesOscSettingsT() {
     this.enabled = false;
-    this.portIn = 0;
     this.portOut = 0;
     this.address = null;
   }

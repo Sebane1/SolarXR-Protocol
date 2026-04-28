@@ -9,41 +9,39 @@ use core::mem;
 use core::cmp::Ordering;
 use self::flatbuffers::{EndianScalar, Follow};
 use super::*;
-pub enum SpatialHeadphonesOSCSettingsOffset {}
+pub enum SpatialHeadphonesOscSettingsOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
 /// OSC Settings that are used for spatial headphone processing
-pub struct SpatialHeadphonesOSCSettings<'a> {
+pub struct SpatialHeadphonesOscSettings<'a> {
   pub _tab: flatbuffers::Table<'a>,
 }
 
-impl<'a> flatbuffers::Follow<'a> for SpatialHeadphonesOSCSettings<'a> {
-  type Inner = SpatialHeadphonesOSCSettings<'a>;
+impl<'a> flatbuffers::Follow<'a> for SpatialHeadphonesOscSettings<'a> {
+  type Inner = SpatialHeadphonesOscSettings<'a>;
   #[inline]
   unsafe fn follow(buf: &'a [u8], loc: usize) -> Self::Inner {
     Self { _tab: flatbuffers::Table::new(buf, loc) }
   }
 }
 
-impl<'a> SpatialHeadphonesOSCSettings<'a> {
+impl<'a> SpatialHeadphonesOscSettings<'a> {
   pub const VT_ENABLED: flatbuffers::VOffsetT = 4;
-  pub const VT_PORT_IN: flatbuffers::VOffsetT = 6;
-  pub const VT_PORT_OUT: flatbuffers::VOffsetT = 8;
-  pub const VT_ADDRESS: flatbuffers::VOffsetT = 10;
+  pub const VT_PORT_OUT: flatbuffers::VOffsetT = 6;
+  pub const VT_ADDRESS: flatbuffers::VOffsetT = 8;
 
   #[inline]
   pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
-    SpatialHeadphonesOSCSettings { _tab: table }
+    SpatialHeadphonesOscSettings { _tab: table }
   }
   #[allow(unused_mut)]
   pub fn create<'bldr: 'args, 'args: 'mut_bldr, 'mut_bldr>(
     _fbb: &'mut_bldr mut flatbuffers::FlatBufferBuilder<'bldr>,
-    args: &'args SpatialHeadphonesOSCSettingsArgs<'args>
-  ) -> flatbuffers::WIPOffset<SpatialHeadphonesOSCSettings<'bldr>> {
-    let mut builder = SpatialHeadphonesOSCSettingsBuilder::new(_fbb);
+    args: &'args SpatialHeadphonesOscSettingsArgs<'args>
+  ) -> flatbuffers::WIPOffset<SpatialHeadphonesOscSettings<'bldr>> {
+    let mut builder = SpatialHeadphonesOscSettingsBuilder::new(_fbb);
     if let Some(x) = args.address { builder.add_address(x); }
     builder.add_port_out(args.port_out);
-    builder.add_port_in(args.port_in);
     builder.add_enabled(args.enabled);
     builder.finish()
   }
@@ -54,32 +52,25 @@ impl<'a> SpatialHeadphonesOSCSettings<'a> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<bool>(SpatialHeadphonesOSCSettings::VT_ENABLED, Some(false)).unwrap()}
-  }
-  #[inline]
-  pub fn port_in(&self) -> u16 {
-    // Safety:
-    // Created from valid Table for this object
-    // which contains a valid value in this slot
-    unsafe { self._tab.get::<u16>(SpatialHeadphonesOSCSettings::VT_PORT_IN, Some(0)).unwrap()}
+    unsafe { self._tab.get::<bool>(SpatialHeadphonesOscSettings::VT_ENABLED, Some(false)).unwrap()}
   }
   #[inline]
   pub fn port_out(&self) -> u16 {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<u16>(SpatialHeadphonesOSCSettings::VT_PORT_OUT, Some(0)).unwrap()}
+    unsafe { self._tab.get::<u16>(SpatialHeadphonesOscSettings::VT_PORT_OUT, Some(0)).unwrap()}
   }
   #[inline]
   pub fn address(&self) -> Option<&'a str> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SpatialHeadphonesOSCSettings::VT_ADDRESS, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(SpatialHeadphonesOscSettings::VT_ADDRESS, None)}
   }
 }
 
-impl flatbuffers::Verifiable for SpatialHeadphonesOSCSettings<'_> {
+impl flatbuffers::Verifiable for SpatialHeadphonesOscSettings<'_> {
   #[inline]
   fn run_verifier(
     v: &mut flatbuffers::Verifier, pos: usize
@@ -87,72 +78,64 @@ impl flatbuffers::Verifiable for SpatialHeadphonesOSCSettings<'_> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
      .visit_field::<bool>("enabled", Self::VT_ENABLED, false)?
-     .visit_field::<u16>("port_in", Self::VT_PORT_IN, false)?
      .visit_field::<u16>("port_out", Self::VT_PORT_OUT, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<&str>>("address", Self::VT_ADDRESS, false)?
      .finish();
     Ok(())
   }
 }
-pub struct SpatialHeadphonesOSCSettingsArgs<'a> {
+pub struct SpatialHeadphonesOscSettingsArgs<'a> {
     pub enabled: bool,
-    pub port_in: u16,
     pub port_out: u16,
     pub address: Option<flatbuffers::WIPOffset<&'a str>>,
 }
-impl<'a> Default for SpatialHeadphonesOSCSettingsArgs<'a> {
+impl<'a> Default for SpatialHeadphonesOscSettingsArgs<'a> {
   #[inline]
   fn default() -> Self {
-    SpatialHeadphonesOSCSettingsArgs {
+    SpatialHeadphonesOscSettingsArgs {
       enabled: false,
-      port_in: 0,
       port_out: 0,
       address: None,
     }
   }
 }
 
-pub struct SpatialHeadphonesOSCSettingsBuilder<'a: 'b, 'b> {
+pub struct SpatialHeadphonesOscSettingsBuilder<'a: 'b, 'b> {
   fbb_: &'b mut flatbuffers::FlatBufferBuilder<'a>,
   start_: flatbuffers::WIPOffset<flatbuffers::TableUnfinishedWIPOffset>,
 }
-impl<'a: 'b, 'b> SpatialHeadphonesOSCSettingsBuilder<'a, 'b> {
+impl<'a: 'b, 'b> SpatialHeadphonesOscSettingsBuilder<'a, 'b> {
   #[inline]
   pub fn add_enabled(&mut self, enabled: bool) {
-    self.fbb_.push_slot::<bool>(SpatialHeadphonesOSCSettings::VT_ENABLED, enabled, false);
-  }
-  #[inline]
-  pub fn add_port_in(&mut self, port_in: u16) {
-    self.fbb_.push_slot::<u16>(SpatialHeadphonesOSCSettings::VT_PORT_IN, port_in, 0);
+    self.fbb_.push_slot::<bool>(SpatialHeadphonesOscSettings::VT_ENABLED, enabled, false);
   }
   #[inline]
   pub fn add_port_out(&mut self, port_out: u16) {
-    self.fbb_.push_slot::<u16>(SpatialHeadphonesOSCSettings::VT_PORT_OUT, port_out, 0);
+    self.fbb_.push_slot::<u16>(SpatialHeadphonesOscSettings::VT_PORT_OUT, port_out, 0);
   }
   #[inline]
   pub fn add_address(&mut self, address: flatbuffers::WIPOffset<&'b  str>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SpatialHeadphonesOSCSettings::VT_ADDRESS, address);
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(SpatialHeadphonesOscSettings::VT_ADDRESS, address);
   }
   #[inline]
-  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SpatialHeadphonesOSCSettingsBuilder<'a, 'b> {
+  pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> SpatialHeadphonesOscSettingsBuilder<'a, 'b> {
     let start = _fbb.start_table();
-    SpatialHeadphonesOSCSettingsBuilder {
+    SpatialHeadphonesOscSettingsBuilder {
       fbb_: _fbb,
       start_: start,
     }
   }
   #[inline]
-  pub fn finish(self) -> flatbuffers::WIPOffset<SpatialHeadphonesOSCSettings<'a>> {
+  pub fn finish(self) -> flatbuffers::WIPOffset<SpatialHeadphonesOscSettings<'a>> {
     let o = self.fbb_.end_table(self.start_);
     flatbuffers::WIPOffset::new(o.value())
   }
 }
 
-impl core::fmt::Debug for SpatialHeadphonesOSCSettings<'_> {
+impl core::fmt::Debug for SpatialHeadphonesOscSettings<'_> {
   fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-    let mut ds = f.debug_struct("SpatialHeadphonesOSCSettings");
+    let mut ds = f.debug_struct("SpatialHeadphonesOscSettings");
       ds.field("enabled", &self.enabled());
-      ds.field("port_in", &self.port_in());
       ds.field("port_out", &self.port_out());
       ds.field("address", &self.address());
       ds.finish()

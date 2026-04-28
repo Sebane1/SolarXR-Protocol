@@ -43,8 +43,8 @@ public final class ChangeSettingsRequest extends Table {
   public solarxr_protocol.rpc.TimeoutSettings timeout(solarxr_protocol.rpc.TimeoutSettings obj) { int o = __offset(28); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
   public solarxr_protocol.rpc.VelocitySettings velocitySettings() { return velocitySettings(new solarxr_protocol.rpc.VelocitySettings()); }
   public solarxr_protocol.rpc.VelocitySettings velocitySettings(solarxr_protocol.rpc.VelocitySettings obj) { int o = __offset(30); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
-  public solarxr_protocol.rpc.SpatialHeadphonesOSCSettings spatialHeadphonesOsc() { return spatialHeadphonesOsc(new solarxr_protocol.rpc.SpatialHeadphonesOSCSettings()); }
-  public solarxr_protocol.rpc.SpatialHeadphonesOSCSettings spatialHeadphonesOsc(solarxr_protocol.rpc.SpatialHeadphonesOSCSettings obj) { int o = __offset(32); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
+  public solarxr_protocol.rpc.SpatialHeadphonesOscSettings spatialHeadphonesOsc() { return spatialHeadphonesOsc(new solarxr_protocol.rpc.SpatialHeadphonesOscSettings()); }
+  public solarxr_protocol.rpc.SpatialHeadphonesOscSettings spatialHeadphonesOsc(solarxr_protocol.rpc.SpatialHeadphonesOscSettings obj) { int o = __offset(32); return o != 0 ? obj.__assign(__indirect(o + bb_pos), bb) : null; }
 
   public static int createChangeSettingsRequest(FlatBufferBuilder builder,
       int steamVrTrackersOffset,
@@ -161,7 +161,7 @@ public final class ChangeSettingsRequest extends Table {
     int _hidSettings = _o.getHidSettings() == null ? 0 : solarxr_protocol.rpc.HIDSettings.pack(builder, _o.getHidSettings());
     int _timeout = _o.getTimeout() == null ? 0 : solarxr_protocol.rpc.TimeoutSettings.pack(builder, _o.getTimeout());
     int _velocitySettings = _o.getVelocitySettings() == null ? 0 : solarxr_protocol.rpc.VelocitySettings.pack(builder, _o.getVelocitySettings());
-    int _spatialHeadphonesOsc = _o.getSpatialHeadphonesOsc() == null ? 0 : solarxr_protocol.rpc.SpatialHeadphonesOSCSettings.pack(builder, _o.getSpatialHeadphonesOsc());
+    int _spatialHeadphonesOsc = _o.getSpatialHeadphonesOsc() == null ? 0 : solarxr_protocol.rpc.SpatialHeadphonesOscSettings.pack(builder, _o.getSpatialHeadphonesOsc());
     return createChangeSettingsRequest(
       builder,
       _steamVrTrackers,

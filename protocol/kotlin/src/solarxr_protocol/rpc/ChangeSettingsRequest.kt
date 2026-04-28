@@ -142,8 +142,8 @@ class ChangeSettingsRequest : Table() {
             null
         }
     }
-    val spatialHeadphonesOsc : solarxr_protocol.rpc.SpatialHeadphonesOSCSettings? get() = spatialHeadphonesOsc(solarxr_protocol.rpc.SpatialHeadphonesOSCSettings())
-    fun spatialHeadphonesOsc(obj: solarxr_protocol.rpc.SpatialHeadphonesOSCSettings) : solarxr_protocol.rpc.SpatialHeadphonesOSCSettings? {
+    val spatialHeadphonesOsc : solarxr_protocol.rpc.SpatialHeadphonesOscSettings? get() = spatialHeadphonesOsc(solarxr_protocol.rpc.SpatialHeadphonesOscSettings())
+    fun spatialHeadphonesOsc(obj: solarxr_protocol.rpc.SpatialHeadphonesOscSettings) : solarxr_protocol.rpc.SpatialHeadphonesOscSettings? {
         val o = __offset(32)
         return if (o != 0) {
             obj.__assign(__indirect(o + bb_pos), bb)

@@ -169,11 +169,11 @@ impl<'a> ChangeSettingsRequest<'a> {
     unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<VelocitySettings>>(ChangeSettingsRequest::VT_VELOCITY_SETTINGS, None)}
   }
   #[inline]
-  pub fn spatial_headphones_osc(&self) -> Option<SpatialHeadphonesOSCSettings<'a>> {
+  pub fn spatial_headphones_osc(&self) -> Option<SpatialHeadphonesOscSettings<'a>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SpatialHeadphonesOSCSettings>>(ChangeSettingsRequest::VT_SPATIAL_HEADPHONES_OSC, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<SpatialHeadphonesOscSettings>>(ChangeSettingsRequest::VT_SPATIAL_HEADPHONES_OSC, None)}
   }
 }
 
@@ -198,7 +198,7 @@ impl flatbuffers::Verifiable for ChangeSettingsRequest<'_> {
      .visit_field::<flatbuffers::ForwardsUOffset<HIDSettings>>("hid_settings", Self::VT_HID_SETTINGS, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<TimeoutSettings>>("timeout", Self::VT_TIMEOUT, false)?
      .visit_field::<flatbuffers::ForwardsUOffset<VelocitySettings>>("velocity_settings", Self::VT_VELOCITY_SETTINGS, false)?
-     .visit_field::<flatbuffers::ForwardsUOffset<SpatialHeadphonesOSCSettings>>("spatial_headphones_osc", Self::VT_SPATIAL_HEADPHONES_OSC, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<SpatialHeadphonesOscSettings>>("spatial_headphones_osc", Self::VT_SPATIAL_HEADPHONES_OSC, false)?
      .finish();
     Ok(())
   }
@@ -218,7 +218,7 @@ pub struct ChangeSettingsRequestArgs<'a> {
     pub hid_settings: Option<flatbuffers::WIPOffset<HIDSettings<'a>>>,
     pub timeout: Option<flatbuffers::WIPOffset<TimeoutSettings<'a>>>,
     pub velocity_settings: Option<flatbuffers::WIPOffset<VelocitySettings<'a>>>,
-    pub spatial_headphones_osc: Option<flatbuffers::WIPOffset<SpatialHeadphonesOSCSettings<'a>>>,
+    pub spatial_headphones_osc: Option<flatbuffers::WIPOffset<SpatialHeadphonesOscSettings<'a>>>,
 }
 impl<'a> Default for ChangeSettingsRequestArgs<'a> {
   #[inline]
@@ -305,8 +305,8 @@ impl<'a: 'b, 'b> ChangeSettingsRequestBuilder<'a, 'b> {
     self.fbb_.push_slot_always::<flatbuffers::WIPOffset<VelocitySettings>>(ChangeSettingsRequest::VT_VELOCITY_SETTINGS, velocity_settings);
   }
   #[inline]
-  pub fn add_spatial_headphones_osc(&mut self, spatial_headphones_osc: flatbuffers::WIPOffset<SpatialHeadphonesOSCSettings<'b >>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SpatialHeadphonesOSCSettings>>(ChangeSettingsRequest::VT_SPATIAL_HEADPHONES_OSC, spatial_headphones_osc);
+  pub fn add_spatial_headphones_osc(&mut self, spatial_headphones_osc: flatbuffers::WIPOffset<SpatialHeadphonesOscSettings<'b >>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<SpatialHeadphonesOscSettings>>(ChangeSettingsRequest::VT_SPATIAL_HEADPHONES_OSC, spatial_headphones_osc);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> ChangeSettingsRequestBuilder<'a, 'b> {

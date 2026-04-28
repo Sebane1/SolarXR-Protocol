@@ -8,7 +8,7 @@ import { FilteringSettings, FilteringSettingsT } from '../../solarxr-protocol/rp
 import { HIDSettings, HIDSettingsT } from '../../solarxr-protocol/rpc/hidsettings.js';
 import { OSCRouterSettings, OSCRouterSettingsT } from '../../solarxr-protocol/rpc/oscrouter-settings.js';
 import { ResetsSettings, ResetsSettingsT } from '../../solarxr-protocol/rpc/resets-settings.js';
-import { SpatialHeadphonesOSCSettings, SpatialHeadphonesOSCSettingsT } from '../../solarxr-protocol/rpc/spatial-headphones-oscsettings.js';
+import { SpatialHeadphonesOscSettings, SpatialHeadphonesOscSettingsT } from '../../solarxr-protocol/rpc/spatial-headphones-osc-settings.js';
 import { StayAlignedSettings, StayAlignedSettingsT } from '../../solarxr-protocol/rpc/stay-aligned-settings.js';
 import { SteamVRTrackersSetting, SteamVRTrackersSettingT } from '../../solarxr-protocol/rpc/steam-vrtrackers-setting.js';
 import { TapDetectionSettings, TapDetectionSettingsT } from '../../solarxr-protocol/rpc/tap-detection-settings.js';
@@ -107,9 +107,9 @@ velocitySettings(obj?:VelocitySettings):VelocitySettings|null {
   return offset ? (obj || new VelocitySettings()).__init(this.bb!.__indirect(this.bb_pos + offset), this.bb!) : null;
 }
 
-spatialHeadphonesOsc(obj?:SpatialHeadphonesOSCSettings):SpatialHeadphonesOSCSettings|null {
+spatialHeadphonesOsc(obj?:SpatialHeadphonesOscSettings):SpatialHeadphonesOscSettings|null {
   const offset = this.bb!.__offset(this.bb_pos, 32);
-  return offset ? (obj || new SpatialHeadphonesOSCSettings()).__init(this.bb!.__indirect(this.bb_pos + offset), this.bb!) : null;
+  return offset ? (obj || new SpatialHeadphonesOscSettings()).__init(this.bb!.__indirect(this.bb_pos + offset), this.bb!) : null;
 }
 
 static startChangeSettingsRequest(builder:flatbuffers.Builder) {
@@ -238,7 +238,7 @@ constructor(
   public hidSettings: HIDSettingsT|null = null,
   public timeout: TimeoutSettingsT|null = null,
   public velocitySettings: VelocitySettingsT|null = null,
-  public spatialHeadphonesOsc: SpatialHeadphonesOSCSettingsT|null = null
+  public spatialHeadphonesOsc: SpatialHeadphonesOscSettingsT|null = null
 ){}
 
 

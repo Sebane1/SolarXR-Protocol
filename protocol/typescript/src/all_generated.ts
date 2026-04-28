@@ -146,7 +146,7 @@ export { SkeletonConfigRequest, SkeletonConfigRequestT } from './solarxr-protoco
 export { SkeletonConfigResponse, SkeletonConfigResponseT } from './solarxr-protocol/rpc/skeleton-config-response.js';
 export { SkeletonPart, SkeletonPartT } from './solarxr-protocol/rpc/skeleton-part.js';
 export { SkeletonResetAllRequest, SkeletonResetAllRequestT } from './solarxr-protocol/rpc/skeleton-reset-all-request.js';
-export { SpatialHeadphonesOSCSettings, SpatialHeadphonesOSCSettingsT } from './solarxr-protocol/rpc/spatial-headphones-oscsettings.js';
+export { SpatialHeadphonesOscSettings, SpatialHeadphonesOscSettingsT } from './solarxr-protocol/rpc/spatial-headphones-osc-settings.js';
 export { StartUserHeightCalibration, StartUserHeightCalibrationT } from './solarxr-protocol/rpc/start-user-height-calibration.js';
 export { StartWifiProvisioningRequest, StartWifiProvisioningRequestT } from './solarxr-protocol/rpc/start-wifi-provisioning-request.js';
 export { StatusData, unionToStatusData, unionListToStatusData } from './solarxr-protocol/rpc/status-data.js';

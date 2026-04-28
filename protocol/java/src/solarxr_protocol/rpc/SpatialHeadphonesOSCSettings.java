@@ -11,39 +11,35 @@ import com.google.flatbuffers.*;
  * OSC Settings that are used for spatial headphone processing
  */
 @SuppressWarnings("unused")
-public final class SpatialHeadphonesOSCSettings extends Table {
+public final class SpatialHeadphonesOscSettings extends Table {
   public static void ValidateVersion() { Constants.FLATBUFFERS_22_10_26(); }
-  public static SpatialHeadphonesOSCSettings getRootAsSpatialHeadphonesOSCSettings(ByteBuffer _bb) { return getRootAsSpatialHeadphonesOSCSettings(_bb, new SpatialHeadphonesOSCSettings()); }
-  public static SpatialHeadphonesOSCSettings getRootAsSpatialHeadphonesOSCSettings(ByteBuffer _bb, SpatialHeadphonesOSCSettings obj) { _bb.order(ByteOrder.LITTLE_ENDIAN); return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb)); }
+  public static SpatialHeadphonesOscSettings getRootAsSpatialHeadphonesOscSettings(ByteBuffer _bb) { return getRootAsSpatialHeadphonesOscSettings(_bb, new SpatialHeadphonesOscSettings()); }
+  public static SpatialHeadphonesOscSettings getRootAsSpatialHeadphonesOscSettings(ByteBuffer _bb, SpatialHeadphonesOscSettings obj) { _bb.order(ByteOrder.LITTLE_ENDIAN); return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb)); }
   public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
-  public SpatialHeadphonesOSCSettings __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
+  public SpatialHeadphonesOscSettings __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public boolean enabled() { int o = __offset(4); return o != 0 ? 0!=bb.get(o + bb_pos) : false; }
-  public int portIn() { int o = __offset(6); return o != 0 ? bb.getShort(o + bb_pos) & 0xFFFF : 0; }
-  public int portOut() { int o = __offset(8); return o != 0 ? bb.getShort(o + bb_pos) & 0xFFFF : 0; }
-  public String address() { int o = __offset(10); return o != 0 ? __string(o + bb_pos) : null; }
-  public ByteBuffer addressAsByteBuffer() { return __vector_as_bytebuffer(10, 1); }
-  public ByteBuffer addressInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 10, 1); }
+  public int portOut() { int o = __offset(6); return o != 0 ? bb.getShort(o + bb_pos) & 0xFFFF : 0; }
+  public String address() { int o = __offset(8); return o != 0 ? __string(o + bb_pos) : null; }
+  public ByteBuffer addressAsByteBuffer() { return __vector_as_bytebuffer(8, 1); }
+  public ByteBuffer addressInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 8, 1); }
 
-  public static int createSpatialHeadphonesOSCSettings(FlatBufferBuilder builder,
+  public static int createSpatialHeadphonesOscSettings(FlatBufferBuilder builder,
       boolean enabled,
-      int portIn,
       int portOut,
       int addressOffset) {
-    builder.startTable(4);
-    SpatialHeadphonesOSCSettings.addAddress(builder, addressOffset);
-    SpatialHeadphonesOSCSettings.addPortOut(builder, portOut);
-    SpatialHeadphonesOSCSettings.addPortIn(builder, portIn);
-    SpatialHeadphonesOSCSettings.addEnabled(builder, enabled);
-    return SpatialHeadphonesOSCSettings.endSpatialHeadphonesOSCSettings(builder);
+    builder.startTable(3);
+    SpatialHeadphonesOscSettings.addAddress(builder, addressOffset);
+    SpatialHeadphonesOscSettings.addPortOut(builder, portOut);
+    SpatialHeadphonesOscSettings.addEnabled(builder, enabled);
+    return SpatialHeadphonesOscSettings.endSpatialHeadphonesOscSettings(builder);
   }
 
-  public static void startSpatialHeadphonesOSCSettings(FlatBufferBuilder builder) { builder.startTable(4); }
+  public static void startSpatialHeadphonesOscSettings(FlatBufferBuilder builder) { builder.startTable(3); }
   public static void addEnabled(FlatBufferBuilder builder, boolean enabled) { builder.addBoolean(0, enabled, false); }
-  public static void addPortIn(FlatBufferBuilder builder, int portIn) { builder.addShort(1, (short) portIn, (short) 0); }
-  public static void addPortOut(FlatBufferBuilder builder, int portOut) { builder.addShort(2, (short) portOut, (short) 0); }
-  public static void addAddress(FlatBufferBuilder builder, int addressOffset) { builder.addOffset(3, addressOffset, 0); }
-  public static int endSpatialHeadphonesOSCSettings(FlatBufferBuilder builder) {
+  public static void addPortOut(FlatBufferBuilder builder, int portOut) { builder.addShort(1, (short) portOut, (short) 0); }
+  public static void addAddress(FlatBufferBuilder builder, int addressOffset) { builder.addOffset(2, addressOffset, 0); }
+  public static int endSpatialHeadphonesOscSettings(FlatBufferBuilder builder) {
     int o = builder.endTable();
     return o;
   }
@@ -51,31 +47,28 @@ public final class SpatialHeadphonesOSCSettings extends Table {
   public static final class Vector extends BaseVector {
     public Vector __assign(int _vector, int _element_size, ByteBuffer _bb) { __reset(_vector, _element_size, _bb); return this; }
 
-    public SpatialHeadphonesOSCSettings get(int j) { return get(new SpatialHeadphonesOSCSettings(), j); }
-    public SpatialHeadphonesOSCSettings get(SpatialHeadphonesOSCSettings obj, int j) {  return obj.__assign(__indirect(__element(j), bb), bb); }
+    public SpatialHeadphonesOscSettings get(int j) { return get(new SpatialHeadphonesOscSettings(), j); }
+    public SpatialHeadphonesOscSettings get(SpatialHeadphonesOscSettings obj, int j) {  return obj.__assign(__indirect(__element(j), bb), bb); }
   }
-  public SpatialHeadphonesOSCSettingsT unpack() {
-    SpatialHeadphonesOSCSettingsT _o = new SpatialHeadphonesOSCSettingsT();
+  public SpatialHeadphonesOscSettingsT unpack() {
+    SpatialHeadphonesOscSettingsT _o = new SpatialHeadphonesOscSettingsT();
     unpackTo(_o);
     return _o;
   }
-  public void unpackTo(SpatialHeadphonesOSCSettingsT _o) {
+  public void unpackTo(SpatialHeadphonesOscSettingsT _o) {
     boolean _oEnabled = enabled();
     _o.setEnabled(_oEnabled);
-    int _oPortIn = portIn();
-    _o.setPortIn(_oPortIn);
     int _oPortOut = portOut();
     _o.setPortOut(_oPortOut);
     String _oAddress = address();
     _o.setAddress(_oAddress);
   }
-  public static int pack(FlatBufferBuilder builder, SpatialHeadphonesOSCSettingsT _o) {
+  public static int pack(FlatBufferBuilder builder, SpatialHeadphonesOscSettingsT _o) {
     if (_o == null) return 0;
     int _address = _o.getAddress() == null ? 0 : builder.createString(_o.getAddress());
-    return createSpatialHeadphonesOSCSettings(
+    return createSpatialHeadphonesOscSettings(
       builder,
       _o.getEnabled(),
-      _o.getPortIn(),
       _o.getPortOut(),
       _address);
   }

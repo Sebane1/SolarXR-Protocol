@@ -10,12 +10,12 @@ import com.google.flatbuffers.*
  * OSC Settings that are used for spatial headphone processing
  */
 @Suppress("unused")
-class SpatialHeadphonesOSCSettings : Table() {
+class SpatialHeadphonesOscSettings : Table() {
 
     fun __init(_i: Int, _bb: ByteBuffer)  {
         __reset(_i, _bb)
     }
-    fun __assign(_i: Int, _bb: ByteBuffer) : SpatialHeadphonesOSCSettings {
+    fun __assign(_i: Int, _bb: ByteBuffer) : SpatialHeadphonesOscSettings {
         __init(_i, _bb)
         return this
     }
@@ -24,54 +24,46 @@ class SpatialHeadphonesOSCSettings : Table() {
             val o = __offset(4)
             return if(o != 0) 0.toByte() != bb.get(o + bb_pos) else false
         }
-    val portIn : UShort
+    val portOut : UShort
         get() {
             val o = __offset(6)
             return if(o != 0) bb.getShort(o + bb_pos).toUShort() else 0u
         }
-    val portOut : UShort
-        get() {
-            val o = __offset(8)
-            return if(o != 0) bb.getShort(o + bb_pos).toUShort() else 0u
-        }
     val address : String?
         get() {
-            val o = __offset(10)
+            val o = __offset(8)
             return if (o != 0) __string(o + bb_pos) else null
         }
-    val addressAsByteBuffer : ByteBuffer get() = __vector_as_bytebuffer(10, 1)
-    fun addressInByteBuffer(_bb: ByteBuffer) : ByteBuffer = __vector_in_bytebuffer(_bb, 10, 1)
+    val addressAsByteBuffer : ByteBuffer get() = __vector_as_bytebuffer(8, 1)
+    fun addressInByteBuffer(_bb: ByteBuffer) : ByteBuffer = __vector_in_bytebuffer(_bb, 8, 1)
     companion object {
         @JvmStatic
         fun validateVersion() = Constants.FLATBUFFERS_22_10_26()
         @JvmStatic
-        fun getRootAsSpatialHeadphonesOSCSettings(_bb: ByteBuffer): SpatialHeadphonesOSCSettings = getRootAsSpatialHeadphonesOSCSettings(_bb, SpatialHeadphonesOSCSettings())
+        fun getRootAsSpatialHeadphonesOscSettings(_bb: ByteBuffer): SpatialHeadphonesOscSettings = getRootAsSpatialHeadphonesOscSettings(_bb, SpatialHeadphonesOscSettings())
         @JvmStatic
-        fun getRootAsSpatialHeadphonesOSCSettings(_bb: ByteBuffer, obj: SpatialHeadphonesOSCSettings): SpatialHeadphonesOSCSettings {
+        fun getRootAsSpatialHeadphonesOscSettings(_bb: ByteBuffer, obj: SpatialHeadphonesOscSettings): SpatialHeadphonesOscSettings {
             _bb.order(ByteOrder.LITTLE_ENDIAN)
             return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb))
         }
         @JvmStatic
-        fun createSpatialHeadphonesOSCSettings(builder: FlatBufferBuilder, enabled: Boolean, portIn: UShort, portOut: UShort, addressOffset: Int) : Int {
-            builder.startTable(4)
+        fun createSpatialHeadphonesOscSettings(builder: FlatBufferBuilder, enabled: Boolean, portOut: UShort, addressOffset: Int) : Int {
+            builder.startTable(3)
             addAddress(builder, addressOffset)
             addPortOut(builder, portOut)
-            addPortIn(builder, portIn)
             addEnabled(builder, enabled)
-            return endSpatialHeadphonesOSCSettings(builder)
+            return endSpatialHeadphonesOscSettings(builder)
         }
         @JvmStatic
-        fun startSpatialHeadphonesOSCSettings(builder: FlatBufferBuilder) = builder.startTable(4)
+        fun startSpatialHeadphonesOscSettings(builder: FlatBufferBuilder) = builder.startTable(3)
         @JvmStatic
         fun addEnabled(builder: FlatBufferBuilder, enabled: Boolean) = builder.addBoolean(0, enabled, false)
         @JvmStatic
-        fun addPortIn(builder: FlatBufferBuilder, portIn: UShort) = builder.addShort(1, portIn.toShort(), 0)
+        fun addPortOut(builder: FlatBufferBuilder, portOut: UShort) = builder.addShort(1, portOut.toShort(), 0)
         @JvmStatic
-        fun addPortOut(builder: FlatBufferBuilder, portOut: UShort) = builder.addShort(2, portOut.toShort(), 0)
+        fun addAddress(builder: FlatBufferBuilder, address: Int) = builder.addOffset(2, address, 0)
         @JvmStatic
-        fun addAddress(builder: FlatBufferBuilder, address: Int) = builder.addOffset(3, address, 0)
-        @JvmStatic
-        fun endSpatialHeadphonesOSCSettings(builder: FlatBufferBuilder) : Int {
+        fun endSpatialHeadphonesOscSettings(builder: FlatBufferBuilder) : Int {
             val o = builder.endTable()
             return o
         }

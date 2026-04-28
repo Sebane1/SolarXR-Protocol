@@ -22,7 +22,7 @@ public class ChangeSettingsRequestT {
   private solarxr_protocol.rpc.HIDSettingsT hidSettings;
   private solarxr_protocol.rpc.TimeoutSettingsT timeout;
   private solarxr_protocol.rpc.VelocitySettingsT velocitySettings;
-  private solarxr_protocol.rpc.SpatialHeadphonesOSCSettingsT spatialHeadphonesOsc;
+  private solarxr_protocol.rpc.SpatialHeadphonesOscSettingsT spatialHeadphonesOsc;
 
   public solarxr_protocol.rpc.SteamVRTrackersSettingT getSteamVrTrackers() { return steamVrTrackers; }
 
@@ -80,9 +80,9 @@ public class ChangeSettingsRequestT {
 
   public void setVelocitySettings(solarxr_protocol.rpc.VelocitySettingsT velocitySettings) { this.velocitySettings = velocitySettings; }
 
-  public solarxr_protocol.rpc.SpatialHeadphonesOSCSettingsT getSpatialHeadphonesOsc() { return spatialHeadphonesOsc; }
+  public solarxr_protocol.rpc.SpatialHeadphonesOscSettingsT getSpatialHeadphonesOsc() { return spatialHeadphonesOsc; }
 
-  public void setSpatialHeadphonesOsc(solarxr_protocol.rpc.SpatialHeadphonesOSCSettingsT spatialHeadphonesOsc) { this.spatialHeadphonesOsc = spatialHeadphonesOsc; }
+  public void setSpatialHeadphonesOsc(solarxr_protocol.rpc.SpatialHeadphonesOscSettingsT spatialHeadphonesOsc) { this.spatialHeadphonesOsc = spatialHeadphonesOsc; }
 
 
   public ChangeSettingsRequestT() {
