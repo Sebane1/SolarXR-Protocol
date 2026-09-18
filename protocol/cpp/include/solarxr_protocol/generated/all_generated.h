@@ -248,6 +248,12 @@ struct OverlayDisplayModeChangeRequestBuilder;
 struct OverlayDisplayModeResponse;
 struct OverlayDisplayModeResponseBuilder;
 
+struct PluginBone;
+struct PluginBoneBuilder;
+
+struct PluginBonesUpdateResponse;
+struct PluginBonesUpdateResponseBuilder;
+
 struct StartWifiProvisioningRequest;
 struct StartWifiProvisioningRequestBuilder;
 
@@ -3073,11 +3079,12 @@ enum class RpcMessage : uint8_t {
   CustomOSCSettingsRequest = 130,
   CustomOSCSettingsResponse = 131,
   ChangeCustomOSCSettingsRequest = 132,
+  PluginBonesUpdateResponse = 133,
   MIN = NONE,
-  MAX = ChangeCustomOSCSettingsRequest
+  MAX = PluginBonesUpdateResponse
 };
 
-inline const RpcMessage (&EnumValuesRpcMessage())[133] {
+inline const RpcMessage (&EnumValuesRpcMessage())[134] {
   static const RpcMessage values[] = {
     RpcMessage::NONE,
     RpcMessage::HeartbeatRequest,
@@ -3211,13 +3218,14 @@ inline const RpcMessage (&EnumValuesRpcMessage())[133] {
     RpcMessage::TelemetryGapResponse,
     RpcMessage::CustomOSCSettingsRequest,
     RpcMessage::CustomOSCSettingsResponse,
-    RpcMessage::ChangeCustomOSCSettingsRequest
+    RpcMessage::ChangeCustomOSCSettingsRequest,
+    RpcMessage::PluginBonesUpdateResponse
   };
   return values;
 }
 
 inline const char * const *EnumNamesRpcMessage() {
-  static const char * const names[134] = {
+  static const char * const names[135] = {
     "NONE",
     "HeartbeatRequest",
     "HeartbeatResponse",
@@ -3351,13 +3359,14 @@ inline const char * const *EnumNamesRpcMessage() {
     "CustomOSCSettingsRequest",
     "CustomOSCSettingsResponse",
     "ChangeCustomOSCSettingsRequest",
+    "PluginBonesUpdateResponse",
     nullptr
   };
   return names;
 }
 
 inline const char *EnumNameRpcMessage(RpcMessage e) {
-  if (flatbuffers::IsOutRange(e, RpcMessage::NONE, RpcMessage::ChangeCustomOSCSettingsRequest)) return "";
+  if (flatbuffers::IsOutRange(e, RpcMessage::NONE, RpcMessage::PluginBonesUpdateResponse)) return "";
   const size_t index = static_cast<size_t>(e);
   return EnumNamesRpcMessage()[index];
 }
@@ -3892,6 +3901,10 @@ template<> struct RpcMessageTraits<solarxr_protocol::rpc::CustomOSCSettingsRespo
 
 template<> struct RpcMessageTraits<solarxr_protocol::rpc::ChangeCustomOSCSettingsRequest> {
   static const RpcMessage enum_value = RpcMessage::ChangeCustomOSCSettingsRequest;
+};
+
+template<> struct RpcMessageTraits<solarxr_protocol::rpc::PluginBonesUpdateResponse> {
+  static const RpcMessage enum_value = RpcMessage::PluginBonesUpdateResponse;
 };
 
 bool VerifyRpcMessage(flatbuffers::Verifier &verifier, const void *obj, RpcMessage type);
@@ -9049,6 +9062,273 @@ inline flatbuffers::Offset<OverlayDisplayModeResponse> CreateOverlayDisplayModeR
   builder_.add_is_mirrored(is_mirrored);
   builder_.add_is_visible(is_visible);
   return builder_.Finish();
+}
+
+/// Represents a generic stacked overlay bone registered by a plugin.
+struct PluginBone FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  typedef PluginBoneBuilder Builder;
+  enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
+    VT_ID = 4,
+    VT_NAME = 6,
+    VT_PARENT_BONE_ID = 8,
+    VT_LOCAL_POSITION_X = 10,
+    VT_LOCAL_POSITION_Y = 12,
+    VT_LOCAL_POSITION_Z = 14,
+    VT_LOCAL_ROTATION_X = 16,
+    VT_LOCAL_ROTATION_Y = 18,
+    VT_LOCAL_ROTATION_Z = 20,
+    VT_LOCAL_ROTATION_W = 22,
+    VT_VMC_BONE_NAME = 24,
+    VT_VRC_OSC_PARAM_NAME = 26,
+    VT_MODEL_URL = 28
+  };
+  /// Unique identifier for this plugin bone.
+  const flatbuffers::String *id() const {
+    return GetPointer<const flatbuffers::String *>(VT_ID);
+  }
+  /// Display name of the bone (e.g., "LeftHand", "RightFoot").
+  const flatbuffers::String *name() const {
+    return GetPointer<const flatbuffers::String *>(VT_NAME);
+  }
+  /// The parent bone ID - can be a standard BodyPart name or another PluginBone's id.
+  const flatbuffers::String *parent_bone_id() const {
+    return GetPointer<const flatbuffers::String *>(VT_PARENT_BONE_ID);
+  }
+  /// Local position relative to the parent bone in meters.
+  float local_position_x() const {
+    return GetField<float>(VT_LOCAL_POSITION_X, 0.0f);
+  }
+  float local_position_y() const {
+    return GetField<float>(VT_LOCAL_POSITION_Y, 0.0f);
+  }
+  float local_position_z() const {
+    return GetField<float>(VT_LOCAL_POSITION_Z, 0.0f);
+  }
+  /// Local rotation as a quaternion (x, y, z, w) relative to the parent bone.
+  float local_rotation_x() const {
+    return GetField<float>(VT_LOCAL_ROTATION_X, 0.0f);
+  }
+  float local_rotation_y() const {
+    return GetField<float>(VT_LOCAL_ROTATION_Y, 0.0f);
+  }
+  float local_rotation_z() const {
+    return GetField<float>(VT_LOCAL_ROTATION_Z, 0.0f);
+  }
+  float local_rotation_w() const {
+    return GetField<float>(VT_LOCAL_ROTATION_W, 1.0f);
+  }
+  /// VMC bone name for virtual machine compatibility.
+  const flatbuffers::String *vmc_bone_name() const {
+    return GetPointer<const flatbuffers::String *>(VT_VMC_BONE_NAME);
+  }
+  /// VRChat OSC parameter name for this bone.
+  const flatbuffers::String *vrc_osc_param_name() const {
+    return GetPointer<const flatbuffers::String *>(VT_VRC_OSC_PARAM_NAME);
+  }
+  /// URL to a model file (e.g., glTF/GLB) that can be attached to this bone.
+  const flatbuffers::String *model_url() const {
+    return GetPointer<const flatbuffers::String *>(VT_MODEL_URL);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyOffset(verifier, VT_ID) &&
+           verifier.VerifyString(id()) &&
+           VerifyOffset(verifier, VT_NAME) &&
+           verifier.VerifyString(name()) &&
+           VerifyOffset(verifier, VT_PARENT_BONE_ID) &&
+           verifier.VerifyString(parent_bone_id()) &&
+           VerifyField<float>(verifier, VT_LOCAL_POSITION_X, 4) &&
+           VerifyField<float>(verifier, VT_LOCAL_POSITION_Y, 4) &&
+           VerifyField<float>(verifier, VT_LOCAL_POSITION_Z, 4) &&
+           VerifyField<float>(verifier, VT_LOCAL_ROTATION_X, 4) &&
+           VerifyField<float>(verifier, VT_LOCAL_ROTATION_Y, 4) &&
+           VerifyField<float>(verifier, VT_LOCAL_ROTATION_Z, 4) &&
+           VerifyField<float>(verifier, VT_LOCAL_ROTATION_W, 4) &&
+           VerifyOffset(verifier, VT_VMC_BONE_NAME) &&
+           verifier.VerifyString(vmc_bone_name()) &&
+           VerifyOffset(verifier, VT_VRC_OSC_PARAM_NAME) &&
+           verifier.VerifyString(vrc_osc_param_name()) &&
+           VerifyOffset(verifier, VT_MODEL_URL) &&
+           verifier.VerifyString(model_url()) &&
+           verifier.EndTable();
+  }
+};
+
+struct PluginBoneBuilder {
+  typedef PluginBone Table;
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_id(flatbuffers::Offset<flatbuffers::String> id) {
+    fbb_.AddOffset(PluginBone::VT_ID, id);
+  }
+  void add_name(flatbuffers::Offset<flatbuffers::String> name) {
+    fbb_.AddOffset(PluginBone::VT_NAME, name);
+  }
+  void add_parent_bone_id(flatbuffers::Offset<flatbuffers::String> parent_bone_id) {
+    fbb_.AddOffset(PluginBone::VT_PARENT_BONE_ID, parent_bone_id);
+  }
+  void add_local_position_x(float local_position_x) {
+    fbb_.AddElement<float>(PluginBone::VT_LOCAL_POSITION_X, local_position_x, 0.0f);
+  }
+  void add_local_position_y(float local_position_y) {
+    fbb_.AddElement<float>(PluginBone::VT_LOCAL_POSITION_Y, local_position_y, 0.0f);
+  }
+  void add_local_position_z(float local_position_z) {
+    fbb_.AddElement<float>(PluginBone::VT_LOCAL_POSITION_Z, local_position_z, 0.0f);
+  }
+  void add_local_rotation_x(float local_rotation_x) {
+    fbb_.AddElement<float>(PluginBone::VT_LOCAL_ROTATION_X, local_rotation_x, 0.0f);
+  }
+  void add_local_rotation_y(float local_rotation_y) {
+    fbb_.AddElement<float>(PluginBone::VT_LOCAL_ROTATION_Y, local_rotation_y, 0.0f);
+  }
+  void add_local_rotation_z(float local_rotation_z) {
+    fbb_.AddElement<float>(PluginBone::VT_LOCAL_ROTATION_Z, local_rotation_z, 0.0f);
+  }
+  void add_local_rotation_w(float local_rotation_w) {
+    fbb_.AddElement<float>(PluginBone::VT_LOCAL_ROTATION_W, local_rotation_w, 1.0f);
+  }
+  void add_vmc_bone_name(flatbuffers::Offset<flatbuffers::String> vmc_bone_name) {
+    fbb_.AddOffset(PluginBone::VT_VMC_BONE_NAME, vmc_bone_name);
+  }
+  void add_vrc_osc_param_name(flatbuffers::Offset<flatbuffers::String> vrc_osc_param_name) {
+    fbb_.AddOffset(PluginBone::VT_VRC_OSC_PARAM_NAME, vrc_osc_param_name);
+  }
+  void add_model_url(flatbuffers::Offset<flatbuffers::String> model_url) {
+    fbb_.AddOffset(PluginBone::VT_MODEL_URL, model_url);
+  }
+  explicit PluginBoneBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  flatbuffers::Offset<PluginBone> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<PluginBone>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<PluginBone> CreatePluginBone(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<flatbuffers::String> id = 0,
+    flatbuffers::Offset<flatbuffers::String> name = 0,
+    flatbuffers::Offset<flatbuffers::String> parent_bone_id = 0,
+    float local_position_x = 0.0f,
+    float local_position_y = 0.0f,
+    float local_position_z = 0.0f,
+    float local_rotation_x = 0.0f,
+    float local_rotation_y = 0.0f,
+    float local_rotation_z = 0.0f,
+    float local_rotation_w = 1.0f,
+    flatbuffers::Offset<flatbuffers::String> vmc_bone_name = 0,
+    flatbuffers::Offset<flatbuffers::String> vrc_osc_param_name = 0,
+    flatbuffers::Offset<flatbuffers::String> model_url = 0) {
+  PluginBoneBuilder builder_(_fbb);
+  builder_.add_model_url(model_url);
+  builder_.add_vrc_osc_param_name(vrc_osc_param_name);
+  builder_.add_vmc_bone_name(vmc_bone_name);
+  builder_.add_local_rotation_w(local_rotation_w);
+  builder_.add_local_rotation_z(local_rotation_z);
+  builder_.add_local_rotation_y(local_rotation_y);
+  builder_.add_local_rotation_x(local_rotation_x);
+  builder_.add_local_position_z(local_position_z);
+  builder_.add_local_position_y(local_position_y);
+  builder_.add_local_position_x(local_position_x);
+  builder_.add_parent_bone_id(parent_bone_id);
+  builder_.add_name(name);
+  builder_.add_id(id);
+  return builder_.Finish();
+}
+
+inline flatbuffers::Offset<PluginBone> CreatePluginBoneDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    const char *id = nullptr,
+    const char *name = nullptr,
+    const char *parent_bone_id = nullptr,
+    float local_position_x = 0.0f,
+    float local_position_y = 0.0f,
+    float local_position_z = 0.0f,
+    float local_rotation_x = 0.0f,
+    float local_rotation_y = 0.0f,
+    float local_rotation_z = 0.0f,
+    float local_rotation_w = 1.0f,
+    const char *vmc_bone_name = nullptr,
+    const char *vrc_osc_param_name = nullptr,
+    const char *model_url = nullptr) {
+  auto id__ = id ? _fbb.CreateString(id) : 0;
+  auto name__ = name ? _fbb.CreateString(name) : 0;
+  auto parent_bone_id__ = parent_bone_id ? _fbb.CreateString(parent_bone_id) : 0;
+  auto vmc_bone_name__ = vmc_bone_name ? _fbb.CreateString(vmc_bone_name) : 0;
+  auto vrc_osc_param_name__ = vrc_osc_param_name ? _fbb.CreateString(vrc_osc_param_name) : 0;
+  auto model_url__ = model_url ? _fbb.CreateString(model_url) : 0;
+  return solarxr_protocol::rpc::CreatePluginBone(
+      _fbb,
+      id__,
+      name__,
+      parent_bone_id__,
+      local_position_x,
+      local_position_y,
+      local_position_z,
+      local_rotation_x,
+      local_rotation_y,
+      local_rotation_z,
+      local_rotation_w,
+      vmc_bone_name__,
+      vrc_osc_param_name__,
+      model_url__);
+}
+
+/// RPC response containing an array of plugin bones.
+struct PluginBonesUpdateResponse FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  typedef PluginBonesUpdateResponseBuilder Builder;
+  enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
+    VT_BONES = 4
+  };
+  const flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>> *bones() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>> *>(VT_BONES);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyOffset(verifier, VT_BONES) &&
+           verifier.VerifyVector(bones()) &&
+           verifier.VerifyVectorOfTables(bones()) &&
+           verifier.EndTable();
+  }
+};
+
+struct PluginBonesUpdateResponseBuilder {
+  typedef PluginBonesUpdateResponse Table;
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_bones(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>>> bones) {
+    fbb_.AddOffset(PluginBonesUpdateResponse::VT_BONES, bones);
+  }
+  explicit PluginBonesUpdateResponseBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  flatbuffers::Offset<PluginBonesUpdateResponse> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<PluginBonesUpdateResponse>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<PluginBonesUpdateResponse> CreatePluginBonesUpdateResponse(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>>> bones = 0) {
+  PluginBonesUpdateResponseBuilder builder_(_fbb);
+  builder_.add_bones(bones);
+  return builder_.Finish();
+}
+
+inline flatbuffers::Offset<PluginBonesUpdateResponse> CreatePluginBonesUpdateResponseDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    const std::vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>> *bones = nullptr) {
+  auto bones__ = bones ? _fbb.CreateVector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>>(*bones) : 0;
+  return solarxr_protocol::rpc::CreatePluginBonesUpdateResponse(
+      _fbb,
+      bones__);
 }
 
 struct StartWifiProvisioningRequest FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
@@ -16329,6 +16609,9 @@ struct RpcMessageHeader FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const solarxr_protocol::rpc::ChangeCustomOSCSettingsRequest *message_as_ChangeCustomOSCSettingsRequest() const {
     return message_type() == solarxr_protocol::rpc::RpcMessage::ChangeCustomOSCSettingsRequest ? static_cast<const solarxr_protocol::rpc::ChangeCustomOSCSettingsRequest *>(message()) : nullptr;
   }
+  const solarxr_protocol::rpc::PluginBonesUpdateResponse *message_as_PluginBonesUpdateResponse() const {
+    return message_type() == solarxr_protocol::rpc::RpcMessage::PluginBonesUpdateResponse ? static_cast<const solarxr_protocol::rpc::PluginBonesUpdateResponse *>(message()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint32_t>(verifier, VT_TX_ID, 4) &&
@@ -16866,6 +17149,10 @@ template<> inline const solarxr_protocol::rpc::CustomOSCSettingsResponse *RpcMes
 
 template<> inline const solarxr_protocol::rpc::ChangeCustomOSCSettingsRequest *RpcMessageHeader::message_as<solarxr_protocol::rpc::ChangeCustomOSCSettingsRequest>() const {
   return message_as_ChangeCustomOSCSettingsRequest();
+}
+
+template<> inline const solarxr_protocol::rpc::PluginBonesUpdateResponse *RpcMessageHeader::message_as<solarxr_protocol::rpc::PluginBonesUpdateResponse>() const {
+  return message_as_PluginBonesUpdateResponse();
 }
 
 struct RpcMessageHeaderBuilder {
@@ -18833,6 +19120,10 @@ inline bool VerifyRpcMessage(flatbuffers::Verifier &verifier, const void *obj, R
     }
     case RpcMessage::ChangeCustomOSCSettingsRequest: {
       auto ptr = reinterpret_cast<const solarxr_protocol::rpc::ChangeCustomOSCSettingsRequest *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case RpcMessage::PluginBonesUpdateResponse: {
+      auto ptr = reinterpret_cast<const solarxr_protocol::rpc::PluginBonesUpdateResponse *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return true;

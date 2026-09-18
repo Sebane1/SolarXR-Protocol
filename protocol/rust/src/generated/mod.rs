@@ -291,6 +291,10 @@ pub mod solarxr_protocol {
     pub use self::overlay_display_mode_change_request_generated::*;
     mod overlay_display_mode_response_generated;
     pub use self::overlay_display_mode_response_generated::*;
+    mod plugin_bone_generated;
+    pub use self::plugin_bone_generated::*;
+    mod plugin_bones_update_response_generated;
+    pub use self::plugin_bones_update_response_generated::*;
     mod start_wifi_provisioning_request_generated;
     pub use self::start_wifi_provisioning_request_generated::*;
     mod stop_wifi_provisioning_request_generated;

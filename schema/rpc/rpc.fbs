@@ -16,6 +16,7 @@ include "firmware.fbs";
 include "height_calibration.fbs";
 include "keybinding.fbs";
 include "overlay.fbs";
+include "plugins.fbs";
 include "provisioning.fbs";
 include "resets.fbs";
 include "serial.fbs";
@@ -164,6 +165,7 @@ union RpcMessage {
     CustomOSCSettingsRequest,
     CustomOSCSettingsResponse,
     ChangeCustomOSCSettingsRequest,
+    PluginBonesUpdateResponse,
 }
 
 table RpcMessageHeader {

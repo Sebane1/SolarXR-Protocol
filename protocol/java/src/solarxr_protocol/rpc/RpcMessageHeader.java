@@ -599,6 +599,10 @@ public final class RpcMessageHeader extends Table {
         _oMessageValue = message(new solarxr_protocol.rpc.ChangeCustomOSCSettingsRequest());
         _oMessage.setValue(_oMessageValue != null ? ((solarxr_protocol.rpc.ChangeCustomOSCSettingsRequest) _oMessageValue).unpack() : null);
         break;
+      case solarxr_protocol.rpc.RpcMessage.PluginBonesUpdateResponse:
+        _oMessageValue = message(new solarxr_protocol.rpc.PluginBonesUpdateResponse());
+        _oMessage.setValue(_oMessageValue != null ? ((solarxr_protocol.rpc.PluginBonesUpdateResponse) _oMessageValue).unpack() : null);
+        break;
       default: break;
     }
     _o.setMessage(_oMessage);
