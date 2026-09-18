@@ -2394,11 +2394,12 @@ enum class TrackingChecklistStepId : uint8_t {
   STAY_ALIGNED_CONFIGURED = 10,
   STEAMVR_HANDS_ENABLED = 11,
   STANDABLE_INSTALLED = 12,
+  VRCHAT_OSC_TRACKING_DISABLED = 13,
   MIN = UNKNOWN,
-  MAX = STANDABLE_INSTALLED
+  MAX = VRCHAT_OSC_TRACKING_DISABLED
 };
 
-inline const TrackingChecklistStepId (&EnumValuesTrackingChecklistStepId())[13] {
+inline const TrackingChecklistStepId (&EnumValuesTrackingChecklistStepId())[14] {
   static const TrackingChecklistStepId values[] = {
     TrackingChecklistStepId::UNKNOWN,
     TrackingChecklistStepId::TRACKERS_REST_CALIBRATION,
@@ -2412,13 +2413,14 @@ inline const TrackingChecklistStepId (&EnumValuesTrackingChecklistStepId())[13] 
     TrackingChecklistStepId::FEET_MOUNTING_CALIBRATION,
     TrackingChecklistStepId::STAY_ALIGNED_CONFIGURED,
     TrackingChecklistStepId::STEAMVR_HANDS_ENABLED,
-    TrackingChecklistStepId::STANDABLE_INSTALLED
+    TrackingChecklistStepId::STANDABLE_INSTALLED,
+    TrackingChecklistStepId::VRCHAT_OSC_TRACKING_DISABLED
   };
   return values;
 }
 
 inline const char * const *EnumNamesTrackingChecklistStepId() {
-  static const char * const names[14] = {
+  static const char * const names[15] = {
     "UNKNOWN",
     "TRACKERS_REST_CALIBRATION",
     "FULL_RESET",
@@ -2432,13 +2434,14 @@ inline const char * const *EnumNamesTrackingChecklistStepId() {
     "STAY_ALIGNED_CONFIGURED",
     "STEAMVR_HANDS_ENABLED",
     "STANDABLE_INSTALLED",
+    "VRCHAT_OSC_TRACKING_DISABLED",
     nullptr
   };
   return names;
 }
 
 inline const char *EnumNameTrackingChecklistStepId(TrackingChecklistStepId e) {
-  if (flatbuffers::IsOutRange(e, TrackingChecklistStepId::UNKNOWN, TrackingChecklistStepId::STANDABLE_INSTALLED)) return "";
+  if (flatbuffers::IsOutRange(e, TrackingChecklistStepId::UNKNOWN, TrackingChecklistStepId::VRCHAT_OSC_TRACKING_DISABLED)) return "";
   const size_t index = static_cast<size_t>(e);
   return EnumNamesTrackingChecklistStepId()[index];
 }
@@ -2889,6 +2892,42 @@ inline const char *EnumNameVRCOSCOscQueryState(VRCOSCOscQueryState e) {
   if (flatbuffers::IsOutRange(e, VRCOSCOscQueryState::DISABLED, VRCOSCOscQueryState::ERROR)) return "";
   const size_t index = static_cast<size_t>(e);
   return EnumNamesVRCOSCOscQueryState()[index];
+}
+
+enum class VRCOSCTrackingDataState : uint8_t {
+  /// VRC OSC is off, or VRChat was not detected, so we cannot tell
+  UNKNOWN = 0,
+  /// VRChat is reachable but the tracking data toggle is off
+  DISABLED_IN_VRCHAT = 1,
+  /// Head/wrist poses are arriving
+  RECEIVED = 2,
+  MIN = UNKNOWN,
+  MAX = RECEIVED
+};
+
+inline const VRCOSCTrackingDataState (&EnumValuesVRCOSCTrackingDataState())[3] {
+  static const VRCOSCTrackingDataState values[] = {
+    VRCOSCTrackingDataState::UNKNOWN,
+    VRCOSCTrackingDataState::DISABLED_IN_VRCHAT,
+    VRCOSCTrackingDataState::RECEIVED
+  };
+  return values;
+}
+
+inline const char * const *EnumNamesVRCOSCTrackingDataState() {
+  static const char * const names[4] = {
+    "UNKNOWN",
+    "DISABLED_IN_VRCHAT",
+    "RECEIVED",
+    nullptr
+  };
+  return names;
+}
+
+inline const char *EnumNameVRCOSCTrackingDataState(VRCOSCTrackingDataState e) {
+  if (flatbuffers::IsOutRange(e, VRCOSCTrackingDataState::UNKNOWN, VRCOSCTrackingDataState::RECEIVED)) return "";
+  const size_t index = static_cast<size_t>(e);
+  return EnumNamesVRCOSCTrackingDataState()[index];
 }
 
 enum class CustomOSCAxisSource : uint8_t {
@@ -5407,13 +5446,14 @@ struct TrackerInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_IS_IMU = 4,
     VT_IMU_TYPE = 6,
     VT_BODY_PART = 8,
-    VT_MOUNTING_ORIENTATION = 10,
-    VT_MOUNTING_RESET_ORIENTATION = 12,
-    VT_DISPLAY_NAME = 14,
-    VT_CUSTOM_NAME = 16,
-    VT_LAST_MOUNTING_METHOD = 18,
-    VT_MAGNETOMETER = 20,
-    VT_DATA_TYPE = 22
+    VT_INTENDED_BODY_PART = 10,
+    VT_MOUNTING_ORIENTATION = 12,
+    VT_MOUNTING_RESET_ORIENTATION = 14,
+    VT_DISPLAY_NAME = 16,
+    VT_CUSTOM_NAME = 18,
+    VT_LAST_MOUNTING_METHOD = 20,
+    VT_MAGNETOMETER = 22,
+    VT_DATA_TYPE = 24
   };
   /// Indicates if the tracker is using an IMU for its tracking data
   bool is_imu() const {
@@ -5422,9 +5462,13 @@ struct TrackerInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   solarxr_protocol::datatypes::hardware_info::ImuType imu_type() const {
     return static_cast<solarxr_protocol::datatypes::hardware_info::ImuType>(GetField<uint16_t>(VT_IMU_TYPE, 0));
   }
-  /// The user-assigned role of the tracker.
+  /// The user-assigned role of the tracker. Should be used in most cases.
   solarxr_protocol::datatypes::BodyPart body_part() const {
     return static_cast<solarxr_protocol::datatypes::BodyPart>(GetField<uint8_t>(VT_BODY_PART, 0));
+  }
+  /// The source-assigned role of the tracker. For example, for a VR headset this will be the head.
+  solarxr_protocol::datatypes::BodyPart intended_body_part() const {
+    return static_cast<solarxr_protocol::datatypes::BodyPart>(GetField<uint8_t>(VT_INTENDED_BODY_PART, 0));
   }
   /// The manual mounting orientation. Used if last_mounting_method is MANUAL.
   const solarxr_protocol::datatypes::math::Quat *mounting_orientation() const {
@@ -5459,6 +5503,7 @@ struct TrackerInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<uint8_t>(verifier, VT_IS_IMU, 1) &&
            VerifyField<uint16_t>(verifier, VT_IMU_TYPE, 2) &&
            VerifyField<uint8_t>(verifier, VT_BODY_PART, 1) &&
+           VerifyField<uint8_t>(verifier, VT_INTENDED_BODY_PART, 1) &&
            VerifyField<solarxr_protocol::datatypes::math::Quat>(verifier, VT_MOUNTING_ORIENTATION, 4) &&
            VerifyField<solarxr_protocol::datatypes::math::Quat>(verifier, VT_MOUNTING_RESET_ORIENTATION, 4) &&
            VerifyOffset(verifier, VT_DISPLAY_NAME) &&
@@ -5484,6 +5529,9 @@ struct TrackerInfoBuilder {
   }
   void add_body_part(solarxr_protocol::datatypes::BodyPart body_part) {
     fbb_.AddElement<uint8_t>(TrackerInfo::VT_BODY_PART, static_cast<uint8_t>(body_part), 0);
+  }
+  void add_intended_body_part(solarxr_protocol::datatypes::BodyPart intended_body_part) {
+    fbb_.AddElement<uint8_t>(TrackerInfo::VT_INTENDED_BODY_PART, static_cast<uint8_t>(intended_body_part), 0);
   }
   void add_mounting_orientation(const solarxr_protocol::datatypes::math::Quat *mounting_orientation) {
     fbb_.AddStruct(TrackerInfo::VT_MOUNTING_ORIENTATION, mounting_orientation);
@@ -5522,6 +5570,7 @@ inline flatbuffers::Offset<TrackerInfo> CreateTrackerInfo(
     bool is_imu = false,
     solarxr_protocol::datatypes::hardware_info::ImuType imu_type = solarxr_protocol::datatypes::hardware_info::ImuType::UNKNOWN,
     solarxr_protocol::datatypes::BodyPart body_part = solarxr_protocol::datatypes::BodyPart::NONE,
+    solarxr_protocol::datatypes::BodyPart intended_body_part = solarxr_protocol::datatypes::BodyPart::NONE,
     const solarxr_protocol::datatypes::math::Quat *mounting_orientation = nullptr,
     const solarxr_protocol::datatypes::math::Quat *mounting_reset_orientation = nullptr,
     flatbuffers::Offset<flatbuffers::String> display_name = 0,
@@ -5538,6 +5587,7 @@ inline flatbuffers::Offset<TrackerInfo> CreateTrackerInfo(
   builder_.add_data_type(data_type);
   builder_.add_magnetometer(magnetometer);
   builder_.add_last_mounting_method(last_mounting_method);
+  builder_.add_intended_body_part(intended_body_part);
   builder_.add_body_part(body_part);
   builder_.add_is_imu(is_imu);
   return builder_.Finish();
@@ -5548,6 +5598,7 @@ inline flatbuffers::Offset<TrackerInfo> CreateTrackerInfoDirect(
     bool is_imu = false,
     solarxr_protocol::datatypes::hardware_info::ImuType imu_type = solarxr_protocol::datatypes::hardware_info::ImuType::UNKNOWN,
     solarxr_protocol::datatypes::BodyPart body_part = solarxr_protocol::datatypes::BodyPart::NONE,
+    solarxr_protocol::datatypes::BodyPart intended_body_part = solarxr_protocol::datatypes::BodyPart::NONE,
     const solarxr_protocol::datatypes::math::Quat *mounting_orientation = nullptr,
     const solarxr_protocol::datatypes::math::Quat *mounting_reset_orientation = nullptr,
     const char *display_name = nullptr,
@@ -5562,6 +5613,7 @@ inline flatbuffers::Offset<TrackerInfo> CreateTrackerInfoDirect(
       is_imu,
       imu_type,
       body_part,
+      intended_body_part,
       mounting_orientation,
       mounting_reset_orientation,
       display_name__,
@@ -9995,7 +10047,7 @@ struct ResetsSettingsResponse FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tab
     VT_ARMS_RESET_MODE = 6,
     VT_YAW_RESET_SMOOTH_TIME = 8,
     VT_SAVE_MOUNTING_RESET = 10,
-    VT_RESET_POSITIONAL_HEAD_ATTITUDE = 12
+    VT_RESET_HMD_ATTITUDE = 12
   };
   /// Makes it so feet will be always be mounting reset even when passing no BodyPart
   bool reset_mounting_feet() const {
@@ -10012,9 +10064,9 @@ struct ResetsSettingsResponse FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tab
   bool save_mounting_reset() const {
     return GetField<uint8_t>(VT_SAVE_MOUNTING_RESET, 0) != 0;
   }
-  /// Reset positional head trackers pitch and roll
-  bool reset_positional_head_attitude() const {
-    return GetField<uint8_t>(VT_RESET_POSITIONAL_HEAD_ATTITUDE, 0) != 0;
+  /// Reset VR headset's pitch and roll
+  bool reset_hmd_attitude() const {
+    return GetField<uint8_t>(VT_RESET_HMD_ATTITUDE, 0) != 0;
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -10022,7 +10074,7 @@ struct ResetsSettingsResponse FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tab
            VerifyField<uint8_t>(verifier, VT_ARMS_RESET_MODE, 1) &&
            VerifyField<float>(verifier, VT_YAW_RESET_SMOOTH_TIME, 4) &&
            VerifyField<uint8_t>(verifier, VT_SAVE_MOUNTING_RESET, 1) &&
-           VerifyField<uint8_t>(verifier, VT_RESET_POSITIONAL_HEAD_ATTITUDE, 1) &&
+           VerifyField<uint8_t>(verifier, VT_RESET_HMD_ATTITUDE, 1) &&
            verifier.EndTable();
   }
 };
@@ -10043,8 +10095,8 @@ struct ResetsSettingsResponseBuilder {
   void add_save_mounting_reset(bool save_mounting_reset) {
     fbb_.AddElement<uint8_t>(ResetsSettingsResponse::VT_SAVE_MOUNTING_RESET, static_cast<uint8_t>(save_mounting_reset), 0);
   }
-  void add_reset_positional_head_attitude(bool reset_positional_head_attitude) {
-    fbb_.AddElement<uint8_t>(ResetsSettingsResponse::VT_RESET_POSITIONAL_HEAD_ATTITUDE, static_cast<uint8_t>(reset_positional_head_attitude), 0);
+  void add_reset_hmd_attitude(bool reset_hmd_attitude) {
+    fbb_.AddElement<uint8_t>(ResetsSettingsResponse::VT_RESET_HMD_ATTITUDE, static_cast<uint8_t>(reset_hmd_attitude), 0);
   }
   explicit ResetsSettingsResponseBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -10063,10 +10115,10 @@ inline flatbuffers::Offset<ResetsSettingsResponse> CreateResetsSettingsResponse(
     solarxr_protocol::rpc::ArmsResetMode arms_reset_mode = solarxr_protocol::rpc::ArmsResetMode::BACK,
     float yaw_reset_smooth_time = 0.0f,
     bool save_mounting_reset = false,
-    bool reset_positional_head_attitude = false) {
+    bool reset_hmd_attitude = false) {
   ResetsSettingsResponseBuilder builder_(_fbb);
   builder_.add_yaw_reset_smooth_time(yaw_reset_smooth_time);
-  builder_.add_reset_positional_head_attitude(reset_positional_head_attitude);
+  builder_.add_reset_hmd_attitude(reset_hmd_attitude);
   builder_.add_save_mounting_reset(save_mounting_reset);
   builder_.add_arms_reset_mode(arms_reset_mode);
   builder_.add_reset_mounting_feet(reset_mounting_feet);
@@ -10080,7 +10132,7 @@ struct ChangeResetsSettingsRequest FLATBUFFERS_FINAL_CLASS : private flatbuffers
     VT_ARMS_RESET_MODE = 6,
     VT_YAW_RESET_SMOOTH_TIME = 8,
     VT_SAVE_MOUNTING_RESET = 10,
-    VT_RESET_POSITIONAL_HEAD_ATTITUDE = 12
+    VT_RESET_HMD_ATTITUDE = 12
   };
   /// Makes it so feet will be always be mounting reset even when passing no BodyPart
   bool reset_mounting_feet() const {
@@ -10097,9 +10149,9 @@ struct ChangeResetsSettingsRequest FLATBUFFERS_FINAL_CLASS : private flatbuffers
   bool save_mounting_reset() const {
     return GetField<uint8_t>(VT_SAVE_MOUNTING_RESET, 0) != 0;
   }
-  /// Reset positional head trackers pitch and roll
-  bool reset_positional_head_attitude() const {
-    return GetField<uint8_t>(VT_RESET_POSITIONAL_HEAD_ATTITUDE, 0) != 0;
+  /// Reset VR headset's pitch and roll
+  bool reset_hmd_attitude() const {
+    return GetField<uint8_t>(VT_RESET_HMD_ATTITUDE, 0) != 0;
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
@@ -10107,7 +10159,7 @@ struct ChangeResetsSettingsRequest FLATBUFFERS_FINAL_CLASS : private flatbuffers
            VerifyField<uint8_t>(verifier, VT_ARMS_RESET_MODE, 1) &&
            VerifyField<float>(verifier, VT_YAW_RESET_SMOOTH_TIME, 4) &&
            VerifyField<uint8_t>(verifier, VT_SAVE_MOUNTING_RESET, 1) &&
-           VerifyField<uint8_t>(verifier, VT_RESET_POSITIONAL_HEAD_ATTITUDE, 1) &&
+           VerifyField<uint8_t>(verifier, VT_RESET_HMD_ATTITUDE, 1) &&
            verifier.EndTable();
   }
 };
@@ -10128,8 +10180,8 @@ struct ChangeResetsSettingsRequestBuilder {
   void add_save_mounting_reset(bool save_mounting_reset) {
     fbb_.AddElement<uint8_t>(ChangeResetsSettingsRequest::VT_SAVE_MOUNTING_RESET, static_cast<uint8_t>(save_mounting_reset), 0);
   }
-  void add_reset_positional_head_attitude(bool reset_positional_head_attitude) {
-    fbb_.AddElement<uint8_t>(ChangeResetsSettingsRequest::VT_RESET_POSITIONAL_HEAD_ATTITUDE, static_cast<uint8_t>(reset_positional_head_attitude), 0);
+  void add_reset_hmd_attitude(bool reset_hmd_attitude) {
+    fbb_.AddElement<uint8_t>(ChangeResetsSettingsRequest::VT_RESET_HMD_ATTITUDE, static_cast<uint8_t>(reset_hmd_attitude), 0);
   }
   explicit ChangeResetsSettingsRequestBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -10148,10 +10200,10 @@ inline flatbuffers::Offset<ChangeResetsSettingsRequest> CreateChangeResetsSettin
     solarxr_protocol::rpc::ArmsResetMode arms_reset_mode = solarxr_protocol::rpc::ArmsResetMode::BACK,
     float yaw_reset_smooth_time = 0.0f,
     bool save_mounting_reset = false,
-    bool reset_positional_head_attitude = false) {
+    bool reset_hmd_attitude = false) {
   ChangeResetsSettingsRequestBuilder builder_(_fbb);
   builder_.add_yaw_reset_smooth_time(yaw_reset_smooth_time);
-  builder_.add_reset_positional_head_attitude(reset_positional_head_attitude);
+  builder_.add_reset_hmd_attitude(reset_hmd_attitude);
   builder_.add_save_mounting_reset(save_mounting_reset);
   builder_.add_arms_reset_mode(arms_reset_mode);
   builder_.add_reset_mounting_feet(reset_mounting_feet);
@@ -15360,7 +15412,9 @@ struct VRCOSCStatusChangeResponse FLATBUFFERS_FINAL_CLASS : private flatbuffers:
     VT_OSCQUERY_STATE = 24,
     VT_OSCQUERY_ADVERTISED_PORT = 26,
     VT_OSCQUERY_ERROR = 28,
-    VT_DISCOVERED_TARGETS = 30
+    VT_DISCOVERED_TARGETS = 30,
+    VT_LAST_RECEIVED_TRACKING_MILLIS = 32,
+    VT_TRACKING_DATA_STATE = 34
   };
   solarxr_protocol::rpc::VRCOSCInputState input_state() const {
     return static_cast<solarxr_protocol::rpc::VRCOSCInputState>(GetField<uint8_t>(VT_INPUT_STATE, 0));
@@ -15404,6 +15458,12 @@ struct VRCOSCStatusChangeResponse FLATBUFFERS_FINAL_CLASS : private flatbuffers:
   const flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::VRCOSCDiscoveredTarget>> *discovered_targets() const {
     return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::VRCOSCDiscoveredTarget>> *>(VT_DISCOVERED_TARGETS);
   }
+  flatbuffers::Optional<uint64_t> last_received_tracking_millis() const {
+    return GetOptional<uint64_t, uint64_t>(VT_LAST_RECEIVED_TRACKING_MILLIS);
+  }
+  solarxr_protocol::rpc::VRCOSCTrackingDataState tracking_data_state() const {
+    return static_cast<solarxr_protocol::rpc::VRCOSCTrackingDataState>(GetField<uint8_t>(VT_TRACKING_DATA_STATE, 0));
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint8_t>(verifier, VT_INPUT_STATE, 1) &&
@@ -15426,6 +15486,8 @@ struct VRCOSCStatusChangeResponse FLATBUFFERS_FINAL_CLASS : private flatbuffers:
            VerifyOffset(verifier, VT_DISCOVERED_TARGETS) &&
            verifier.VerifyVector(discovered_targets()) &&
            verifier.VerifyVectorOfTables(discovered_targets()) &&
+           VerifyField<uint64_t>(verifier, VT_LAST_RECEIVED_TRACKING_MILLIS, 8) &&
+           VerifyField<uint8_t>(verifier, VT_TRACKING_DATA_STATE, 1) &&
            verifier.EndTable();
   }
 };
@@ -15476,6 +15538,12 @@ struct VRCOSCStatusChangeResponseBuilder {
   void add_discovered_targets(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::VRCOSCDiscoveredTarget>>> discovered_targets) {
     fbb_.AddOffset(VRCOSCStatusChangeResponse::VT_DISCOVERED_TARGETS, discovered_targets);
   }
+  void add_last_received_tracking_millis(uint64_t last_received_tracking_millis) {
+    fbb_.AddElement<uint64_t>(VRCOSCStatusChangeResponse::VT_LAST_RECEIVED_TRACKING_MILLIS, last_received_tracking_millis);
+  }
+  void add_tracking_data_state(solarxr_protocol::rpc::VRCOSCTrackingDataState tracking_data_state) {
+    fbb_.AddElement<uint8_t>(VRCOSCStatusChangeResponse::VT_TRACKING_DATA_STATE, static_cast<uint8_t>(tracking_data_state), 0);
+  }
   explicit VRCOSCStatusChangeResponseBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -15502,8 +15570,11 @@ inline flatbuffers::Offset<VRCOSCStatusChangeResponse> CreateVRCOSCStatusChangeR
     solarxr_protocol::rpc::VRCOSCOscQueryState oscquery_state = solarxr_protocol::rpc::VRCOSCOscQueryState::DISABLED,
     flatbuffers::Optional<uint16_t> oscquery_advertised_port = flatbuffers::nullopt,
     flatbuffers::Offset<flatbuffers::String> oscquery_error = 0,
-    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::VRCOSCDiscoveredTarget>>> discovered_targets = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::VRCOSCDiscoveredTarget>>> discovered_targets = 0,
+    flatbuffers::Optional<uint64_t> last_received_tracking_millis = flatbuffers::nullopt,
+    solarxr_protocol::rpc::VRCOSCTrackingDataState tracking_data_state = solarxr_protocol::rpc::VRCOSCTrackingDataState::UNKNOWN) {
   VRCOSCStatusChangeResponseBuilder builder_(_fbb);
+  if(last_received_tracking_millis) { builder_.add_last_received_tracking_millis(*last_received_tracking_millis); }
   if(last_frame_sent_millis) { builder_.add_last_frame_sent_millis(*last_frame_sent_millis); }
   if(last_received_input_millis) { builder_.add_last_received_input_millis(*last_received_input_millis); }
   builder_.add_discovered_targets(discovered_targets);
@@ -15514,6 +15585,7 @@ inline flatbuffers::Offset<VRCOSCStatusChangeResponse> CreateVRCOSCStatusChangeR
   if(oscquery_advertised_port) { builder_.add_oscquery_advertised_port(*oscquery_advertised_port); }
   if(target_port) { builder_.add_target_port(*target_port); }
   if(input_port) { builder_.add_input_port(*input_port); }
+  builder_.add_tracking_data_state(tracking_data_state);
   builder_.add_oscquery_state(oscquery_state);
   builder_.add_target_source(target_source);
   builder_.add_output_state(output_state);
@@ -15536,7 +15608,9 @@ inline flatbuffers::Offset<VRCOSCStatusChangeResponse> CreateVRCOSCStatusChangeR
     solarxr_protocol::rpc::VRCOSCOscQueryState oscquery_state = solarxr_protocol::rpc::VRCOSCOscQueryState::DISABLED,
     flatbuffers::Optional<uint16_t> oscquery_advertised_port = flatbuffers::nullopt,
     const char *oscquery_error = nullptr,
-    const std::vector<flatbuffers::Offset<solarxr_protocol::rpc::VRCOSCDiscoveredTarget>> *discovered_targets = nullptr) {
+    const std::vector<flatbuffers::Offset<solarxr_protocol::rpc::VRCOSCDiscoveredTarget>> *discovered_targets = nullptr,
+    flatbuffers::Optional<uint64_t> last_received_tracking_millis = flatbuffers::nullopt,
+    solarxr_protocol::rpc::VRCOSCTrackingDataState tracking_data_state = solarxr_protocol::rpc::VRCOSCTrackingDataState::UNKNOWN) {
   auto input_error__ = input_error ? _fbb.CreateString(input_error) : 0;
   auto output_error__ = output_error ? _fbb.CreateString(output_error) : 0;
   auto target_address__ = target_address ? _fbb.CreateString(target_address) : 0;
@@ -15557,7 +15631,9 @@ inline flatbuffers::Offset<VRCOSCStatusChangeResponse> CreateVRCOSCStatusChangeR
       oscquery_state,
       oscquery_advertised_port,
       oscquery_error__,
-      discovered_targets__);
+      discovered_targets__,
+      last_received_tracking_millis,
+      tracking_data_state);
 }
 
 struct VRCOSCSettingsRequest FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
