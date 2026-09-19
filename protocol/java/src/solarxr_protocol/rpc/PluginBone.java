@@ -7,9 +7,6 @@ import java.lang.*;
 import java.util.*;
 import com.google.flatbuffers.*;
 
-/**
- * Represents a generic stacked overlay bone registered by a plugin.
- */
 @SuppressWarnings("unused")
 public final class PluginBone extends Table {
   public static void ValidateVersion() { Constants.FLATBUFFERS_22_10_26(); }
@@ -18,46 +15,25 @@ public final class PluginBone extends Table {
   public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
   public PluginBone __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  /**
-   * Unique identifier for this plugin bone.
-   */
   public String id() { int o = __offset(4); return o != 0 ? __string(o + bb_pos) : null; }
   public ByteBuffer idAsByteBuffer() { return __vector_as_bytebuffer(4, 1); }
   public ByteBuffer idInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 4, 1); }
-  /**
-   * Display name of the bone (e.g., "LeftHand", "RightFoot").
-   */
   public String name() { int o = __offset(6); return o != 0 ? __string(o + bb_pos) : null; }
   public ByteBuffer nameAsByteBuffer() { return __vector_as_bytebuffer(6, 1); }
   public ByteBuffer nameInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 6, 1); }
-  /**
-   * The parent bone ID - can be a standard BodyPart name or another PluginBone's id.
-   */
   public String parentBoneId() { int o = __offset(8); return o != 0 ? __string(o + bb_pos) : null; }
   public ByteBuffer parentBoneIdAsByteBuffer() { return __vector_as_bytebuffer(8, 1); }
   public ByteBuffer parentBoneIdInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 8, 1); }
-  /**
-   * Local position relative to the parent bone in meters.
-   */
   public float localPositionX() { int o = __offset(10); return o != 0 ? bb.getFloat(o + bb_pos) : 0.0f; }
   public float localPositionY() { int o = __offset(12); return o != 0 ? bb.getFloat(o + bb_pos) : 0.0f; }
   public float localPositionZ() { int o = __offset(14); return o != 0 ? bb.getFloat(o + bb_pos) : 0.0f; }
-  /**
-   * Local rotation as a quaternion (x, y, z, w) relative to the parent bone.
-   */
   public float localRotationX() { int o = __offset(16); return o != 0 ? bb.getFloat(o + bb_pos) : 0.0f; }
   public float localRotationY() { int o = __offset(18); return o != 0 ? bb.getFloat(o + bb_pos) : 0.0f; }
   public float localRotationZ() { int o = __offset(20); return o != 0 ? bb.getFloat(o + bb_pos) : 0.0f; }
   public float localRotationW() { int o = __offset(22); return o != 0 ? bb.getFloat(o + bb_pos) : 1.0f; }
-  /**
-   * VMC bone name for virtual machine compatibility.
-   */
   public String vmcBoneName() { int o = __offset(24); return o != 0 ? __string(o + bb_pos) : null; }
   public ByteBuffer vmcBoneNameAsByteBuffer() { return __vector_as_bytebuffer(24, 1); }
   public ByteBuffer vmcBoneNameInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 24, 1); }
-  /**
-   * VRChat OSC parameter name for this bone.
-   */
   public String vrcOscParamName() { int o = __offset(26); return o != 0 ? __string(o + bb_pos) : null; }
   public ByteBuffer vrcOscParamNameAsByteBuffer() { return __vector_as_bytebuffer(26, 1); }
   public ByteBuffer vrcOscParamNameInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 26, 1); }

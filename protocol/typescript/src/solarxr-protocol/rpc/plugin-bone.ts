@@ -4,9 +4,6 @@ import * as flatbuffers from 'flatbuffers';
 
 
 
-/**
- * Represents a generic stacked overlay bone registered by a plugin.
- */
 export class PluginBone implements flatbuffers.IUnpackableObject<PluginBoneT> {
   bb: flatbuffers.ByteBuffer|null = null;
   bb_pos = 0;
@@ -25,9 +22,6 @@ static getSizePrefixedRootAsPluginBone(bb:flatbuffers.ByteBuffer, obj?:PluginBon
   return (obj || new PluginBone()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 }
 
-/**
- * Unique identifier for this plugin bone.
- */
 id():string|null
 id(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
 id(optionalEncoding?:any):string|Uint8Array|null {
@@ -35,9 +29,6 @@ id(optionalEncoding?:any):string|Uint8Array|null {
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
-/**
- * Display name of the bone (e.g., "LeftHand", "RightFoot").
- */
 name():string|null
 name(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
 name(optionalEncoding?:any):string|Uint8Array|null {
@@ -45,9 +36,6 @@ name(optionalEncoding?:any):string|Uint8Array|null {
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
-/**
- * The parent bone ID - can be a standard BodyPart name or another PluginBone's id.
- */
 parentBoneId():string|null
 parentBoneId(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
 parentBoneId(optionalEncoding?:any):string|Uint8Array|null {
@@ -55,9 +43,6 @@ parentBoneId(optionalEncoding?:any):string|Uint8Array|null {
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
-/**
- * Local position relative to the parent bone in meters.
- */
 localPositionX():number {
   const offset = this.bb!.__offset(this.bb_pos, 10);
   return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 0.0;
@@ -73,9 +58,6 @@ localPositionZ():number {
   return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 0.0;
 }
 
-/**
- * Local rotation as a quaternion (x, y, z, w) relative to the parent bone.
- */
 localRotationX():number {
   const offset = this.bb!.__offset(this.bb_pos, 16);
   return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 0.0;
@@ -96,9 +78,6 @@ localRotationW():number {
   return offset ? this.bb!.readFloat32(this.bb_pos + offset) : 1.0;
 }
 
-/**
- * VMC bone name for virtual machine compatibility.
- */
 vmcBoneName():string|null
 vmcBoneName(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
 vmcBoneName(optionalEncoding?:any):string|Uint8Array|null {
@@ -106,9 +85,6 @@ vmcBoneName(optionalEncoding?:any):string|Uint8Array|null {
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
-/**
- * VRChat OSC parameter name for this bone.
- */
 vrcOscParamName():string|null
 vrcOscParamName(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
 vrcOscParamName(optionalEncoding?:any):string|Uint8Array|null {

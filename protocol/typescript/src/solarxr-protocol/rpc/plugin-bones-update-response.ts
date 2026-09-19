@@ -5,9 +5,6 @@ import * as flatbuffers from 'flatbuffers';
 import { PluginBone, PluginBoneT } from '../../solarxr-protocol/rpc/plugin-bone.js';
 
 
-/**
- * RPC response containing an array of plugin bones.
- */
 export class PluginBonesUpdateResponse implements flatbuffers.IUnpackableObject<PluginBonesUpdateResponseT> {
   bb: flatbuffers.ByteBuffer|null = null;
   bb_pos = 0;

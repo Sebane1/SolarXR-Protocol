@@ -8,9 +8,6 @@ import kotlin.Int
 import kotlin.String
 import kotlin.collections.List
 
-/**
- * Represents a generic stacked overlay bone registered by a plugin.
- */
 public data class PluginBone(
   public val id: String? = null,
   public val name: String? = null,
@@ -89,9 +86,6 @@ public data class PluginBone(
   }
 }
 
-/**
- * RPC response containing an array of plugin bones.
- */
 public data class PluginBonesUpdateResponse(
   public val bones: List<PluginBone>? = null,
 ) : RpcMessage {

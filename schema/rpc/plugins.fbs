@@ -1,31 +1,22 @@
 namespace solarxr_protocol.rpc;
 
-/// Represents a generic stacked overlay bone registered by a plugin.
 table PluginBone {
-    /// Unique identifier for this plugin bone.
     id: string;
-    /// Display name of the bone (e.g., "LeftHand", "RightFoot").
     name: string;
-    /// The parent bone ID - can be a standard BodyPart name or another PluginBone's id.
     parent_bone_id: string;
-    /// Local position relative to the parent bone in meters.
     local_position_x: float32 = 0.0;
     local_position_y: float32 = 0.0;
     local_position_z: float32 = 0.0;
-    /// Local rotation as a quaternion (x, y, z, w) relative to the parent bone.
     local_rotation_x: float32 = 0.0;
     local_rotation_y: float32 = 0.0;
     local_rotation_z: float32 = 0.0;
     local_rotation_w: float32 = 1.0;
-    /// VMC bone name for virtual machine compatibility.
     vmc_bone_name: string;
-    /// VRChat OSC parameter name for this bone.
     vrc_osc_param_name: string;
     /// URL to a model file (e.g., glTF/GLB) that can be attached to this bone.
     model_url: string;
 }
 
-/// RPC response containing an array of plugin bones.
 table PluginBonesUpdateResponse {
     bones: [PluginBone];
 }

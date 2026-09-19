@@ -9116,7 +9116,6 @@ inline flatbuffers::Offset<OverlayDisplayModeResponse> CreateOverlayDisplayModeR
   return builder_.Finish();
 }
 
-/// Represents a generic stacked overlay bone registered by a plugin.
 struct PluginBone FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef PluginBoneBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
@@ -9134,19 +9133,15 @@ struct PluginBone FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_VRC_OSC_PARAM_NAME = 26,
     VT_MODEL_URL = 28
   };
-  /// Unique identifier for this plugin bone.
   const flatbuffers::String *id() const {
     return GetPointer<const flatbuffers::String *>(VT_ID);
   }
-  /// Display name of the bone (e.g., "LeftHand", "RightFoot").
   const flatbuffers::String *name() const {
     return GetPointer<const flatbuffers::String *>(VT_NAME);
   }
-  /// The parent bone ID - can be a standard BodyPart name or another PluginBone's id.
   const flatbuffers::String *parent_bone_id() const {
     return GetPointer<const flatbuffers::String *>(VT_PARENT_BONE_ID);
   }
-  /// Local position relative to the parent bone in meters.
   float local_position_x() const {
     return GetField<float>(VT_LOCAL_POSITION_X, 0.0f);
   }
@@ -9156,7 +9151,6 @@ struct PluginBone FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   float local_position_z() const {
     return GetField<float>(VT_LOCAL_POSITION_Z, 0.0f);
   }
-  /// Local rotation as a quaternion (x, y, z, w) relative to the parent bone.
   float local_rotation_x() const {
     return GetField<float>(VT_LOCAL_ROTATION_X, 0.0f);
   }
@@ -9169,11 +9163,9 @@ struct PluginBone FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   float local_rotation_w() const {
     return GetField<float>(VT_LOCAL_ROTATION_W, 1.0f);
   }
-  /// VMC bone name for virtual machine compatibility.
   const flatbuffers::String *vmc_bone_name() const {
     return GetPointer<const flatbuffers::String *>(VT_VMC_BONE_NAME);
   }
-  /// VRChat OSC parameter name for this bone.
   const flatbuffers::String *vrc_osc_param_name() const {
     return GetPointer<const flatbuffers::String *>(VT_VRC_OSC_PARAM_NAME);
   }
@@ -9330,7 +9322,6 @@ inline flatbuffers::Offset<PluginBone> CreatePluginBoneDirect(
       model_url__);
 }
 
-/// RPC response containing an array of plugin bones.
 struct PluginBonesUpdateResponse FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef PluginBonesUpdateResponseBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {

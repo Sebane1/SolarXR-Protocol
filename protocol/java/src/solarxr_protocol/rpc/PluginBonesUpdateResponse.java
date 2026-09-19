@@ -7,9 +7,6 @@ import java.lang.*;
 import java.util.*;
 import com.google.flatbuffers.*;
 
-/**
- * RPC response containing an array of plugin bones.
- */
 @SuppressWarnings("unused")
 public final class PluginBonesUpdateResponse extends Table {
   public static void ValidateVersion() { Constants.FLATBUFFERS_22_10_26(); }

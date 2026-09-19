@@ -12,7 +12,6 @@ use super::*;
 pub enum PluginBonesUpdateResponseOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-/// RPC response containing an array of plugin bones.
 pub struct PluginBonesUpdateResponse<'a> {
   pub _tab: flatbuffers::Table<'a>,
 }

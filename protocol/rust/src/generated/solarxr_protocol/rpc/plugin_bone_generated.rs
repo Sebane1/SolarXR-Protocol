@@ -12,7 +12,6 @@ use super::*;
 pub enum PluginBoneOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-/// Represents a generic stacked overlay bone registered by a plugin.
 pub struct PluginBone<'a> {
   pub _tab: flatbuffers::Table<'a>,
 }
@@ -67,7 +66,6 @@ impl<'a> PluginBone<'a> {
   }
 
 
-  /// Unique identifier for this plugin bone.
   #[inline]
   pub fn id(&self) -> Option<&'a str> {
     // Safety:
@@ -75,7 +73,6 @@ impl<'a> PluginBone<'a> {
     // which contains a valid value in this slot
     unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(PluginBone::VT_ID, None)}
   }
-  /// Display name of the bone (e.g., "LeftHand", "RightFoot").
   #[inline]
   pub fn name(&self) -> Option<&'a str> {
     // Safety:
@@ -83,7 +80,6 @@ impl<'a> PluginBone<'a> {
     // which contains a valid value in this slot
     unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(PluginBone::VT_NAME, None)}
   }
-  /// The parent bone ID - can be a standard BodyPart name or another PluginBone's id.
   #[inline]
   pub fn parent_bone_id(&self) -> Option<&'a str> {
     // Safety:
@@ -91,7 +87,6 @@ impl<'a> PluginBone<'a> {
     // which contains a valid value in this slot
     unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(PluginBone::VT_PARENT_BONE_ID, None)}
   }
-  /// Local position relative to the parent bone in meters.
   #[inline]
   pub fn local_position_x(&self) -> f32 {
     // Safety:
@@ -113,7 +108,6 @@ impl<'a> PluginBone<'a> {
     // which contains a valid value in this slot
     unsafe { self._tab.get::<f32>(PluginBone::VT_LOCAL_POSITION_Z, Some(0.0)).unwrap()}
   }
-  /// Local rotation as a quaternion (x, y, z, w) relative to the parent bone.
   #[inline]
   pub fn local_rotation_x(&self) -> f32 {
     // Safety:
@@ -142,7 +136,6 @@ impl<'a> PluginBone<'a> {
     // which contains a valid value in this slot
     unsafe { self._tab.get::<f32>(PluginBone::VT_LOCAL_ROTATION_W, Some(1.0)).unwrap()}
   }
-  /// VMC bone name for virtual machine compatibility.
   #[inline]
   pub fn vmc_bone_name(&self) -> Option<&'a str> {
     // Safety:
@@ -150,7 +143,6 @@ impl<'a> PluginBone<'a> {
     // which contains a valid value in this slot
     unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<&str>>(PluginBone::VT_VMC_BONE_NAME, None)}
   }
-  /// VRChat OSC parameter name for this bone.
   #[inline]
   pub fn vrc_osc_param_name(&self) -> Option<&'a str> {
     // Safety:
