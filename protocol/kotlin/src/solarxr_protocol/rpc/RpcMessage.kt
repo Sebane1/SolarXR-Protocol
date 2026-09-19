@@ -92,7 +92,40 @@ class RpcMessage private constructor() {
         const val OpenUriRequest: UByte = 84u
         const val OpenUriResponse: UByte = 85u
         const val EnableSteamVRDriverRequest: UByte = 86u
-        val names : Array<String> = arrayOf("NONE", "HeartbeatRequest", "HeartbeatResponse", "ResetRequest", "ResetResponse", "AssignTrackerRequest", "SettingsRequest", "SettingsResponse", "ChangeSettingsRequest", "ClearDriftCompensationRequest", "RecordBVHRequest", "RecordBVHStatus", "SkeletonConfigRequest", "ChangeSkeletonConfigRequest", "SkeletonResetAllRequest", "SkeletonConfigResponse", "OpenSerialRequest", "CloseSerialRequest", "SetWifiRequest", "SerialUpdateResponse", "AutoBoneProcessRequest", "AutoBoneProcessStatusResponse", "AutoBoneEpochResponse", "OverlayDisplayModeRequest", "OverlayDisplayModeChangeRequest", "OverlayDisplayModeResponse", "SerialTrackerRebootRequest", "SerialTrackerGetInfoRequest", "SerialTrackerFactoryResetRequest", "SerialDevicesRequest", "SerialDevicesResponse", "NewSerialDeviceResponse", "StartWifiProvisioningRequest", "StopWifiProvisioningRequest", "WifiProvisioningStatusResponse", "ServerInfosRequest", "ServerInfosResponse", "LegTweaksTmpChange", "LegTweaksTmpClear", "TapDetectionSetupNotification", "SetPauseTrackingRequest", "StatusSystemRequest", "StatusSystemResponse", "StatusSystemUpdate", "StatusSystemFixed", "ClearMountingResetRequest", "HeightRequest", "HeightResponse", "AutoBoneApplyRequest", "AutoBoneStopRecordingRequest", "AutoBoneCancelRecordingRequest", "SaveFileNotification", "TrackingPauseStateRequest", "TrackingPauseStateResponse", "SerialTrackerGetWifiScanRequest", "UnknownDeviceHandshakeNotification", "AddUnknownDeviceRequest", "ForgetDeviceRequest", "FirmwareUpdateRequest", "FirmwareUpdateStatusResponse", "FirmwareUpdateStopQueuesRequest", "SettingsResetRequest", "MagToggleRequest", "MagToggleResponse", "ChangeMagToggleRequest", "RecordBVHStatusRequest", "VRCConfigStateRequest", "VRCConfigStateChangeResponse", "EnableStayAlignedRequest", "DetectStayAlignedRelaxedPoseRequest", "ResetStayAlignedRelaxedPoseRequest", "SerialTrackerCustomCommandRequest", "VRCConfigSettingToggleMute", "TrackingChecklistRequest", "TrackingChecklistResponse", "IgnoreTrackingChecklistStepRequest", "StartUserHeightCalibration", "CancelUserHeightCalibration", "UserHeightRecordingStatusResponse", "KeybindRequest", "ChangeKeybindRequest", "KeybindResponse", "InstalledInfoRequest", "InstalledInfoResponse", "OpenUriRequest", "OpenUriResponse", "EnableSteamVRDriverRequest")
+        // Plugin bones RPC messages - added for plugin support
+        const val GetPluginBonesRequest: UByte = 134u
+        const val GetPluginBonesResponse: UByte = 135u
+        val names : Array<String> = arrayOf(
+            "NONE", "HeartbeatRequest", "HeartbeatResponse", "ResetRequest", "ResetResponse", 
+            "AssignTrackerRequest", "SettingsRequest", "SettingsResponse", "ChangeSettingsRequest", 
+            "ClearDriftCompensationRequest", "RecordBVHRequest", "RecordBVHStatus", 
+            "SkeletonConfigRequest", "ChangeSkeletonConfigRequest", "SkeletonResetAllRequest", 
+            "SkeletonConfigResponse", "OpenSerialRequest", "CloseSerialRequest", "SetWifiRequest", 
+            "SerialUpdateResponse", "AutoBoneProcessRequest", "AutoBoneProcessStatusResponse", 
+            "AutoBoneEpochResponse", "OverlayDisplayModeRequest", "OverlayDisplayModeChangeRequest", 
+            "OverlayDisplayModeResponse", "SerialTrackerRebootRequest", "SerialTrackerGetInfoRequest", 
+            "SerialTrackerFactoryResetRequest", "SerialDevicesRequest", "SerialDevicesResponse", 
+            "NewSerialDeviceResponse", "StartWifiProvisioningRequest", "StopWifiProvisioningRequest", 
+            "WifiProvisioningStatusResponse", "ServerInfosRequest", "ServerInfosResponse", 
+            "LegTweaksTmpChange", "LegTweaksTmpClear", "TapDetectionSetupNotification", 
+            "SetPauseTrackingRequest", "StatusSystemRequest", "StatusSystemResponse", 
+            "StatusSystemUpdate", "StatusSystemFixed", "ClearMountingResetRequest", 
+            "HeightRequest", "HeightResponse", "AutoBoneApplyRequest", "AutoBoneStopRecordingRequest", 
+            "AutoBoneCancelRecordingRequest", "SaveFileNotification", "TrackingPauseStateRequest", 
+            "TrackingPauseStateResponse", "SerialTrackerGetWifiScanRequest", 
+            "UnknownDeviceHandshakeNotification", "AddUnknownDeviceRequest", "ForgetDeviceRequest", 
+            "FirmwareUpdateRequest", "FirmwareUpdateStatusResponse", "FirmwareUpdateStopQueuesRequest", 
+            "SettingsResetRequest", "MagToggleRequest", "MagToggleResponse", "ChangeMagToggleRequest", 
+            "RecordBVHStatusRequest", "VRCConfigStateRequest", "VRCConfigStateChangeResponse", 
+            "EnableStayAlignedRequest", "DetectStayAlignedRelaxedPoseRequest", 
+            "ResetStayAlignedRelaxedPoseRequest", "SerialTrackerCustomCommandRequest", 
+            "VRCConfigSettingToggleMute", "TrackingChecklistRequest", "TrackingChecklistResponse", 
+            "IgnoreTrackingChecklistStepRequest", "StartUserHeightCalibration", 
+            "CancelUserHeightCalibration", "UserHeightRecordingStatusResponse", "KeybindRequest", 
+            "ChangeKeybindRequest", "KeybindResponse", "InstalledInfoRequest", "InstalledInfoResponse", 
+            "OpenUriRequest", "OpenUriResponse", "EnableSteamVRDriverRequest", 
+            "GetPluginBonesRequest", "GetPluginBonesResponse"
+        )
         @JvmStatic
         fun name(e: Int) : String = names[e]
     }

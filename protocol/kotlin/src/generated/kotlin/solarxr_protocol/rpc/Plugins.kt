@@ -8,6 +8,49 @@ import kotlin.Int
 import kotlin.String
 import kotlin.collections.List
 
+/**
+ * Request to get currently registered plugin bones from loaded plugins.
+ */
+public class GetPluginBonesRequest : RpcMessage {
+  public fun encode(builder: FlatBufferWriter): Int {
+    builder.startTable(0)
+    return builder.endTable()
+  }
+
+  public companion object {
+    public fun decode(bb: FlatBufferReader, tableOffset: Int): GetPluginBonesRequest = GetPluginBonesRequest()
+  }
+}
+
+/**
+ * Response containing the list of plugin bones.
+ * Each PluginBone represents a virtual bone exposed by a plugin for tracker assignment or other purposes.
+ */
+public data class GetPluginBonesResponse(
+  public val bones: List<PluginBone>? = null,
+) : RpcMessage {
+  public fun encode(builder: FlatBufferWriter): Int {
+    val __off_bones = bones?.let { builder.createVectorOfTables(it.map { e -> e.encode(builder) }.toIntArray()) }
+
+    builder.startTable(1)
+    __off_bones?.let { builder.addOffset(0, it, 0) }
+    return builder.endTable()
+  }
+
+  public companion object {
+    public fun decode(bb: FlatBufferReader, tableOffset: Int): GetPluginBonesResponse {
+      val vtableOffset = tableOffset - bb.getInt(tableOffset)
+      val vtableSize = bb.getShort(vtableOffset).toInt()
+
+      val __offset_bones = if (vtableSize > 4) bb.getShort(vtableOffset + 4).toInt() else 0
+
+      return GetPluginBonesResponse(
+              bones = if (__offset_bones != 0) { val vecOff = tableOffset + __offset_bones + bb.getInt(tableOffset + __offset_bones); val len = bb.getInt(vecOff); (0 until len).mapNotNull { i -> if (bb.getInt(vecOff + 4 + i * 4) != 0) PluginBone.decode(bb, vecOff + 4 + i * 4 + bb.getInt(vecOff + 4 + i * 4)) else null } } else null
+          )
+    }
+  }
+}
+
 public data class PluginBone(
   public val id: String? = null,
   public val name: String? = null,

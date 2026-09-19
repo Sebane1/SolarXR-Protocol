@@ -248,6 +248,12 @@ struct OverlayDisplayModeChangeRequestBuilder;
 struct OverlayDisplayModeResponse;
 struct OverlayDisplayModeResponseBuilder;
 
+struct GetPluginBonesRequest;
+struct GetPluginBonesRequestBuilder;
+
+struct GetPluginBonesResponse;
+struct GetPluginBonesResponseBuilder;
+
 struct PluginBone;
 struct PluginBoneBuilder;
 
@@ -3119,11 +3125,15 @@ enum class RpcMessage : uint8_t {
   CustomOSCSettingsResponse = 131,
   ChangeCustomOSCSettingsRequest = 132,
   PluginBonesUpdateResponse = 133,
+  /// Request to get currently registered plugin bones from loaded plugins.
+  GetPluginBonesRequest = 134,
+  /// Response containing the list of plugin bones.
+  GetPluginBonesResponse = 135,
   MIN = NONE,
-  MAX = PluginBonesUpdateResponse
+  MAX = GetPluginBonesResponse
 };
 
-inline const RpcMessage (&EnumValuesRpcMessage())[134] {
+inline const RpcMessage (&EnumValuesRpcMessage())[136] {
   static const RpcMessage values[] = {
     RpcMessage::NONE,
     RpcMessage::HeartbeatRequest,
@@ -3258,13 +3268,15 @@ inline const RpcMessage (&EnumValuesRpcMessage())[134] {
     RpcMessage::CustomOSCSettingsRequest,
     RpcMessage::CustomOSCSettingsResponse,
     RpcMessage::ChangeCustomOSCSettingsRequest,
-    RpcMessage::PluginBonesUpdateResponse
+    RpcMessage::PluginBonesUpdateResponse,
+    RpcMessage::GetPluginBonesRequest,
+    RpcMessage::GetPluginBonesResponse
   };
   return values;
 }
 
 inline const char * const *EnumNamesRpcMessage() {
-  static const char * const names[135] = {
+  static const char * const names[137] = {
     "NONE",
     "HeartbeatRequest",
     "HeartbeatResponse",
@@ -3399,13 +3411,15 @@ inline const char * const *EnumNamesRpcMessage() {
     "CustomOSCSettingsResponse",
     "ChangeCustomOSCSettingsRequest",
     "PluginBonesUpdateResponse",
+    "GetPluginBonesRequest",
+    "GetPluginBonesResponse",
     nullptr
   };
   return names;
 }
 
 inline const char *EnumNameRpcMessage(RpcMessage e) {
-  if (flatbuffers::IsOutRange(e, RpcMessage::NONE, RpcMessage::PluginBonesUpdateResponse)) return "";
+  if (flatbuffers::IsOutRange(e, RpcMessage::NONE, RpcMessage::GetPluginBonesResponse)) return "";
   const size_t index = static_cast<size_t>(e);
   return EnumNamesRpcMessage()[index];
 }
@@ -3944,6 +3958,14 @@ template<> struct RpcMessageTraits<solarxr_protocol::rpc::ChangeCustomOSCSetting
 
 template<> struct RpcMessageTraits<solarxr_protocol::rpc::PluginBonesUpdateResponse> {
   static const RpcMessage enum_value = RpcMessage::PluginBonesUpdateResponse;
+};
+
+template<> struct RpcMessageTraits<solarxr_protocol::rpc::GetPluginBonesRequest> {
+  static const RpcMessage enum_value = RpcMessage::GetPluginBonesRequest;
+};
+
+template<> struct RpcMessageTraits<solarxr_protocol::rpc::GetPluginBonesResponse> {
+  static const RpcMessage enum_value = RpcMessage::GetPluginBonesResponse;
 };
 
 bool VerifyRpcMessage(flatbuffers::Verifier &verifier, const void *obj, RpcMessage type);
@@ -9114,6 +9136,92 @@ inline flatbuffers::Offset<OverlayDisplayModeResponse> CreateOverlayDisplayModeR
   builder_.add_is_mirrored(is_mirrored);
   builder_.add_is_visible(is_visible);
   return builder_.Finish();
+}
+
+/// Request to get currently registered plugin bones from loaded plugins.
+struct GetPluginBonesRequest FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  typedef GetPluginBonesRequestBuilder Builder;
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           verifier.EndTable();
+  }
+};
+
+struct GetPluginBonesRequestBuilder {
+  typedef GetPluginBonesRequest Table;
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  explicit GetPluginBonesRequestBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  flatbuffers::Offset<GetPluginBonesRequest> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<GetPluginBonesRequest>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<GetPluginBonesRequest> CreateGetPluginBonesRequest(
+    flatbuffers::FlatBufferBuilder &_fbb) {
+  GetPluginBonesRequestBuilder builder_(_fbb);
+  return builder_.Finish();
+}
+
+/// Response containing the list of plugin bones.
+/// Each PluginBone represents a virtual bone exposed by a plugin for tracker assignment or other purposes.
+struct GetPluginBonesResponse FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  typedef GetPluginBonesResponseBuilder Builder;
+  enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
+    VT_BONES = 4
+  };
+  /// List of PluginBone objects registered by loaded plugins.
+  /// Empty if no plugins have registered bones.
+  const flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>> *bones() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>> *>(VT_BONES);
+  }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyOffset(verifier, VT_BONES) &&
+           verifier.VerifyVector(bones()) &&
+           verifier.VerifyVectorOfTables(bones()) &&
+           verifier.EndTable();
+  }
+};
+
+struct GetPluginBonesResponseBuilder {
+  typedef GetPluginBonesResponse Table;
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_bones(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>>> bones) {
+    fbb_.AddOffset(GetPluginBonesResponse::VT_BONES, bones);
+  }
+  explicit GetPluginBonesResponseBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+        : fbb_(_fbb) {
+    start_ = fbb_.StartTable();
+  }
+  flatbuffers::Offset<GetPluginBonesResponse> Finish() {
+    const auto end = fbb_.EndTable(start_);
+    auto o = flatbuffers::Offset<GetPluginBonesResponse>(end);
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<GetPluginBonesResponse> CreateGetPluginBonesResponse(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>>> bones = 0) {
+  GetPluginBonesResponseBuilder builder_(_fbb);
+  builder_.add_bones(bones);
+  return builder_.Finish();
+}
+
+inline flatbuffers::Offset<GetPluginBonesResponse> CreateGetPluginBonesResponseDirect(
+    flatbuffers::FlatBufferBuilder &_fbb,
+    const std::vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>> *bones = nullptr) {
+  auto bones__ = bones ? _fbb.CreateVector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>>(*bones) : 0;
+  return solarxr_protocol::rpc::CreateGetPluginBonesResponse(
+      _fbb,
+      bones__);
 }
 
 struct PluginBone FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
@@ -16679,6 +16787,12 @@ struct RpcMessageHeader FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const solarxr_protocol::rpc::PluginBonesUpdateResponse *message_as_PluginBonesUpdateResponse() const {
     return message_type() == solarxr_protocol::rpc::RpcMessage::PluginBonesUpdateResponse ? static_cast<const solarxr_protocol::rpc::PluginBonesUpdateResponse *>(message()) : nullptr;
   }
+  const solarxr_protocol::rpc::GetPluginBonesRequest *message_as_GetPluginBonesRequest() const {
+    return message_type() == solarxr_protocol::rpc::RpcMessage::GetPluginBonesRequest ? static_cast<const solarxr_protocol::rpc::GetPluginBonesRequest *>(message()) : nullptr;
+  }
+  const solarxr_protocol::rpc::GetPluginBonesResponse *message_as_GetPluginBonesResponse() const {
+    return message_type() == solarxr_protocol::rpc::RpcMessage::GetPluginBonesResponse ? static_cast<const solarxr_protocol::rpc::GetPluginBonesResponse *>(message()) : nullptr;
+  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<uint32_t>(verifier, VT_TX_ID, 4) &&
@@ -17220,6 +17334,14 @@ template<> inline const solarxr_protocol::rpc::ChangeCustomOSCSettingsRequest *R
 
 template<> inline const solarxr_protocol::rpc::PluginBonesUpdateResponse *RpcMessageHeader::message_as<solarxr_protocol::rpc::PluginBonesUpdateResponse>() const {
   return message_as_PluginBonesUpdateResponse();
+}
+
+template<> inline const solarxr_protocol::rpc::GetPluginBonesRequest *RpcMessageHeader::message_as<solarxr_protocol::rpc::GetPluginBonesRequest>() const {
+  return message_as_GetPluginBonesRequest();
+}
+
+template<> inline const solarxr_protocol::rpc::GetPluginBonesResponse *RpcMessageHeader::message_as<solarxr_protocol::rpc::GetPluginBonesResponse>() const {
+  return message_as_GetPluginBonesResponse();
 }
 
 struct RpcMessageHeaderBuilder {
@@ -19191,6 +19313,14 @@ inline bool VerifyRpcMessage(flatbuffers::Verifier &verifier, const void *obj, R
     }
     case RpcMessage::PluginBonesUpdateResponse: {
       auto ptr = reinterpret_cast<const solarxr_protocol::rpc::PluginBonesUpdateResponse *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case RpcMessage::GetPluginBonesRequest: {
+      auto ptr = reinterpret_cast<const solarxr_protocol::rpc::GetPluginBonesRequest *>(obj);
+      return verifier.VerifyTable(ptr);
+    }
+    case RpcMessage::GetPluginBonesResponse: {
+      auto ptr = reinterpret_cast<const solarxr_protocol::rpc::GetPluginBonesResponse *>(obj);
       return verifier.VerifyTable(ptr);
     }
     default: return true;

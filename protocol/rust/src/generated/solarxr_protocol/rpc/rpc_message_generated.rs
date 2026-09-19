@@ -12,10 +12,10 @@ use super::*;
 #[deprecated(since = "2.0.0", note = "Use associated constants instead. This will no longer be generated in 2021.")]
 pub const ENUM_MIN_RPC_MESSAGE: u8 = 0;
 #[deprecated(since = "2.0.0", note = "Use associated constants instead. This will no longer be generated in 2021.")]
-pub const ENUM_MAX_RPC_MESSAGE: u8 = 133;
+pub const ENUM_MAX_RPC_MESSAGE: u8 = 135;
 #[deprecated(since = "2.0.0", note = "Use associated constants instead. This will no longer be generated in 2021.")]
 #[allow(non_camel_case_types)]
-pub const ENUM_VALUES_RPC_MESSAGE: [RpcMessage; 134] = [
+pub const ENUM_VALUES_RPC_MESSAGE: [RpcMessage; 136] = [
   RpcMessage::NONE,
   RpcMessage::HeartbeatRequest,
   RpcMessage::HeartbeatResponse,
@@ -150,6 +150,8 @@ pub const ENUM_VALUES_RPC_MESSAGE: [RpcMessage; 134] = [
   RpcMessage::CustomOSCSettingsResponse,
   RpcMessage::ChangeCustomOSCSettingsRequest,
   RpcMessage::PluginBonesUpdateResponse,
+  RpcMessage::GetPluginBonesRequest,
+  RpcMessage::GetPluginBonesResponse,
 ];
 
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
@@ -291,9 +293,13 @@ impl RpcMessage {
   pub const CustomOSCSettingsResponse: Self = Self(131);
   pub const ChangeCustomOSCSettingsRequest: Self = Self(132);
   pub const PluginBonesUpdateResponse: Self = Self(133);
+  /// Request to get currently registered plugin bones from loaded plugins.
+  pub const GetPluginBonesRequest: Self = Self(134);
+  /// Response containing the list of plugin bones.
+  pub const GetPluginBonesResponse: Self = Self(135);
 
   pub const ENUM_MIN: u8 = 0;
-  pub const ENUM_MAX: u8 = 133;
+  pub const ENUM_MAX: u8 = 135;
   pub const ENUM_VALUES: &'static [Self] = &[
     Self::NONE,
     Self::HeartbeatRequest,
@@ -429,6 +435,8 @@ impl RpcMessage {
     Self::CustomOSCSettingsResponse,
     Self::ChangeCustomOSCSettingsRequest,
     Self::PluginBonesUpdateResponse,
+    Self::GetPluginBonesRequest,
+    Self::GetPluginBonesResponse,
   ];
   /// Returns the variant's name or "" if unknown.
   pub fn variant_name(self) -> Option<&'static str> {
@@ -567,6 +575,8 @@ impl RpcMessage {
       Self::CustomOSCSettingsResponse => Some("CustomOSCSettingsResponse"),
       Self::ChangeCustomOSCSettingsRequest => Some("ChangeCustomOSCSettingsRequest"),
       Self::PluginBonesUpdateResponse => Some("PluginBonesUpdateResponse"),
+      Self::GetPluginBonesRequest => Some("GetPluginBonesRequest"),
+      Self::GetPluginBonesResponse => Some("GetPluginBonesResponse"),
       _ => None,
     }
   }

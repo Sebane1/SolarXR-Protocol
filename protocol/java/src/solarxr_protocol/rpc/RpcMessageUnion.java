@@ -154,6 +154,8 @@ public class RpcMessageUnion {
   public solarxr_protocol.rpc.CustomOSCSettingsResponseT asCustomOSCSettingsResponse() { return (solarxr_protocol.rpc.CustomOSCSettingsResponseT) value; }
   public solarxr_protocol.rpc.ChangeCustomOSCSettingsRequestT asChangeCustomOSCSettingsRequest() { return (solarxr_protocol.rpc.ChangeCustomOSCSettingsRequestT) value; }
   public solarxr_protocol.rpc.PluginBonesUpdateResponseT asPluginBonesUpdateResponse() { return (solarxr_protocol.rpc.PluginBonesUpdateResponseT) value; }
+  public solarxr_protocol.rpc.GetPluginBonesRequestT asGetPluginBonesRequest() { return (solarxr_protocol.rpc.GetPluginBonesRequestT) value; }
+  public solarxr_protocol.rpc.GetPluginBonesResponseT asGetPluginBonesResponse() { return (solarxr_protocol.rpc.GetPluginBonesResponseT) value; }
 
   public static int pack(FlatBufferBuilder builder, RpcMessageUnion _o) {
     switch (_o.type) {
@@ -290,6 +292,8 @@ public class RpcMessageUnion {
       case RpcMessage.CustomOSCSettingsResponse: return solarxr_protocol.rpc.CustomOSCSettingsResponse.pack(builder, _o.asCustomOSCSettingsResponse());
       case RpcMessage.ChangeCustomOSCSettingsRequest: return solarxr_protocol.rpc.ChangeCustomOSCSettingsRequest.pack(builder, _o.asChangeCustomOSCSettingsRequest());
       case RpcMessage.PluginBonesUpdateResponse: return solarxr_protocol.rpc.PluginBonesUpdateResponse.pack(builder, _o.asPluginBonesUpdateResponse());
+      case RpcMessage.GetPluginBonesRequest: return solarxr_protocol.rpc.GetPluginBonesRequest.pack(builder, _o.asGetPluginBonesRequest());
+      case RpcMessage.GetPluginBonesResponse: return solarxr_protocol.rpc.GetPluginBonesResponse.pack(builder, _o.asGetPluginBonesResponse());
       default: return 0;
     }
   }

@@ -166,6 +166,10 @@ union RpcMessage {
     CustomOSCSettingsResponse,
     ChangeCustomOSCSettingsRequest,
     PluginBonesUpdateResponse,
+    /// Request to get currently registered plugin bones from loaded plugins.
+    GetPluginBonesRequest,
+    /// Response containing the list of plugin bones.
+    GetPluginBonesResponse,
 }
 
 table RpcMessageHeader {

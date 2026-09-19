@@ -1,5 +1,16 @@
 namespace solarxr_protocol.rpc;
 
+/// Request to get currently registered plugin bones from loaded plugins.
+table GetPluginBonesRequest {}
+
+/// Response containing the list of plugin bones.
+/// Each PluginBone represents a virtual bone exposed by a plugin for tracker assignment or other purposes.
+table GetPluginBonesResponse {
+    /// List of PluginBone objects registered by loaded plugins.
+    /// Empty if no plugins have registered bones.
+    bones: [PluginBone];
+}
+
 table PluginBone {
     id: string;
     name: string;

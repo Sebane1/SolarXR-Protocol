@@ -150,6 +150,8 @@ public sealed interface RpcMessage {
       131 -> CustomOSCSettingsResponse.decode(bb, offset)
       132 -> ChangeCustomOSCSettingsRequest.decode(bb, offset)
       133 -> PluginBonesUpdateResponse.decode(bb, offset)
+      134 -> GetPluginBonesRequest.decode(bb, offset)
+      135 -> GetPluginBonesResponse.decode(bb, offset)
       else -> null
     }
 
@@ -287,6 +289,8 @@ public sealed interface RpcMessage {
       is CustomOSCSettingsResponse -> 131.toUByte()
       is ChangeCustomOSCSettingsRequest -> 132.toUByte()
       is PluginBonesUpdateResponse -> 133.toUByte()
+      is GetPluginBonesRequest -> 134.toUByte()
+      is GetPluginBonesResponse -> 135.toUByte()
     }
 
     public fun encode(`value`: RpcMessage, builder: FlatBufferWriter): Int = when (value) {
@@ -423,6 +427,8 @@ public sealed interface RpcMessage {
       is CustomOSCSettingsResponse -> value.encode(builder)
       is ChangeCustomOSCSettingsRequest -> value.encode(builder)
       is PluginBonesUpdateResponse -> value.encode(builder)
+      is GetPluginBonesRequest -> value.encode(builder)
+      is GetPluginBonesResponse -> value.encode(builder)
     }
   }
 }

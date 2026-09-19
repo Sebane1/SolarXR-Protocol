@@ -108,6 +108,8 @@ export { FirmwareUpdateStatus } from './solarxr-protocol/rpc/firmware-update-sta
 export { FirmwareUpdateStatusResponse, FirmwareUpdateStatusResponseT } from './solarxr-protocol/rpc/firmware-update-status-response.js';
 export { FirmwareUpdateStopQueuesRequest, FirmwareUpdateStopQueuesRequestT } from './solarxr-protocol/rpc/firmware-update-stop-queues-request.js';
 export { ForgetDeviceRequest, ForgetDeviceRequestT } from './solarxr-protocol/rpc/forget-device-request.js';
+export { GetPluginBonesRequest, GetPluginBonesRequestT } from './solarxr-protocol/rpc/get-plugin-bones-request.js';
+export { GetPluginBonesResponse, GetPluginBonesResponseT } from './solarxr-protocol/rpc/get-plugin-bones-response.js';
 export { HIDSettingsRequest, HIDSettingsRequestT } from './solarxr-protocol/rpc/hidsettings-request.js';
 export { HIDSettingsResponse, HIDSettingsResponseT } from './solarxr-protocol/rpc/hidsettings-response.js';
 export { HeartbeatRequest, HeartbeatRequestT } from './solarxr-protocol/rpc/heartbeat-request.js';

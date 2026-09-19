@@ -2074,6 +2074,36 @@ impl<'a> RpcMessageHeader<'a> {
     }
   }
 
+  #[inline]
+  #[allow(non_snake_case)]
+  pub fn message_as_get_plugin_bones_request(&self) -> Option<GetPluginBonesRequest<'a>> {
+    if self.message_type() == RpcMessage::GetPluginBonesRequest {
+      self.message().map(|t| {
+       // Safety:
+       // Created from a valid Table for this object
+       // Which contains a valid union in this slot
+       unsafe { GetPluginBonesRequest::init_from_table(t) }
+     })
+    } else {
+      None
+    }
+  }
+
+  #[inline]
+  #[allow(non_snake_case)]
+  pub fn message_as_get_plugin_bones_response(&self) -> Option<GetPluginBonesResponse<'a>> {
+    if self.message_type() == RpcMessage::GetPluginBonesResponse {
+      self.message().map(|t| {
+       // Safety:
+       // Created from a valid Table for this object
+       // Which contains a valid union in this slot
+       unsafe { GetPluginBonesResponse::init_from_table(t) }
+     })
+    } else {
+      None
+    }
+  }
+
 }
 
 impl flatbuffers::Verifiable for RpcMessageHeader<'_> {
@@ -2220,6 +2250,8 @@ impl flatbuffers::Verifiable for RpcMessageHeader<'_> {
           RpcMessage::CustomOSCSettingsResponse => v.verify_union_variant::<flatbuffers::ForwardsUOffset<CustomOSCSettingsResponse>>("RpcMessage::CustomOSCSettingsResponse", pos),
           RpcMessage::ChangeCustomOSCSettingsRequest => v.verify_union_variant::<flatbuffers::ForwardsUOffset<ChangeCustomOSCSettingsRequest>>("RpcMessage::ChangeCustomOSCSettingsRequest", pos),
           RpcMessage::PluginBonesUpdateResponse => v.verify_union_variant::<flatbuffers::ForwardsUOffset<PluginBonesUpdateResponse>>("RpcMessage::PluginBonesUpdateResponse", pos),
+          RpcMessage::GetPluginBonesRequest => v.verify_union_variant::<flatbuffers::ForwardsUOffset<GetPluginBonesRequest>>("RpcMessage::GetPluginBonesRequest", pos),
+          RpcMessage::GetPluginBonesResponse => v.verify_union_variant::<flatbuffers::ForwardsUOffset<GetPluginBonesResponse>>("RpcMessage::GetPluginBonesResponse", pos),
           _ => Ok(()),
         }
      })?
@@ -3214,6 +3246,20 @@ impl core::fmt::Debug for RpcMessageHeader<'_> {
         },
         RpcMessage::PluginBonesUpdateResponse => {
           if let Some(x) = self.message_as_plugin_bones_update_response() {
+            ds.field("message", &x)
+          } else {
+            ds.field("message", &"InvalidFlatbuffer: Union discriminant does not match value.")
+          }
+        },
+        RpcMessage::GetPluginBonesRequest => {
+          if let Some(x) = self.message_as_get_plugin_bones_request() {
+            ds.field("message", &x)
+          } else {
+            ds.field("message", &"InvalidFlatbuffer: Union discriminant does not match value.")
+          }
+        },
+        RpcMessage::GetPluginBonesResponse => {
+          if let Some(x) = self.message_as_get_plugin_bones_response() {
             ds.field("message", &x)
           } else {
             ds.field("message", &"InvalidFlatbuffer: Union discriminant does not match value.")
