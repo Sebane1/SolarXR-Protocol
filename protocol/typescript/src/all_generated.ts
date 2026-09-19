@@ -135,7 +135,7 @@ export { OpenSerialRequest, OpenSerialRequestT } from './solarxr-protocol/rpc/op
 export { OverlayDisplayModeChangeRequest, OverlayDisplayModeChangeRequestT } from './solarxr-protocol/rpc/overlay-display-mode-change-request.js';
 export { OverlayDisplayModeRequest, OverlayDisplayModeRequestT } from './solarxr-protocol/rpc/overlay-display-mode-request.js';
 export { OverlayDisplayModeResponse, OverlayDisplayModeResponseT } from './solarxr-protocol/rpc/overlay-display-mode-response.js';
-export { PluginBone, PluginBoneT } from './solarxr-protocol/rpc/plugin-bone.js';
+export { PluginBoneRegistration, PluginBoneRegistrationT } from './solarxr-protocol/rpc/plugin-bone-registration.js';
 export { PluginBonesUpdateResponse, PluginBonesUpdateResponseT } from './solarxr-protocol/rpc/plugin-bones-update-response.js';
 export { RecordBVHRequest, RecordBVHRequestT } from './solarxr-protocol/rpc/record-bvhrequest.js';
 export { RecordBVHStatus, RecordBVHStatusT } from './solarxr-protocol/rpc/record-bvhstatus.js';

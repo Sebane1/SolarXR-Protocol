@@ -8,15 +8,15 @@ import java.util.*;
 import com.google.flatbuffers.*;
 
 public class GetPluginBonesResponseT {
-  private solarxr_protocol.rpc.PluginBoneT[] bones;
+  private solarxr_protocol.rpc.PluginBoneRegistrationT[] registeredPluginBones;
 
-  public solarxr_protocol.rpc.PluginBoneT[] getBones() { return bones; }
+  public solarxr_protocol.rpc.PluginBoneRegistrationT[] getRegisteredPluginBones() { return registeredPluginBones; }
 
-  public void setBones(solarxr_protocol.rpc.PluginBoneT[] bones) { this.bones = bones; }
+  public void setRegisteredPluginBones(solarxr_protocol.rpc.PluginBoneRegistrationT[] registeredPluginBones) { this.registeredPluginBones = registeredPluginBones; }
 
 
   public GetPluginBonesResponseT() {
-    this.bones = null;
+    this.registeredPluginBones = null;
   }
 }
 

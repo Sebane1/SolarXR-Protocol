@@ -2,7 +2,7 @@
 
 import * as flatbuffers from 'flatbuffers';
 
-import { PluginBone, PluginBoneT } from '../../solarxr-protocol/rpc/plugin-bone.js';
+import { PluginBoneRegistration, PluginBoneRegistrationT } from '../../solarxr-protocol/rpc/plugin-bone-registration.js';
 
 
 export class PluginBonesUpdateResponse implements flatbuffers.IUnpackableObject<PluginBonesUpdateResponseT> {
@@ -23,12 +23,12 @@ static getSizePrefixedRootAsPluginBonesUpdateResponse(bb:flatbuffers.ByteBuffer,
   return (obj || new PluginBonesUpdateResponse()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 }
 
-bones(index: number, obj?:PluginBone):PluginBone|null {
+registeredPluginBones(index: number, obj?:PluginBoneRegistration):PluginBoneRegistration|null {
   const offset = this.bb!.__offset(this.bb_pos, 4);
-  return offset ? (obj || new PluginBone()).__init(this.bb!.__indirect(this.bb!.__vector(this.bb_pos + offset) + index * 4), this.bb!) : null;
+  return offset ? (obj || new PluginBoneRegistration()).__init(this.bb!.__indirect(this.bb!.__vector(this.bb_pos + offset) + index * 4), this.bb!) : null;
 }
 
-bonesLength():number {
+registeredPluginBonesLength():number {
   const offset = this.bb!.__offset(this.bb_pos, 4);
   return offset ? this.bb!.__vector_len(this.bb_pos + offset) : 0;
 }
@@ -37,11 +37,11 @@ static startPluginBonesUpdateResponse(builder:flatbuffers.Builder) {
   builder.startObject(1);
 }
 
-static addBones(builder:flatbuffers.Builder, bonesOffset:flatbuffers.Offset) {
-  builder.addFieldOffset(0, bonesOffset, 0);
+static addRegisteredPluginBones(builder:flatbuffers.Builder, registeredPluginBonesOffset:flatbuffers.Offset) {
+  builder.addFieldOffset(0, registeredPluginBonesOffset, 0);
 }
 
-static createBonesVector(builder:flatbuffers.Builder, data:flatbuffers.Offset[]):flatbuffers.Offset {
+static createRegisteredPluginBonesVector(builder:flatbuffers.Builder, data:flatbuffers.Offset[]):flatbuffers.Offset {
   builder.startVector(4, data.length, 4);
   for (let i = data.length - 1; i >= 0; i--) {
     builder.addOffset(data[i]!);
@@ -49,7 +49,7 @@ static createBonesVector(builder:flatbuffers.Builder, data:flatbuffers.Offset[])
   return builder.endVector();
 }
 
-static startBonesVector(builder:flatbuffers.Builder, numElems:number) {
+static startRegisteredPluginBonesVector(builder:flatbuffers.Builder, numElems:number) {
   builder.startVector(4, numElems, 4);
 }
 
@@ -58,35 +58,35 @@ static endPluginBonesUpdateResponse(builder:flatbuffers.Builder):flatbuffers.Off
   return offset;
 }
 
-static createPluginBonesUpdateResponse(builder:flatbuffers.Builder, bonesOffset:flatbuffers.Offset):flatbuffers.Offset {
+static createPluginBonesUpdateResponse(builder:flatbuffers.Builder, registeredPluginBonesOffset:flatbuffers.Offset):flatbuffers.Offset {
   PluginBonesUpdateResponse.startPluginBonesUpdateResponse(builder);
-  PluginBonesUpdateResponse.addBones(builder, bonesOffset);
+  PluginBonesUpdateResponse.addRegisteredPluginBones(builder, registeredPluginBonesOffset);
   return PluginBonesUpdateResponse.endPluginBonesUpdateResponse(builder);
 }
 
 unpack(): PluginBonesUpdateResponseT {
   return new PluginBonesUpdateResponseT(
-    this.bb!.createObjList<PluginBone, PluginBoneT>(this.bones.bind(this), this.bonesLength())
+    this.bb!.createObjList<PluginBoneRegistration, PluginBoneRegistrationT>(this.registeredPluginBones.bind(this), this.registeredPluginBonesLength())
   );
 }
 
 
 unpackTo(_o: PluginBonesUpdateResponseT): void {
-  _o.bones = this.bb!.createObjList<PluginBone, PluginBoneT>(this.bones.bind(this), this.bonesLength());
+  _o.registeredPluginBones = this.bb!.createObjList<PluginBoneRegistration, PluginBoneRegistrationT>(this.registeredPluginBones.bind(this), this.registeredPluginBonesLength());
 }
 }
 
 export class PluginBonesUpdateResponseT implements flatbuffers.IGeneratedObject {
 constructor(
-  public bones: (PluginBoneT)[] = []
+  public registeredPluginBones: (PluginBoneRegistrationT)[] = []
 ){}
 
 
 pack(builder:flatbuffers.Builder): flatbuffers.Offset {
-  const bones = PluginBonesUpdateResponse.createBonesVector(builder, builder.createObjectOffsetList(this.bones));
+  const registeredPluginBones = PluginBonesUpdateResponse.createRegisteredPluginBonesVector(builder, builder.createObjectOffsetList(this.registeredPluginBones));
 
   return PluginBonesUpdateResponse.createPluginBonesUpdateResponse(builder,
-    bones
+    registeredPluginBones
   );
 }
 }

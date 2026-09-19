@@ -12,7 +12,7 @@ use super::*;
 pub enum GetPluginBonesRequestOffset {}
 #[derive(Copy, Clone, PartialEq)]
 
-/// Request to get currently registered plugin bones from loaded plugins.
+/// Request to get currently registered plugin bone registrations from loaded plugins.
 pub struct GetPluginBonesRequest<'a> {
   pub _tab: flatbuffers::Table<'a>,
 }

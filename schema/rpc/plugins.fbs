@@ -1,33 +1,25 @@
 namespace solarxr_protocol.rpc;
 
-/// Request to get currently registered plugin bones from loaded plugins.
+/// Request to get currently registered plugin bone registrations from loaded plugins.
 table GetPluginBonesRequest {}
 
-/// Response containing the list of plugin bones.
-/// Each PluginBone represents a virtual bone exposed by a plugin for tracker assignment or other purposes.
+/// Response containing the list of plugin bone registrations.
+/// Each PluginBoneRegistration represents a custom bone exposed by a plugin for tracker assignment or other purposes.
 table GetPluginBonesResponse {
-    /// List of PluginBone objects registered by loaded plugins.
+    /// List of PluginBoneRegistration objects registered by loaded plugins.
     /// Empty if no plugins have registered bones.
-    bones: [PluginBone];
+    registeredPluginBones: [PluginBoneRegistration];
 }
 
-table PluginBone {
+table PluginBoneRegistration {
     id: string;
     name: string;
     parent_bone_id: string;
-    local_position_x: float32 = 0.0;
-    local_position_y: float32 = 0.0;
-    local_position_z: float32 = 0.0;
-    local_rotation_x: float32 = 0.0;
-    local_rotation_y: float32 = 0.0;
-    local_rotation_z: float32 = 0.0;
-    local_rotation_w: float32 = 1.0;
     vmc_bone_name: string;
-    vrc_osc_param_name: string;
     /// URL to a model file (e.g., glTF/GLB) that can be attached to this bone.
     model_url: string;
 }
 
 table PluginBonesUpdateResponse {
-    bones: [PluginBone];
+    registeredPluginBones: [PluginBoneRegistration];
 }

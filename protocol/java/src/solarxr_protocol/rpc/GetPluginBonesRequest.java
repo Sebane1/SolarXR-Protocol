@@ -8,7 +8,7 @@ import java.util.*;
 import com.google.flatbuffers.*;
 
 /**
- * Request to get currently registered plugin bones from loaded plugins.
+ * Request to get currently registered plugin bone registrations from loaded plugins.
  */
 @SuppressWarnings("unused")
 public final class GetPluginBonesRequest extends Table {

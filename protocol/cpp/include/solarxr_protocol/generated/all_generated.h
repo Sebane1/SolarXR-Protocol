@@ -254,8 +254,8 @@ struct GetPluginBonesRequestBuilder;
 struct GetPluginBonesResponse;
 struct GetPluginBonesResponseBuilder;
 
-struct PluginBone;
-struct PluginBoneBuilder;
+struct PluginBoneRegistration;
+struct PluginBoneRegistrationBuilder;
 
 struct PluginBonesUpdateResponse;
 struct PluginBonesUpdateResponseBuilder;
@@ -9138,7 +9138,7 @@ inline flatbuffers::Offset<OverlayDisplayModeResponse> CreateOverlayDisplayModeR
   return builder_.Finish();
 }
 
-/// Request to get currently registered plugin bones from loaded plugins.
+/// Request to get currently registered plugin bone registrations from loaded plugins.
 struct GetPluginBonesRequest FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef GetPluginBonesRequestBuilder Builder;
   bool Verify(flatbuffers::Verifier &verifier) const {
@@ -9168,23 +9168,23 @@ inline flatbuffers::Offset<GetPluginBonesRequest> CreateGetPluginBonesRequest(
   return builder_.Finish();
 }
 
-/// Response containing the list of plugin bones.
-/// Each PluginBone represents a virtual bone exposed by a plugin for tracker assignment or other purposes.
+/// Response containing the list of plugin bone registrations.
+/// Each PluginBoneRegistration represents a custom bone exposed by a plugin for tracker assignment or other purposes.
 struct GetPluginBonesResponse FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef GetPluginBonesResponseBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
-    VT_BONES = 4
+    VT_REGISTEREDPLUGINBONES = 4
   };
-  /// List of PluginBone objects registered by loaded plugins.
+  /// List of PluginBoneRegistration objects registered by loaded plugins.
   /// Empty if no plugins have registered bones.
-  const flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>> *bones() const {
-    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>> *>(VT_BONES);
+  const flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBoneRegistration>> *registeredPluginBones() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBoneRegistration>> *>(VT_REGISTEREDPLUGINBONES);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyOffset(verifier, VT_BONES) &&
-           verifier.VerifyVector(bones()) &&
-           verifier.VerifyVectorOfTables(bones()) &&
+           VerifyOffset(verifier, VT_REGISTEREDPLUGINBONES) &&
+           verifier.VerifyVector(registeredPluginBones()) &&
+           verifier.VerifyVectorOfTables(registeredPluginBones()) &&
            verifier.EndTable();
   }
 };
@@ -9193,8 +9193,8 @@ struct GetPluginBonesResponseBuilder {
   typedef GetPluginBonesResponse Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_bones(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>>> bones) {
-    fbb_.AddOffset(GetPluginBonesResponse::VT_BONES, bones);
+  void add_registeredPluginBones(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBoneRegistration>>> registeredPluginBones) {
+    fbb_.AddOffset(GetPluginBonesResponse::VT_REGISTEREDPLUGINBONES, registeredPluginBones);
   }
   explicit GetPluginBonesResponseBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -9209,37 +9209,29 @@ struct GetPluginBonesResponseBuilder {
 
 inline flatbuffers::Offset<GetPluginBonesResponse> CreateGetPluginBonesResponse(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>>> bones = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBoneRegistration>>> registeredPluginBones = 0) {
   GetPluginBonesResponseBuilder builder_(_fbb);
-  builder_.add_bones(bones);
+  builder_.add_registeredPluginBones(registeredPluginBones);
   return builder_.Finish();
 }
 
 inline flatbuffers::Offset<GetPluginBonesResponse> CreateGetPluginBonesResponseDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const std::vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>> *bones = nullptr) {
-  auto bones__ = bones ? _fbb.CreateVector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>>(*bones) : 0;
+    const std::vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBoneRegistration>> *registeredPluginBones = nullptr) {
+  auto registeredPluginBones__ = registeredPluginBones ? _fbb.CreateVector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBoneRegistration>>(*registeredPluginBones) : 0;
   return solarxr_protocol::rpc::CreateGetPluginBonesResponse(
       _fbb,
-      bones__);
+      registeredPluginBones__);
 }
 
-struct PluginBone FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  typedef PluginBoneBuilder Builder;
+struct PluginBoneRegistration FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  typedef PluginBoneRegistrationBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_ID = 4,
     VT_NAME = 6,
     VT_PARENT_BONE_ID = 8,
-    VT_LOCAL_POSITION_X = 10,
-    VT_LOCAL_POSITION_Y = 12,
-    VT_LOCAL_POSITION_Z = 14,
-    VT_LOCAL_ROTATION_X = 16,
-    VT_LOCAL_ROTATION_Y = 18,
-    VT_LOCAL_ROTATION_Z = 20,
-    VT_LOCAL_ROTATION_W = 22,
-    VT_VMC_BONE_NAME = 24,
-    VT_VRC_OSC_PARAM_NAME = 26,
-    VT_MODEL_URL = 28
+    VT_VMC_BONE_NAME = 10,
+    VT_MODEL_URL = 12
   };
   const flatbuffers::String *id() const {
     return GetPointer<const flatbuffers::String *>(VT_ID);
@@ -9250,32 +9242,8 @@ struct PluginBone FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const flatbuffers::String *parent_bone_id() const {
     return GetPointer<const flatbuffers::String *>(VT_PARENT_BONE_ID);
   }
-  float local_position_x() const {
-    return GetField<float>(VT_LOCAL_POSITION_X, 0.0f);
-  }
-  float local_position_y() const {
-    return GetField<float>(VT_LOCAL_POSITION_Y, 0.0f);
-  }
-  float local_position_z() const {
-    return GetField<float>(VT_LOCAL_POSITION_Z, 0.0f);
-  }
-  float local_rotation_x() const {
-    return GetField<float>(VT_LOCAL_ROTATION_X, 0.0f);
-  }
-  float local_rotation_y() const {
-    return GetField<float>(VT_LOCAL_ROTATION_Y, 0.0f);
-  }
-  float local_rotation_z() const {
-    return GetField<float>(VT_LOCAL_ROTATION_Z, 0.0f);
-  }
-  float local_rotation_w() const {
-    return GetField<float>(VT_LOCAL_ROTATION_W, 1.0f);
-  }
   const flatbuffers::String *vmc_bone_name() const {
     return GetPointer<const flatbuffers::String *>(VT_VMC_BONE_NAME);
-  }
-  const flatbuffers::String *vrc_osc_param_name() const {
-    return GetPointer<const flatbuffers::String *>(VT_VRC_OSC_PARAM_NAME);
   }
   /// URL to a model file (e.g., glTF/GLB) that can be attached to this bone.
   const flatbuffers::String *model_url() const {
@@ -9289,160 +9257,94 @@ struct PluginBone FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            verifier.VerifyString(name()) &&
            VerifyOffset(verifier, VT_PARENT_BONE_ID) &&
            verifier.VerifyString(parent_bone_id()) &&
-           VerifyField<float>(verifier, VT_LOCAL_POSITION_X, 4) &&
-           VerifyField<float>(verifier, VT_LOCAL_POSITION_Y, 4) &&
-           VerifyField<float>(verifier, VT_LOCAL_POSITION_Z, 4) &&
-           VerifyField<float>(verifier, VT_LOCAL_ROTATION_X, 4) &&
-           VerifyField<float>(verifier, VT_LOCAL_ROTATION_Y, 4) &&
-           VerifyField<float>(verifier, VT_LOCAL_ROTATION_Z, 4) &&
-           VerifyField<float>(verifier, VT_LOCAL_ROTATION_W, 4) &&
            VerifyOffset(verifier, VT_VMC_BONE_NAME) &&
            verifier.VerifyString(vmc_bone_name()) &&
-           VerifyOffset(verifier, VT_VRC_OSC_PARAM_NAME) &&
-           verifier.VerifyString(vrc_osc_param_name()) &&
            VerifyOffset(verifier, VT_MODEL_URL) &&
            verifier.VerifyString(model_url()) &&
            verifier.EndTable();
   }
 };
 
-struct PluginBoneBuilder {
-  typedef PluginBone Table;
+struct PluginBoneRegistrationBuilder {
+  typedef PluginBoneRegistration Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_id(flatbuffers::Offset<flatbuffers::String> id) {
-    fbb_.AddOffset(PluginBone::VT_ID, id);
+    fbb_.AddOffset(PluginBoneRegistration::VT_ID, id);
   }
   void add_name(flatbuffers::Offset<flatbuffers::String> name) {
-    fbb_.AddOffset(PluginBone::VT_NAME, name);
+    fbb_.AddOffset(PluginBoneRegistration::VT_NAME, name);
   }
   void add_parent_bone_id(flatbuffers::Offset<flatbuffers::String> parent_bone_id) {
-    fbb_.AddOffset(PluginBone::VT_PARENT_BONE_ID, parent_bone_id);
-  }
-  void add_local_position_x(float local_position_x) {
-    fbb_.AddElement<float>(PluginBone::VT_LOCAL_POSITION_X, local_position_x, 0.0f);
-  }
-  void add_local_position_y(float local_position_y) {
-    fbb_.AddElement<float>(PluginBone::VT_LOCAL_POSITION_Y, local_position_y, 0.0f);
-  }
-  void add_local_position_z(float local_position_z) {
-    fbb_.AddElement<float>(PluginBone::VT_LOCAL_POSITION_Z, local_position_z, 0.0f);
-  }
-  void add_local_rotation_x(float local_rotation_x) {
-    fbb_.AddElement<float>(PluginBone::VT_LOCAL_ROTATION_X, local_rotation_x, 0.0f);
-  }
-  void add_local_rotation_y(float local_rotation_y) {
-    fbb_.AddElement<float>(PluginBone::VT_LOCAL_ROTATION_Y, local_rotation_y, 0.0f);
-  }
-  void add_local_rotation_z(float local_rotation_z) {
-    fbb_.AddElement<float>(PluginBone::VT_LOCAL_ROTATION_Z, local_rotation_z, 0.0f);
-  }
-  void add_local_rotation_w(float local_rotation_w) {
-    fbb_.AddElement<float>(PluginBone::VT_LOCAL_ROTATION_W, local_rotation_w, 1.0f);
+    fbb_.AddOffset(PluginBoneRegistration::VT_PARENT_BONE_ID, parent_bone_id);
   }
   void add_vmc_bone_name(flatbuffers::Offset<flatbuffers::String> vmc_bone_name) {
-    fbb_.AddOffset(PluginBone::VT_VMC_BONE_NAME, vmc_bone_name);
-  }
-  void add_vrc_osc_param_name(flatbuffers::Offset<flatbuffers::String> vrc_osc_param_name) {
-    fbb_.AddOffset(PluginBone::VT_VRC_OSC_PARAM_NAME, vrc_osc_param_name);
+    fbb_.AddOffset(PluginBoneRegistration::VT_VMC_BONE_NAME, vmc_bone_name);
   }
   void add_model_url(flatbuffers::Offset<flatbuffers::String> model_url) {
-    fbb_.AddOffset(PluginBone::VT_MODEL_URL, model_url);
+    fbb_.AddOffset(PluginBoneRegistration::VT_MODEL_URL, model_url);
   }
-  explicit PluginBoneBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit PluginBoneRegistrationBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  flatbuffers::Offset<PluginBone> Finish() {
+  flatbuffers::Offset<PluginBoneRegistration> Finish() {
     const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<PluginBone>(end);
+    auto o = flatbuffers::Offset<PluginBoneRegistration>(end);
     return o;
   }
 };
 
-inline flatbuffers::Offset<PluginBone> CreatePluginBone(
+inline flatbuffers::Offset<PluginBoneRegistration> CreatePluginBoneRegistration(
     flatbuffers::FlatBufferBuilder &_fbb,
     flatbuffers::Offset<flatbuffers::String> id = 0,
     flatbuffers::Offset<flatbuffers::String> name = 0,
     flatbuffers::Offset<flatbuffers::String> parent_bone_id = 0,
-    float local_position_x = 0.0f,
-    float local_position_y = 0.0f,
-    float local_position_z = 0.0f,
-    float local_rotation_x = 0.0f,
-    float local_rotation_y = 0.0f,
-    float local_rotation_z = 0.0f,
-    float local_rotation_w = 1.0f,
     flatbuffers::Offset<flatbuffers::String> vmc_bone_name = 0,
-    flatbuffers::Offset<flatbuffers::String> vrc_osc_param_name = 0,
     flatbuffers::Offset<flatbuffers::String> model_url = 0) {
-  PluginBoneBuilder builder_(_fbb);
+  PluginBoneRegistrationBuilder builder_(_fbb);
   builder_.add_model_url(model_url);
-  builder_.add_vrc_osc_param_name(vrc_osc_param_name);
   builder_.add_vmc_bone_name(vmc_bone_name);
-  builder_.add_local_rotation_w(local_rotation_w);
-  builder_.add_local_rotation_z(local_rotation_z);
-  builder_.add_local_rotation_y(local_rotation_y);
-  builder_.add_local_rotation_x(local_rotation_x);
-  builder_.add_local_position_z(local_position_z);
-  builder_.add_local_position_y(local_position_y);
-  builder_.add_local_position_x(local_position_x);
   builder_.add_parent_bone_id(parent_bone_id);
   builder_.add_name(name);
   builder_.add_id(id);
   return builder_.Finish();
 }
 
-inline flatbuffers::Offset<PluginBone> CreatePluginBoneDirect(
+inline flatbuffers::Offset<PluginBoneRegistration> CreatePluginBoneRegistrationDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
     const char *id = nullptr,
     const char *name = nullptr,
     const char *parent_bone_id = nullptr,
-    float local_position_x = 0.0f,
-    float local_position_y = 0.0f,
-    float local_position_z = 0.0f,
-    float local_rotation_x = 0.0f,
-    float local_rotation_y = 0.0f,
-    float local_rotation_z = 0.0f,
-    float local_rotation_w = 1.0f,
     const char *vmc_bone_name = nullptr,
-    const char *vrc_osc_param_name = nullptr,
     const char *model_url = nullptr) {
   auto id__ = id ? _fbb.CreateString(id) : 0;
   auto name__ = name ? _fbb.CreateString(name) : 0;
   auto parent_bone_id__ = parent_bone_id ? _fbb.CreateString(parent_bone_id) : 0;
   auto vmc_bone_name__ = vmc_bone_name ? _fbb.CreateString(vmc_bone_name) : 0;
-  auto vrc_osc_param_name__ = vrc_osc_param_name ? _fbb.CreateString(vrc_osc_param_name) : 0;
   auto model_url__ = model_url ? _fbb.CreateString(model_url) : 0;
-  return solarxr_protocol::rpc::CreatePluginBone(
+  return solarxr_protocol::rpc::CreatePluginBoneRegistration(
       _fbb,
       id__,
       name__,
       parent_bone_id__,
-      local_position_x,
-      local_position_y,
-      local_position_z,
-      local_rotation_x,
-      local_rotation_y,
-      local_rotation_z,
-      local_rotation_w,
       vmc_bone_name__,
-      vrc_osc_param_name__,
       model_url__);
 }
 
 struct PluginBonesUpdateResponse FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef PluginBonesUpdateResponseBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
-    VT_BONES = 4
+    VT_REGISTEREDPLUGINBONES = 4
   };
-  const flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>> *bones() const {
-    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>> *>(VT_BONES);
+  const flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBoneRegistration>> *registeredPluginBones() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBoneRegistration>> *>(VT_REGISTEREDPLUGINBONES);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyOffset(verifier, VT_BONES) &&
-           verifier.VerifyVector(bones()) &&
-           verifier.VerifyVectorOfTables(bones()) &&
+           VerifyOffset(verifier, VT_REGISTEREDPLUGINBONES) &&
+           verifier.VerifyVector(registeredPluginBones()) &&
+           verifier.VerifyVectorOfTables(registeredPluginBones()) &&
            verifier.EndTable();
   }
 };
@@ -9451,8 +9353,8 @@ struct PluginBonesUpdateResponseBuilder {
   typedef PluginBonesUpdateResponse Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_bones(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>>> bones) {
-    fbb_.AddOffset(PluginBonesUpdateResponse::VT_BONES, bones);
+  void add_registeredPluginBones(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBoneRegistration>>> registeredPluginBones) {
+    fbb_.AddOffset(PluginBonesUpdateResponse::VT_REGISTEREDPLUGINBONES, registeredPluginBones);
   }
   explicit PluginBonesUpdateResponseBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -9467,19 +9369,19 @@ struct PluginBonesUpdateResponseBuilder {
 
 inline flatbuffers::Offset<PluginBonesUpdateResponse> CreatePluginBonesUpdateResponse(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>>> bones = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBoneRegistration>>> registeredPluginBones = 0) {
   PluginBonesUpdateResponseBuilder builder_(_fbb);
-  builder_.add_bones(bones);
+  builder_.add_registeredPluginBones(registeredPluginBones);
   return builder_.Finish();
 }
 
 inline flatbuffers::Offset<PluginBonesUpdateResponse> CreatePluginBonesUpdateResponseDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const std::vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>> *bones = nullptr) {
-  auto bones__ = bones ? _fbb.CreateVector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBone>>(*bones) : 0;
+    const std::vector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBoneRegistration>> *registeredPluginBones = nullptr) {
+  auto registeredPluginBones__ = registeredPluginBones ? _fbb.CreateVector<flatbuffers::Offset<solarxr_protocol::rpc::PluginBoneRegistration>>(*registeredPluginBones) : 0;
   return solarxr_protocol::rpc::CreatePluginBonesUpdateResponse(
       _fbb,
-      bones__);
+      registeredPluginBones__);
 }
 
 struct StartWifiProvisioningRequest FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {

@@ -5,7 +5,7 @@ import * as flatbuffers from 'flatbuffers';
 
 
 /**
- * Request to get currently registered plugin bones from loaded plugins.
+ * Request to get currently registered plugin bone registrations from loaded plugins.
  */
 export class GetPluginBonesRequest implements flatbuffers.IUnpackableObject<GetPluginBonesRequestT> {
   bb: flatbuffers.ByteBuffer|null = null;

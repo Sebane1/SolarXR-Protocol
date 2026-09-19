@@ -15,23 +15,23 @@ public final class PluginBonesUpdateResponse extends Table {
   public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
   public PluginBonesUpdateResponse __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-  public solarxr_protocol.rpc.PluginBone bones(int j) { return bones(new solarxr_protocol.rpc.PluginBone(), j); }
-  public solarxr_protocol.rpc.PluginBone bones(solarxr_protocol.rpc.PluginBone obj, int j) { int o = __offset(4); return o != 0 ? obj.__assign(__indirect(__vector(o) + j * 4), bb) : null; }
-  public int bonesLength() { int o = __offset(4); return o != 0 ? __vector_len(o) : 0; }
-  public solarxr_protocol.rpc.PluginBone.Vector bonesVector() { return bonesVector(new solarxr_protocol.rpc.PluginBone.Vector()); }
-  public solarxr_protocol.rpc.PluginBone.Vector bonesVector(solarxr_protocol.rpc.PluginBone.Vector obj) { int o = __offset(4); return o != 0 ? obj.__assign(__vector(o), 4, bb) : null; }
+  public solarxr_protocol.rpc.PluginBoneRegistration registeredPluginBones(int j) { return registeredPluginBones(new solarxr_protocol.rpc.PluginBoneRegistration(), j); }
+  public solarxr_protocol.rpc.PluginBoneRegistration registeredPluginBones(solarxr_protocol.rpc.PluginBoneRegistration obj, int j) { int o = __offset(4); return o != 0 ? obj.__assign(__indirect(__vector(o) + j * 4), bb) : null; }
+  public int registeredPluginBonesLength() { int o = __offset(4); return o != 0 ? __vector_len(o) : 0; }
+  public solarxr_protocol.rpc.PluginBoneRegistration.Vector registeredPluginBonesVector() { return registeredPluginBonesVector(new solarxr_protocol.rpc.PluginBoneRegistration.Vector()); }
+  public solarxr_protocol.rpc.PluginBoneRegistration.Vector registeredPluginBonesVector(solarxr_protocol.rpc.PluginBoneRegistration.Vector obj) { int o = __offset(4); return o != 0 ? obj.__assign(__vector(o), 4, bb) : null; }
 
   public static int createPluginBonesUpdateResponse(FlatBufferBuilder builder,
-      int bonesOffset) {
+      int registeredPluginBonesOffset) {
     builder.startTable(1);
-    PluginBonesUpdateResponse.addBones(builder, bonesOffset);
+    PluginBonesUpdateResponse.addRegisteredPluginBones(builder, registeredPluginBonesOffset);
     return PluginBonesUpdateResponse.endPluginBonesUpdateResponse(builder);
   }
 
   public static void startPluginBonesUpdateResponse(FlatBufferBuilder builder) { builder.startTable(1); }
-  public static void addBones(FlatBufferBuilder builder, int bonesOffset) { builder.addOffset(0, bonesOffset, 0); }
-  public static int createBonesVector(FlatBufferBuilder builder, int[] data) { builder.startVector(4, data.length, 4); for (int i = data.length - 1; i >= 0; i--) builder.addOffset(data[i]); return builder.endVector(); }
-  public static void startBonesVector(FlatBufferBuilder builder, int numElems) { builder.startVector(4, numElems, 4); }
+  public static void addRegisteredPluginBones(FlatBufferBuilder builder, int registeredPluginBonesOffset) { builder.addOffset(0, registeredPluginBonesOffset, 0); }
+  public static int createRegisteredPluginBonesVector(FlatBufferBuilder builder, int[] data) { builder.startVector(4, data.length, 4); for (int i = data.length - 1; i >= 0; i--) builder.addOffset(data[i]); return builder.endVector(); }
+  public static void startRegisteredPluginBonesVector(FlatBufferBuilder builder, int numElems) { builder.startVector(4, numElems, 4); }
   public static int endPluginBonesUpdateResponse(FlatBufferBuilder builder) {
     int o = builder.endTable();
     return o;
@@ -49,22 +49,22 @@ public final class PluginBonesUpdateResponse extends Table {
     return _o;
   }
   public void unpackTo(PluginBonesUpdateResponseT _o) {
-    solarxr_protocol.rpc.PluginBoneT[] _oBones = new solarxr_protocol.rpc.PluginBoneT[bonesLength()];
-    for (int _j = 0; _j < bonesLength(); ++_j) {_oBones[_j] = (bones(_j) != null ? bones(_j).unpack() : null);}
-    _o.setBones(_oBones);
+    solarxr_protocol.rpc.PluginBoneRegistrationT[] _oRegisteredPluginBones = new solarxr_protocol.rpc.PluginBoneRegistrationT[registeredPluginBonesLength()];
+    for (int _j = 0; _j < registeredPluginBonesLength(); ++_j) {_oRegisteredPluginBones[_j] = (registeredPluginBones(_j) != null ? registeredPluginBones(_j).unpack() : null);}
+    _o.setRegisteredPluginBones(_oRegisteredPluginBones);
   }
   public static int pack(FlatBufferBuilder builder, PluginBonesUpdateResponseT _o) {
     if (_o == null) return 0;
-    int _bones = 0;
-    if (_o.getBones() != null) {
-      int[] __bones = new int[_o.getBones().length];
+    int _registeredPluginBones = 0;
+    if (_o.getRegisteredPluginBones() != null) {
+      int[] __registeredPluginBones = new int[_o.getRegisteredPluginBones().length];
       int _j = 0;
-      for (solarxr_protocol.rpc.PluginBoneT _e : _o.getBones()) { __bones[_j] = solarxr_protocol.rpc.PluginBone.pack(builder, _e); _j++;}
-      _bones = createBonesVector(builder, __bones);
+      for (solarxr_protocol.rpc.PluginBoneRegistrationT _e : _o.getRegisteredPluginBones()) { __registeredPluginBones[_j] = solarxr_protocol.rpc.PluginBoneRegistration.pack(builder, _e); _j++;}
+      _registeredPluginBones = createRegisteredPluginBonesVector(builder, __registeredPluginBones);
     }
     return createPluginBonesUpdateResponse(
       builder,
-      _bones);
+      _registeredPluginBones);
   }
 }
 

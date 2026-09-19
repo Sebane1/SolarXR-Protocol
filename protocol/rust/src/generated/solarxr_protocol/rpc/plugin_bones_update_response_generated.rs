@@ -25,7 +25,7 @@ impl<'a> flatbuffers::Follow<'a> for PluginBonesUpdateResponse<'a> {
 }
 
 impl<'a> PluginBonesUpdateResponse<'a> {
-  pub const VT_BONES: flatbuffers::VOffsetT = 4;
+  pub const VT_REGISTEREDPLUGINBONES: flatbuffers::VOffsetT = 4;
 
   #[inline]
   pub unsafe fn init_from_table(table: flatbuffers::Table<'a>) -> Self {
@@ -37,17 +37,17 @@ impl<'a> PluginBonesUpdateResponse<'a> {
     args: &'args PluginBonesUpdateResponseArgs<'args>
   ) -> flatbuffers::WIPOffset<PluginBonesUpdateResponse<'bldr>> {
     let mut builder = PluginBonesUpdateResponseBuilder::new(_fbb);
-    if let Some(x) = args.bones { builder.add_bones(x); }
+    if let Some(x) = args.registeredPluginBones { builder.add_registeredPluginBones(x); }
     builder.finish()
   }
 
 
   #[inline]
-  pub fn bones(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PluginBone<'a>>>> {
+  pub fn registeredPluginBones(&self) -> Option<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PluginBoneRegistration<'a>>>> {
     // Safety:
     // Created from valid Table for this object
     // which contains a valid value in this slot
-    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PluginBone>>>>(PluginBonesUpdateResponse::VT_BONES, None)}
+    unsafe { self._tab.get::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PluginBoneRegistration>>>>(PluginBonesUpdateResponse::VT_REGISTEREDPLUGINBONES, None)}
   }
 }
 
@@ -58,19 +58,19 @@ impl flatbuffers::Verifiable for PluginBonesUpdateResponse<'_> {
   ) -> Result<(), flatbuffers::InvalidFlatbuffer> {
     use self::flatbuffers::Verifiable;
     v.visit_table(pos)?
-     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<PluginBone>>>>("bones", Self::VT_BONES, false)?
+     .visit_field::<flatbuffers::ForwardsUOffset<flatbuffers::Vector<'_, flatbuffers::ForwardsUOffset<PluginBoneRegistration>>>>("registeredPluginBones", Self::VT_REGISTEREDPLUGINBONES, false)?
      .finish();
     Ok(())
   }
 }
 pub struct PluginBonesUpdateResponseArgs<'a> {
-    pub bones: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PluginBone<'a>>>>>,
+    pub registeredPluginBones: Option<flatbuffers::WIPOffset<flatbuffers::Vector<'a, flatbuffers::ForwardsUOffset<PluginBoneRegistration<'a>>>>>,
 }
 impl<'a> Default for PluginBonesUpdateResponseArgs<'a> {
   #[inline]
   fn default() -> Self {
     PluginBonesUpdateResponseArgs {
-      bones: None,
+      registeredPluginBones: None,
     }
   }
 }
@@ -81,8 +81,8 @@ pub struct PluginBonesUpdateResponseBuilder<'a: 'b, 'b> {
 }
 impl<'a: 'b, 'b> PluginBonesUpdateResponseBuilder<'a, 'b> {
   #[inline]
-  pub fn add_bones(&mut self, bones: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<PluginBone<'b >>>>) {
-    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(PluginBonesUpdateResponse::VT_BONES, bones);
+  pub fn add_registeredPluginBones(&mut self, registeredPluginBones: flatbuffers::WIPOffset<flatbuffers::Vector<'b , flatbuffers::ForwardsUOffset<PluginBoneRegistration<'b >>>>) {
+    self.fbb_.push_slot_always::<flatbuffers::WIPOffset<_>>(PluginBonesUpdateResponse::VT_REGISTEREDPLUGINBONES, registeredPluginBones);
   }
   #[inline]
   pub fn new(_fbb: &'b mut flatbuffers::FlatBufferBuilder<'a>) -> PluginBonesUpdateResponseBuilder<'a, 'b> {
@@ -102,7 +102,7 @@ impl<'a: 'b, 'b> PluginBonesUpdateResponseBuilder<'a, 'b> {
 impl core::fmt::Debug for PluginBonesUpdateResponse<'_> {
   fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
     let mut ds = f.debug_struct("PluginBonesUpdateResponse");
-      ds.field("bones", &self.bones());
+      ds.field("registeredPluginBones", &self.registeredPluginBones());
       ds.finish()
   }
 }
